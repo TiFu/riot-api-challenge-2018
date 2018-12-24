@@ -1,11 +1,15 @@
 version: '3'
 services:
         redis:
-                image: redis
+                image: redis:alpine
+                ports:
+                        - 6379:6379
                 volumes:
                         - redis-volume:/data
         postgres:
                 image: postgres
+                ports: # ONLY FOR DEV
+                        - 5432:5432
                 volumes:
                         - postgresql-volume:/var/lib/postgresql/data
                 environment:
