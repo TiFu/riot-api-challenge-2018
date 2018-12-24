@@ -1,0 +1,17 @@
+version: '3'
+services:
+        redis:
+                image: redis
+                volumes:
+                        - redis-volume:/data
+        postgres:
+                image: postgres
+                volumes:
+                        - postgresql-volume:/var/lib/postgresql/data
+                environment:
+                        POSTGRES_PASSWORD: dev
+                        POSTGRES_USER: dev
+                        POSTGRES_DB: achievements
+volumes:
+        redis-volume: {}
+        postgresql-volume: {}
