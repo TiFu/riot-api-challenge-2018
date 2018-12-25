@@ -2,14 +2,22 @@
   "name": "lol-achievements",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/electron.js",
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@types/electron": "^1.6.10",
+    "@types/socket.io-client": "^1.4.32",
     "@types/ws": "^6.0.1",
+    "lcu-connector": "^1.0.2",
+    "socket.io-client": "^2.2.0",
     "ws": "^6.1.2"
+  },
+  "devDependencies": {
+    "electron": "^4.0.0"
   }
 }
