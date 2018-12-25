@@ -9,6 +9,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@types/node": "^10.12.18",
     "@types/pg-promise": "^5.4.3",
     "pg-promise": "^8.5.4"
   }

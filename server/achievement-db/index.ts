@@ -1,22 +1,26 @@
 // Test DB
 import {DBConfig} from 'achievement-config'
 
-import {IMain, IDatabase} from 'pg-promise';
+import {IMain, IDatabase, IConnected} from 'pg-promise';
+import {Player} from './models'
+
 import pgPromise from 'pg-promise';
+
+export * from './models';
 
 export class AchievementDB {
     private db: IDatabase<any>;
 
     constructor(config: DBConfig) {
         const psql: IMain = pgPromise();
-        const db:IDatabase<any> = psql({
+        this.db = psql({
             "user": config.user,
             "password": config.password,
             "database": config.db,
             "port": config.port
         });
         
-        db.connect().then(() => {
+/*        db.connect().then(() => {
             return db.query('SELECT NOW()')
         }).then((response) => {
             console.log(response)
@@ -24,7 +28,18 @@ export class AchievementDB {
             console.log(err)
         }).finally(() => {
             db.$pool.end()
-        })
-        this.db = db; 
+        })*/
+    }
+
+    public connect(): Promise<IConnected<any>> {
+        return this.db.connect()
+    }
+    public retrievePlayer(accountId: string, region: string): Promise<Player> {
+        return Promise.resolve({
+            "id": 5,
+            "region": "euw",
+            "accountId": "abcabcabc",
+            "name": "TiFu"
+        });
     }
 }

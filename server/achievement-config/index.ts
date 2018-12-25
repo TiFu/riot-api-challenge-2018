@@ -12,10 +12,15 @@ export interface RedisConfig {
     port: number
 }
 
+export interface FrontendConfig {
+    port: number
+    platform: string
+}
 
 export interface Config {
     db: DBConfig
     redis: RedisConfig
+    frontend: FrontendConfig
 }
 
 export function loadConfigFromEnvironment(): Config {
@@ -30,6 +35,10 @@ export function loadConfigFromEnvironment(): Config {
         "redis": {
             "url": process.env.REDIS_URL || "localhost",
             "port": parseInt(process.env.REDIS_PORT || "6379")
+        },
+        "frontend": {
+            "port": parseInt(process.env.FRONTEND_PORT || "3000"),
+            "platform": process.env.FRONTEND_PLATFORM || "euw1"
         }
     }
 }
