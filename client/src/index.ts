@@ -1,9 +1,14 @@
 import { LCUService } from './services/LCUService';
-import eventBus from './events'
 import { LCUUpdateHandler } from './eventHandlers/LCUUpdateHandler';
+import configureStore from './store/index';
+import { updateLCUConnectedState } from './store/lcu/actions';
 
-const lcu = new LCUService(eventBus);
-const updateHandler = new LCUUpdateHandler(eventBus, lcu);
-const localState = new LocalState(eventBus);
+const store = configureStore();
+const lcu = new LCUService();
+const lcuListener = new LCUUpdateHandler(lcu, store);
+lcu.setListener(lcuListener)
+
+store.subscribe(() => {
+    console.log(store.getState());
+})
 lcu.start()
-

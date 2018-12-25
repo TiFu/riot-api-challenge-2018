@@ -1,30 +1,33 @@
 import { AchievementEventBus } from '../events';
-import { LCUService } from '../services/LCUService';
+import { LCUService, LCUListener } from '../services/LCUService';
+import { updateLCUConnectedState } from '../store/lcu/actions';
+import { updatePlayerInfo } from '../store/player/actions';
+import { AchievementStore } from '../store/index'
 
-export class LCUUpdateHandler {
-    public constructor(private eventBus: AchievementEventBus, private lcuService: LCUService) {
-        this.eventBus.lcu_connected.on(this.handleLCUConnected);
-        this.eventBus.lcu_disconnected.on(this.handleLCUDisconnected)
-        this.eventBus.user_login.on(this.handleUserLogin);
+export class LCUUpdateHandler implements LCUListener {
+
+    public constructor(private lcuService: LCUService, private store: AchievementStore) {
     }
 
-    private handleUserLogin() {
-        this.fetchUserAndPublishUpdate()
+    public onConnectionStateChanged(state: boolean): void {
+        this.store.dispatch(updateLCUConnectedState(state))
+        if (state) {
+            this.fetchUserAndPublishUpdate();
+        } else {
+            this.store.dispatch(updatePlayerInfo(null))
+        }
     }
 
-    private handleLCUConnected() { 
-        this.fetchUserAndPublishUpdate()
-    }
-
-    private handleLCUDisconnected() {
-        this.eventBus.user_update(null);
+    public onUserLogin(): void {
+        this.fetchUserAndPublishUpdate();
     }
 
     private fetchUserAndPublishUpdate(){ 
         this.lcuService.fetchCurrentSummoner().then((player) => {
-            this.eventBus.user_update(player);
+            this.store.dispatch(updatePlayerInfo(player));
         }).catch((err) => {
-            console.log("User not logged in!", err);
+            console.log("User probably not logged in");
+            // user probably not logged in
         })
     }
 }

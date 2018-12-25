@@ -1,9 +1,10 @@
 import LCUConnector from 'lcu-connector';
 
 import WebSocket from 'ws';
-import {AchievementEventBus} from '../events';
 import { PluginLolSummonerApi,PluginLolPlatformConfigApi, HttpBasicAuth } from 'lcu-api';
-import {LocalPlayer} from '../models'
+import { LCUConnectionStateUpdatedAction } from '../store/lcu/types';
+import { PlayerInfo } from '../store/player/types';
+
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 interface LCUConnectionData {
@@ -12,6 +13,11 @@ interface LCUConnectionData {
     username: string
     password: string
     protocol: string
+}
+
+export interface LCUListener {
+    onConnectionStateChanged(connected: boolean): void;
+    onUserLogin(): void;
 }
 
 export class LCUService {
@@ -24,23 +30,34 @@ export class LCUService {
     private LOGIN_NS: string = "LoginDataPacket"
     private currentSummonerApi: PluginLolSummonerApi;
     private platformConfigApi: PluginLolPlatformConfigApi
-    
-    public constructor(private eventBus: AchievementEventBus) {
+    private listener: LCUListener | null = null;
+
+    public constructor() {
         this.connector = new LCUConnector()    
         this.currentSummonerApi = new PluginLolSummonerApi()
         this.platformConfigApi = new PluginLolPlatformConfigApi()
         this.connector.on("connect", (data) => {
             this.lcuData = data
+
             this.configureApis()
-            this.connectToWS()
-            this.eventBus.lcu_connected()
+            this.connectToWS().then(() => {
+                if (this.listener) 
+                    this.listener.onConnectionStateChanged(true)
+            }).catch((err) => {
+                console.log(err);
+            })
         })
         this.connector.on("disconnect", () => {
-            this.eventBus.lcu_disconnected()
+            if (this.listener) 
+                this.listener.onConnectionStateChanged(false)
             this.lcuData = null
             if (this.ws)
                 this.ws.close();
         })
+    }
+
+    public setListener(listener: LCUListener) {
+        this.listener = listener;
     }
 
     public start() {
@@ -55,7 +72,7 @@ export class LCUService {
      * 404 - if not logged in console.log(err["response"]["statusCode"])
      * error - if necessary data was not returned by LCU
      */
-    public fetchCurrentSummoner(): Promise<LocalPlayer> {
+    public fetchCurrentSummoner(): Promise<PlayerInfo> {
         return this.currentSummonerApi.getLolSummonerV1CurrentSummoner().then((response) => {
             if (!response.body.accountId || !response.body.displayName) {
                 throw Error("Unknown accountId or displayName: "+ JSON.stringify(response.body));
@@ -85,35 +102,51 @@ export class LCUService {
         this.platformConfigApi.basePath = path
     }
 
-    private connectToWS() {
+    private connectToWS(): Promise<void> {
         if (this.lcuData) {
-            console.log("Connecting to websocket at "+ `wss://riot:${this.lcuData.password}@127.0.0.1:${this.lcuData.port}/`)
-            this.ws = new WebSocket(`wss://riot:${this.lcuData.password}@127.0.0.1:${this.lcuData.port}/`, "wamp");
-        
-            this.ws.on('error', (err) => {
-                console.log("WS", err);
-            });
-            
-            this.ws.on('message', (msg) => {
-                // TODO emit message based on end point
-                if (msg["eventType"] == "Update" && msg["uri"] == "/lol-summoner/v1/current-summoner" && msg["data"]["accountId"]) {
-                    this.eventBus.user_login()
-                }
-            });
-            
-            this.ws.on('open', () => {
-                if (!this.ws) {
-                    return;
-                }
-                // 5 is probably subscribe https://gist.github.com/Pupix/eb662b1b784bb704a1390643738a8c15
-                for (const event of this.subscribeEvents) {
-                    console.log("Subscribing for event " + event);
-                    this.ws.send('[5, \"' + event + '\"]');
-                }
-            });
+            return new Promise((resolve, reject) => {
 
+                console.log("Connecting to websocket at "+ `wss://riot:${this.lcuData.password}@127.0.0.1:${this.lcuData.port}/`)
+                this.ws = new WebSocket(`wss://riot:${this.lcuData.password}@127.0.0.1:${this.lcuData.port}/`, "wamp");
+            
+                this.ws.on('error', (err) => {
+                    console.log("err", err);
+                    if (err["code"] ==  "ECONNREFUSED") {
+                        console.log("WS1", err);
+                        this.connectToWS().then(() => resolve()).catch((err) => reject(err));
+                    } else {
+                        console.log("WS2", err);
+                        reject(err);
+                    }
+                });
+                
+                this.ws.on('message', (msg) => {
+                    console.log("received msg");
+                    // TODO emit message based on end point
+                    msg = JSON.parse(msg.toString())[2]
+                    console.log("listener", !!this.listener);
+                    if (this.listener && msg["eventType"] == "Update" && msg["uri"] == "/lol-summoner/v1/current-summoner" && msg["data"]["accountId"]) {
+                        console.log("user logged in");
+                        this.listener.onUserLogin()
+                    }
+                });
+                
+                this.ws.on('open', () => {
+                    console.log("WS open");
+                    if (!this.ws) {
+                        return;
+                    }
+                    // 5 is probably subscribe https://gist.github.com/Pupix/eb662b1b784bb704a1390643738a8c15
+                    for (const event of this.subscribeEvents) {
+                        console.log("Subscribing for event " + event);
+                        this.ws.send('[5, \"' + event + '\"]');
+                    }
+                    console.log("resolving!")
+                    resolve();
+                });
+            })            
         } else {
-            throw new Error("You may only call connectToWS if lcuData is set!");
+            return Promise.reject(new Error("You may only call connectToWS if lcuData is set!"));
         }
     }
 
