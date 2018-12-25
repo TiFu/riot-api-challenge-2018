@@ -71,7 +71,15 @@ export class LocalAchievementSocketHandler {
     }
 
     public handleHelloMessage(msg: HelloMessage) {
-        this.notificationService.registerUser(msg, this.socket as unknown as socketio.Socket).then((player) => {
+        // TODO: only allow one hello message?
+        let deregisterPromise = Promise.resolve();
+        if (this.socketState.player) {
+            deregisterPromise = this.notificationService.deregisterUser(this.socketState.player, this.socket as unknown as socketio.Socket);
+        }
+        
+        deregisterPromise.then(() => {
+            return this.notificationService.registerUser(msg, this.socket as unknown as socketio.Socket)
+        }).then((player) => {
             this.socketState["player"] = player
         })
     }

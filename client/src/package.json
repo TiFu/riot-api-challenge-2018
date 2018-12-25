@@ -2,7 +2,7 @@
   "name": "lol-achievements",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/electron.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,6 +15,7 @@
     "@types/ws": "^6.0.1",
     "lcu-connector": "^1.0.2",
     "socket.io-client": "^2.2.0",
+    "ts-event-bus": "^2.0.0",
     "ws": "^6.1.2"
   },
   "devDependencies": {

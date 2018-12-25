@@ -18,8 +18,8 @@ export type PublicPlayerData = {
 
 export type HelloMessage = {
     playerName: string,
-    account_id: string,
-    region: string
+    accountId: string,
+    platformId: string
 }
 
 export type NewGameMessage = {

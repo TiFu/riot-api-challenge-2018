@@ -9,8 +9,13 @@ export class NotificationService {
 
     }
 
+    public deregisterUser(player: Player, socket: socketio.Socket): Promise<void> {
+        // TODO: implement
+        return Promise.resolve();
+    }
+
     public registerUser(msg: HelloMessage, socket: socketio.Socket): Promise<Player> {
-        return this.database.retrievePlayer(msg.account_id, msg.region).then((player) => {
+        return this.database.retrievePlayer(msg.accountId, msg.platformId).then((player) => {
             this.spectatePlayer(player.id, socket);
             return player;
         });
