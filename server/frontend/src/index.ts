@@ -8,7 +8,7 @@ import { WebAchievementSocketHandler, LocalAchievementSocketHandler } from './ha
 import { AchievementService } from './services/achievement-service';
 import { GroupService } from './services/group-service';
 import { NotificationService } from './services/notification-service';
-import { AchievementDB } from '../../achievement-db/index';
+import { AchievementDB } from 'achievement-db';
 
 const config = loadConfigFromEnvironment()
 console.log(config)

@@ -34,7 +34,7 @@ export class AchievementDB {
     public connect(): Promise<IConnected<any>> {
         return this.db.connect()
     }
-    public retrievePlayer(accountId: string, region: string): Promise<Player> {
+    public retrievePlayer(accountId: number, region: string): Promise<Player> {
         return Promise.resolve({
             "id": 5,
             "region": "euw",

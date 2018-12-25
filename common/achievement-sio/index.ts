@@ -18,7 +18,7 @@ export type PublicPlayerData = {
 
 export type HelloMessage = {
     playerName: string,
-    accountId: string,
+    accountId: number,
     platformId: string
 }
 

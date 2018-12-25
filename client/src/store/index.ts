@@ -1,9 +1,10 @@
-import {combineReducers, Dispatch, Reducer, Store, createStore} from 'redux';
+import {combineReducers, Dispatch, Reducer, Store, createStore, applyMiddleware} from 'redux';
 
-import { PlayerState } from './player/types';
+import { PlayerState, PlayerActions } from './player/types';
 import playerReducer from './player/reducer';
 import lcuReducer from './lcu/reducer'
-import { LCUState } from './lcu/types';
+import { LCUState, LCUActions } from './lcu/types';
+import { eventBusMiddleware } from './events';
 
 export interface AchievementState {
     lcu: LCUState
@@ -15,9 +16,12 @@ const reducers: Reducer<AchievementState> = combineReducers<AchievementState>( {
     player: playerReducer
 }) 
 
+export type AllActions = LCUActions | PlayerActions
+
 export type AchievementStore = Store<AchievementState>
 export default function configureStores(): Store<AchievementState> {
     return createStore(
-        reducers
+        reducers,
+        applyMiddleware(eventBusMiddleware)
     )
 }

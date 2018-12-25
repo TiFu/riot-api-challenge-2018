@@ -71,6 +71,7 @@ export class LocalAchievementSocketHandler {
     }
 
     public handleHelloMessage(msg: HelloMessage) {
+        console.log("RECEIVED LOCAL HELLO MESSAGE", msg)
         // TODO: only allow one hello message?
         let deregisterPromise = Promise.resolve();
         if (this.socketState.player) {
