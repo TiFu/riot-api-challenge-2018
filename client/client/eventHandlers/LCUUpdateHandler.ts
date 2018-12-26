@@ -1,4 +1,3 @@
-import { AchievementEventBus } from '../events';
 import { LCUService, LCUListener } from '../services/LCUService';
 import { updateLCUConnectedState } from '../store/lcu/actions';
 import { updatePlayerInfo } from '../store/player/actions';

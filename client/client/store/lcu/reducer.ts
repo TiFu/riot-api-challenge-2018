@@ -1,8 +1,9 @@
 import { Reducer } from 'redux'
-import { LCUState, LCUConnectionStateUpdatedAction, LCUActions } from './types';
+import { LCUState, LCUConnectionStateUpdatedAction, LCUActions, FrontendConnectionStateUpdatedAction } from './types';
 
 export const initialState: LCUState = {
-    connected: false
+    connectedToLcu: false,
+    connectedToFrontend: false
 }
 
 const reducer: Reducer<LCUState> = (state: LCUState = initialState, action) => {
@@ -10,7 +11,9 @@ const reducer: Reducer<LCUState> = (state: LCUState = initialState, action) => {
     // all the cases handled.
     switch ((action as LCUActions).type) {
         case '@@lcu/LCU_CONNECTION_STATE_UPDATED':
-            return Object.assign({}, state, {connected: (action as LCUConnectionStateUpdatedAction).payload});
+            return Object.assign({}, state, {connectedToLcu: (action as LCUConnectionStateUpdatedAction).payload});
+        case '@@lcu/FRONTEND_CONNECTION_STATE_UPDATED':
+            return Object.assign({}, state, {connectedToFrontend: (action as FrontendConnectionStateUpdatedAction).payload})
         default:
             return state;
     }

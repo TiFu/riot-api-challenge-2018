@@ -1,7 +1,8 @@
 import {Action} from 'redux'
 
 export interface LCUState {
-    connected: boolean   
+    connectedToLcu: boolean
+    connectedToFrontend: boolean
 }
 
 
@@ -10,4 +11,8 @@ export interface LCUConnectionStateUpdatedAction extends Action {
     payload: boolean
 }
 
-export type LCUActions = LCUConnectionStateUpdatedAction; // use union type here
+export interface FrontendConnectionStateUpdatedAction extends Action {
+    type: '@@lcu/FRONTEND_CONNECTION_STATE_UPDATED'
+    payload: boolean
+}
+export type LCUActions = LCUConnectionStateUpdatedAction | FrontendConnectionStateUpdatedAction; // use union type here

@@ -26,6 +26,7 @@ export class LCUService {
     private ws: WebSocket | null = null
     private subscribeEvents = [
         "OnJsonApiEvent_lol-summoner_v1_current-summoner"
+//        "OnJsonApiEvent"
     ]
     private LOGIN_NS: string = "LoginDataPacket"
     private currentSummonerApi: PluginLolSummonerApi;
@@ -121,10 +122,9 @@ export class LCUService {
                 });
                 
                 this.ws.on('message', (msg) => {
-                    console.log("received msg");
                     // TODO emit message based on end point
+//                    console.log(msg)
                     msg = JSON.parse(msg.toString())[2]
-                    console.log("listener", !!this.listener);
                     if (this.listener && msg["eventType"] == "Update" && msg["uri"] == "/lol-summoner/v1/current-summoner" && msg["data"]["accountId"]) {
                         console.log("user logged in");
                         this.listener.onUserLogin()

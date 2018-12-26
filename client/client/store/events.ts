@@ -5,11 +5,13 @@ import { AnyAction } from 'redux';
 
 const AchievementEvents = {
     "lcu_connection_update": slot<boolean, void>(),
+    "frontend_connection_update": slot<boolean, void>(),
     "player_info_update": slot<PlayerInfo, void>()
 }
 
 export type AchievementEventBus = {
     "lcu_connection_update": Slot<boolean, void>,
+    "frontend_connection_update": Slot<boolean, void>,
     "player_info_update": Slot<PlayerInfo, void>
 }
 
@@ -25,6 +27,9 @@ export const eventBusMiddleware = (store: AchievementStore)  => (next: (action: 
         break;
         case '@@player/PLAYER_STATE_UPDATED':
             eventBus.player_info_update(action.payload);
+        break;
+        case '@@lcu/FRONTEND_CONNECTION_STATE_UPDATED':
+            eventBus.frontend_connection_update(action.payload);
         break;
     }
     return result;
