@@ -30,12 +30,12 @@ const achievementService = new AchievementService();
 const groupService = new GroupService();
 const notificationService = new NotificationService(io.of("/web"), io.of("/local"), config.frontend.platform, achievementdb);
 
-io.of("/web").on("connection", (socket) => {
+io.of("/web").on("connection", (socket: any) => {
     console.log("new web connection")
     const handler = new WebAchievementSocketHandler(socket, achievementService, groupService, notificationService);
 })
 
-io.of("/local").on("connection", (socket) => {
+io.of("/local").on("connection", (socket: any) => {
     console.log("new local connection!")
     const handler = new LocalAchievementSocketHandler(socket, achievementService, groupService, notificationService);
 })

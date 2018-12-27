@@ -1,9 +1,9 @@
 import LCUConnector from 'lcu-connector';
 
 import WebSocket from 'ws';
-import { PluginLolSummonerApi,PluginLolPlatformConfigApi, HttpBasicAuth } from 'lcu-api';
+import { PluginLolSummonerApi,PluginLolPlatformConfigApi, PluginLolGameApi, HttpBasicAuth } from 'lcu-api';
 import { LCUConnectionStateUpdatedAction } from '../store/lcu/types';
-import { PlayerInfo } from '../store/player/types';
+import { PlayerInfo, GameData } from '../store/player/types';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -18,6 +18,7 @@ interface LCUConnectionData {
 export interface LCUListener {
     onConnectionStateChanged(connected: boolean): void;
     onUserLogin(): void;
+    onGameEnd(gameId: number): void;
 }
 
 export class LCUService {
@@ -31,12 +32,15 @@ export class LCUService {
     private LOGIN_NS: string = "LoginDataPacket"
     private currentSummonerApi: PluginLolSummonerApi;
     private platformConfigApi: PluginLolPlatformConfigApi
+    private lolGameApi: PluginLolGameApi
+
     private listener: LCUListener | null = null;
 
     public constructor() {
         this.connector = new LCUConnector()    
         this.currentSummonerApi = new PluginLolSummonerApi()
         this.platformConfigApi = new PluginLolPlatformConfigApi()
+        this.lolGameApi = new PluginLolGameApi()
         this.connector.on("connect", (data) => {
             this.lcuData = data
 
@@ -69,6 +73,10 @@ export class LCUService {
         this.connector.stop()
     }
 
+    public fetchGame(gameId: number): Promise<GameData> {
+        
+        // TODO: implement fetch game
+    }
     /**
      * 404 - if not logged in console.log(err["response"]["statusCode"])
      * error - if necessary data was not returned by LCU
@@ -101,6 +109,9 @@ export class LCUService {
 
         this.platformConfigApi.setDefaultAuthentication(auth)
         this.platformConfigApi.basePath = path
+
+        this.lolGameApi.setDefaultAuthentication(auth)
+        this.lolGameApi.basePath = path;
     }
 
     private connectToWS(): Promise<void> {
@@ -125,9 +136,13 @@ export class LCUService {
                     // TODO emit message based on end point
 //                    console.log(msg)
                     msg = JSON.parse(msg.toString())[2]
-                    if (this.listener && msg["eventType"] == "Update" && msg["uri"] == "/lol-summoner/v1/current-summoner" && msg["data"]["accountId"]) {
-                        console.log("user logged in");
-                        this.listener.onUserLogin()
+                    if (this.listener) {
+                        if (msg["eventType"] == "Update" && msg["uri"] == "/lol-summoner/v1/current-summoner" && msg["data"]["accountId"]) {
+                            console.log("user logged in");
+                            this.listener.onUserLogin()
+                        } else if (msg["uri"] == "/lol-gameflow/v1/session" && msg["data"]["phase"] == "EndOfGame") {
+                            this.listener.onGameEnd(msg["data"]["gameData"]["gameId"])
+                        }
                     }
                 });
                 
