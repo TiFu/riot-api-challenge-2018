@@ -56,9 +56,8 @@ export class LocalAchievementSocketHandler {
     }
 
     public handleNewGameMessage(msg: NewGameMessage) {
-        if (this.socketState.player && this.socketState.player.id) {
-            this.achievementService.processNewGameMessage(msg, this.socketState.player.id)
-        }
+        console.log(msg)
+        this.achievementService.processNewGameMessage(msg)
     }
 
     public handleSearchPlayer(msg: SearchPlayerMessage, cb: (err: string | null, data?: PublicPlayerData) => void) {        

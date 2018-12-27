@@ -2,8 +2,8 @@ import {NewGameMessage, SearchPlayerMessage, PublicPlayerData} from 'achievement
 
 export class AchievementService {
 
-    public processNewGameMessage(msg: NewGameMessage, player_id: number): void {
-
+    public processNewGameMessage(msg: NewGameMessage): void {
+        console.log("Processing new game message: "+ msg);
     }
 
     public searchPlayer(msg: SearchPlayerMessage): Promise<PublicPlayerData> {        

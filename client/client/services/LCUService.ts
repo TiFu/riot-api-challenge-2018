@@ -26,7 +26,8 @@ export class LCUService {
     private lcuData: LCUConnectionData | null = null
     private ws: WebSocket | null = null
     private subscribeEvents = [
-        "OnJsonApiEvent_lol-summoner_v1_current-summoner"
+        "OnJsonApiEvent_lol-summoner_v1_current-summoner",
+        "OnJsonApiEvent_lol-gameflow_v1_session"
 //        "OnJsonApiEvent"
     ]
     private LOGIN_NS: string = "LoginDataPacket"
@@ -40,7 +41,6 @@ export class LCUService {
         this.connector = new LCUConnector()    
         this.currentSummonerApi = new PluginLolSummonerApi()
         this.platformConfigApi = new PluginLolPlatformConfigApi()
-        this.lolGameApi = new PluginLolGameApi()
         this.connector.on("connect", (data) => {
             this.lcuData = data
 
@@ -105,9 +105,6 @@ export class LCUService {
 
         this.platformConfigApi.setDefaultAuthentication(auth)
         this.platformConfigApi.basePath = path
-
-        this.lolGameApi.setDefaultAuthentication(auth)
-        this.lolGameApi.basePath = path;
     }
 
     private connectToWS(): Promise<void> {
@@ -132,6 +129,8 @@ export class LCUService {
                     // TODO emit message based on end point
 //                    console.log(msg)
                     msg = JSON.parse(msg.toString())[2]
+                    console.log(msg)
+                    
                     if (this.listener) {
                         if (msg["eventType"] == "Update" && msg["uri"] == "/lol-summoner/v1/current-summoner" && msg["data"]["accountId"]) {
                             console.log("user logged in");

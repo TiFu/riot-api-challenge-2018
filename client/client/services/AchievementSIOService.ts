@@ -9,6 +9,7 @@ import { updateFrontendConnectedState } from '../store/lcu/actions';
 export class AchievementSocketIOService {
     private socket: AchievementLocalClient
     private unrecordedEndOfGames = new Set();
+    private unsubscribes = new Set();
 
     public constructor(private store: Store<AchievementState>, private url: string, private eventBus: AchievementEventBus) {
         console.log(url)
@@ -30,10 +31,12 @@ export class AchievementSocketIOService {
             console.log("Connected to frontend server!");
         })
         this.socket.on("disconnect", () => {
+            this.deregisterEvents();
             this.store.dispatch(updateFrontendConnectedState(false))
         });
         
         this.socket.on("connect_error", (err) => {
+            this.deregisterEvents();
             this.store.dispatch(updateFrontendConnectedState(false))
             if (err["description"] == 503) {
                 console.log("Failed to connect to frontend server!");
@@ -43,19 +46,26 @@ export class AchievementSocketIOService {
         })
     }
 
+    private deregisterEvents() {
+        for (const unsub of this.unsubscribes) {
+            unsub()
+            this.unsubscribes.delete(unsub)
+        }
+    }
+
     private registerEventListeners() { 
-        this.eventBus.player_info_update.on((playerInfo) =>{ 
+        this.unsubscribes.add(this.eventBus.player_info_update.on((playerInfo) =>{ 
             this.updatePlayerInfo(playerInfo);
-        })
-        this.eventBus.lcu_connection_update.on((connected) => {
+        }));
+        this.unsubscribes.add(this.eventBus.lcu_connection_update.on((connected) => {
             if (!connected) {
                 this.reset();
             }
-        })
+        }))
 
-        this.eventBus.end_of_game.on((gameId: number) => {
+        this.unsubscribes.add(this.eventBus.end_of_game.on((gameId: number) => {
             this.handleEndOfGame(gameId);
-        });
+        }));
     }
 
     private sendStoredEndOfGames() {
@@ -66,6 +76,7 @@ export class AchievementSocketIOService {
     }
     
     private handleEndOfGame(game: number): void {
+        console.log("emitting eog")
         // TODO: handle end of game
         if (this.socket.connected) {
             this.socket.emit("newGame", game);
