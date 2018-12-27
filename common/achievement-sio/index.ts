@@ -22,10 +22,7 @@ export type HelloMessage = {
     platformId: string
 }
 
-export type NewGameMessage = {
-    game: any
-    timeline: any
-}
+export type NewGameMessage = number
 
 export type Achievement = {
     achievement_id: string,

@@ -8,6 +8,8 @@ import { updateFrontendConnectedState } from '../store/lcu/actions';
 
 export class AchievementSocketIOService {
     private socket: AchievementLocalClient
+    private unrecordedEndOfGames = new Set();
+
     public constructor(private store: Store<AchievementState>, private url: string, private eventBus: AchievementEventBus) {
         console.log(url)
         this.reset();
@@ -24,6 +26,7 @@ export class AchievementSocketIOService {
                 this.emitHelloMessage(this.store.getState().player.playerInfo)
             }
             this.store.dispatch(updateFrontendConnectedState(true))
+            this.sendStoredEndOfGames()
             console.log("Connected to frontend server!");
         })
         this.socket.on("disconnect", () => {
@@ -50,14 +53,25 @@ export class AchievementSocketIOService {
             }
         })
 
-        this.eventBus.end_of_game.on((gameId: GameData) => {
+        this.eventBus.end_of_game.on((gameId: number) => {
             this.handleEndOfGame(gameId);
         });
     }
+
+    private sendStoredEndOfGames() {
+        for (const gameId of this.unrecordedEndOfGames) {
+            this.socket.emit("newGame", gameId);
+            this.unrecordedEndOfGames.delete(gameId);
+        }
+    }
     
-    private handleEndOfGame(game: GameData): void {
+    private handleEndOfGame(game: number): void {
         // TODO: handle end of game
-        this.socket.emit("newGame", game);
+        if (this.socket.connected) {
+            this.socket.emit("newGame", game);
+        } else {
+            this.unrecordedEndOfGames.add(game)
+        }
     }
 
     private updatePlayerInfo(player: PlayerInfo) {

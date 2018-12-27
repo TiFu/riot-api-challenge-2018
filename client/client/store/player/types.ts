@@ -13,7 +13,7 @@ export interface GameData {
 
 export interface EndOfGameAction extends Action {
     type: '@@player/END_OF_GAME',
-    payload: GameData
+    payload: number
 }
 
 export interface PlayerState {

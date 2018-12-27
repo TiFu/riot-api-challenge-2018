@@ -7,14 +7,14 @@ const AchievementEvents = {
     "lcu_connection_update": slot<boolean, void>(),
     "frontend_connection_update": slot<boolean, void>(),
     "player_info_update": slot<PlayerInfo, void>(),
-    "end_of_game": slot<GameData, void>()
+    "end_of_game": slot<number, void>()
 }
 
 export type AchievementEventBus = {
     "lcu_connection_update": Slot<boolean, void>,
     "frontend_connection_update": Slot<boolean, void>,
     "player_info_update": Slot<PlayerInfo, void>,
-    "end_of_game": Slot<GameData, void>
+    "end_of_game": Slot<number, void>
 }
 
 const eventBus = createEventBus( {
@@ -32,6 +32,9 @@ export const eventBusMiddleware = (store: AchievementStore)  => (next: (action: 
         break;
         case '@@lcu/FRONTEND_CONNECTION_STATE_UPDATED':
             eventBus.frontend_connection_update(action.payload);
+        break;
+        case '@@player/END_OF_GAME':
+            eventBus.end_of_game(action.payload)
         break;
     }
     return result;

@@ -8,7 +8,7 @@ export const updatePlayerInfo: ActionCreator<PlayerStateUpdatedAction> = (player
     }
 }
 
-export const endOfGameDetected: ActionCreator<EndOfGameAction> = (game: GameData) => {
+export const endOfGameDetected: ActionCreator<EndOfGameAction> = (game: number) => {
     return {
         type: '@@player/END_OF_GAME',
         payload: game

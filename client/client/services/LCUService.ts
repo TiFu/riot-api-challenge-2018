@@ -73,10 +73,6 @@ export class LCUService {
         this.connector.stop()
     }
 
-    public fetchGame(gameId: number): Promise<GameData> {
-        
-        // TODO: implement fetch game
-    }
     /**
      * 404 - if not logged in console.log(err["response"]["statusCode"])
      * error - if necessary data was not returned by LCU
