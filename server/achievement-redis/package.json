@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/redis": "^2.8.10",
+    "achievement-config": "file:../achievement-config",
     "redis": "^2.8.0"
   }
 }

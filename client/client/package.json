@@ -17,6 +17,8 @@
     "@types/react-redux": "^6.0.11",
     "@types/socket.io-client": "^1.4.32",
     "@types/ws": "^6.0.1",
+    "achievement-sio": "file:../../common/achievement-sio",
+    "lcu-api": "file:../lcu-api",
     "lcu-connector": "^1.0.2",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
