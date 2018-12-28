@@ -11,5 +11,10 @@
   "license": "ISC",
   "devDependencies": {
     "typescript": "^3.2.2"
+  },
+  "dependencies": {
+    "achievement-config": "file:../../achievement-config",
+    "achievement-db": "file:../../achievement-db",
+    "achievement-redis": "file:../../achievement-redis"
   }
 }
