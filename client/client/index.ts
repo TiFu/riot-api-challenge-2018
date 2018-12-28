@@ -7,8 +7,8 @@ import eventBus from './store/events';
 import { endOfGameDetected } from './store/player/actions';
 
 const store = configureStore();
-const lcu = new LCUService();
 
+const lcu = new LCUService();
 const sioService = new AchievementSocketIOService(store, "http://localhost:" + 3000, eventBus);
 const lcuListener = new LCUUpdateHandler(lcu, store, sioService);
 lcu.setListener(lcuListener)
