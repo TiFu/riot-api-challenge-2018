@@ -2,7 +2,7 @@ version: '3'
 services:
         redis:
                 image: redis:alpine
-                ports:
+                ports: # ONLY FOR DEV
                         - 6379:6379
                 volumes:
                         - redis-volume:/data
@@ -12,10 +12,12 @@ services:
                         - 5432:5432
                 volumes:
                         - postgresql-volume:/var/lib/postgresql/data
+                        - ./db-server/structure.sql:/docker-entrypoint-initdb.d/structure.sql
                 environment:
                         POSTGRES_PASSWORD: dev
                         POSTGRES_USER: dev
                         POSTGRES_DB: achievements
+                        PGDATA: /tmp
 volumes:
         redis-volume: {}
         postgresql-volume: {}

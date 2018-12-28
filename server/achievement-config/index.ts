@@ -14,13 +14,22 @@ export interface RedisConfig {
 
 export interface FrontendConfig {
     port: number
-    platform: string
 }
 
+export interface RiotApiConfig {
+    apiKey: string,
+    rateLimits: RateLimit[]
+}
+
+export interface RateLimit {
+    requests: number
+    timeInterval: number
+}
 export interface Config {
     db: DBConfig
     redis: RedisConfig
     frontend: FrontendConfig
+    riotApi: RiotApiConfig
 }
 
 export function loadConfigFromEnvironment(): Config {
@@ -37,8 +46,20 @@ export function loadConfigFromEnvironment(): Config {
             "port": parseInt(process.env.REDIS_PORT || "6379")
         },
         "frontend": {
-            "port": parseInt(process.env.FRONTEND_PORT || "3000"),
-            "platform": process.env.FRONTEND_PLATFORM || "euw1"
+            "port": parseInt(process.env.FRONTEND_PORT || "3000")
+        },
+        "riotApi": {
+            "apiKey": process.env.RIOT_API_KEY || "RGAPI-fa2efd91-c418-45d4-be44-48fb8c10f312", // TODO: Remove
+            "rateLimits": [
+                {
+                    requests: 20,
+                    timeInterval: 1
+                },
+                {
+                    requests: 100,
+                    timeInterval: 120
+                }
+            ]
         }
     }
 }

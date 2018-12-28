@@ -56,8 +56,10 @@ export class LocalAchievementSocketHandler {
     }
 
     public handleNewGameMessage(msg: NewGameMessage) {
-        console.log(msg)
-        this.achievementService.processNewGameMessage(msg)
+        console.log("New game: " + msg)
+        if (this.socketState.player) {
+            this.achievementService.processNewGameMessage(msg, this.socketState.player.region)
+        }
     }
 
     public handleSearchPlayer(msg: SearchPlayerMessage, cb: (err: string | null, data?: PublicPlayerData) => void) {        
@@ -74,12 +76,11 @@ export class LocalAchievementSocketHandler {
         // TODO: only allow one hello message?
         let deregisterPromise = Promise.resolve();
         if (this.socketState.player) {
-            deregisterPromise = this.notificationService.deregisterUser(this.socketState.player, this.socket as any);
+            this.notificationService.deregisterUser(this.socketState.player, this.socket as any);
         }
         
-        deregisterPromise.then(() => {
-            return this.notificationService.registerUser(msg, this.socket as any)
-        }).then((player) => {
+        return this.notificationService.registerUser(msg, this.socket as any)
+        .then((player) => {
             this.socketState["player"] = player
         })
     }

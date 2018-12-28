@@ -21,7 +21,7 @@ export class LCUUpdateHandler implements LCUListener {
         this.fetchUserAndPublishUpdate();
     }
 
-    public onGameEnd(gameId: number, maxRetries: number = 3): void {
+    public onGameEnd(gameId: number): void {
         this.store.dispatch(endOfGameDetected(gameId));
     }
 

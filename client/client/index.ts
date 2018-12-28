@@ -17,3 +17,7 @@ store.subscribe(() => {
     console.log(store.getState());
 })
 lcu.start()
+
+setTimeout(() => {
+    store.dispatch(endOfGameDetected(1234))
+}, 5000)

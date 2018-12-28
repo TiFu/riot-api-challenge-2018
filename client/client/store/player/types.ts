@@ -1,4 +1,5 @@
 import {Action} from 'redux'
+import { NewGameMessage } from 'achievement-sio';
 
 export interface PlayerInfo {
     playerName: string
@@ -13,7 +14,7 @@ export interface GameData {
 
 export interface EndOfGameAction extends Action {
     type: '@@player/END_OF_GAME',
-    payload: number
+    payload: NewGameMessage
 }
 
 export interface PlayerState {

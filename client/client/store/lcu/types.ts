@@ -15,4 +15,5 @@ export interface FrontendConnectionStateUpdatedAction extends Action {
     type: '@@lcu/FRONTEND_CONNECTION_STATE_UPDATED'
     payload: boolean
 }
+
 export type LCUActions = LCUConnectionStateUpdatedAction | FrontendConnectionStateUpdatedAction; // use union type here

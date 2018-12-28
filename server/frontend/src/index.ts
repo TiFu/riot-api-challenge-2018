@@ -9,6 +9,7 @@ import { AchievementService } from './services/achievement-service';
 import { GroupService } from './services/group-service';
 import { NotificationService } from './services/notification-service';
 import { AchievementDB } from 'achievement-db';
+import { AchievementRedis } from '../../achievement-redis/index';
 
 const config = loadConfigFromEnvironment()
 console.log(config)
@@ -25,10 +26,11 @@ app.get('/', (req: any, res: any) => {
 });
 
 const achievementdb = new AchievementDB(config.db);
+const achievementRedis = new AchievementRedis(config.redis)
 
-const achievementService = new AchievementService();
+const achievementService = new AchievementService(achievementRedis);
 const groupService = new GroupService();
-const notificationService = new NotificationService(io.of("/web"), io.of("/local"), config.frontend.platform, achievementdb);
+const notificationService = new NotificationService(io.of("/web"), io.of("/local"), achievementdb);
 
 io.of("/web").on("connection", (socket: any) => {
     console.log("new web connection")

@@ -5,6 +5,7 @@ import { AchievementEventBus } from '../store/events';
 import { AchievementState } from '../store/index';
 import {Store} from 'redux'
 import { updateFrontendConnectedState } from '../store/lcu/actions';
+import { NewGameMessage } from 'achievement-sio';
 
 export class AchievementSocketIOService {
     private socket: AchievementLocalClient
@@ -63,7 +64,7 @@ export class AchievementSocketIOService {
             }
         }))
 
-        this.unsubscribes.add(this.eventBus.end_of_game.on((gameId: number) => {
+        this.unsubscribes.add(this.eventBus.end_of_game.on((gameId: NewGameMessage) => {
             this.handleEndOfGame(gameId);
         }));
     }
@@ -75,7 +76,7 @@ export class AchievementSocketIOService {
         }
     }
     
-    private handleEndOfGame(game: number): void {
+    private handleEndOfGame(game: NewGameMessage): void {
         console.log("emitting eog")
         // TODO: handle end of game
         if (this.socket.connected) {

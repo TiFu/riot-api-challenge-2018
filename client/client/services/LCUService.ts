@@ -2,8 +2,7 @@ import LCUConnector from 'lcu-connector';
 
 import WebSocket from 'ws';
 import { PluginLolSummonerApi,PluginLolPlatformConfigApi, PluginLolGameApi, HttpBasicAuth } from 'lcu-api';
-import { LCUConnectionStateUpdatedAction } from '../store/lcu/types';
-import { PlayerInfo, GameData } from '../store/player/types';
+import { PlayerInfo } from '../store/player/types';
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
@@ -130,7 +129,7 @@ export class LCUService {
 //                    console.log(msg)
                     msg = JSON.parse(msg.toString())[2]
                     console.log(msg)
-                    
+
                     if (this.listener) {
                         if (msg["eventType"] == "Update" && msg["uri"] == "/lol-summoner/v1/current-summoner" && msg["data"]["accountId"]) {
                             console.log("user logged in");

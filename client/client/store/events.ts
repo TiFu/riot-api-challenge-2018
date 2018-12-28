@@ -2,19 +2,20 @@ import {slot, Slot, createEventBus, GenericChannel, combineEvents, TransportMess
 import { PlayerInfo, GameData } from './player/types';
 import { AchievementStore, AllActions } from './index';
 import { AnyAction } from 'redux';
+import { NewGameMessage } from 'achievement-sio';
 
 const AchievementEvents = {
     "lcu_connection_update": slot<boolean, void>(),
     "frontend_connection_update": slot<boolean, void>(),
     "player_info_update": slot<PlayerInfo, void>(),
-    "end_of_game": slot<number, void>()
+    "end_of_game": slot<NewGameMessage, void>()
 }
 
 export type AchievementEventBus = {
     "lcu_connection_update": Slot<boolean, void>,
     "frontend_connection_update": Slot<boolean, void>,
     "player_info_update": Slot<PlayerInfo, void>,
-    "end_of_game": Slot<number, void>
+    "end_of_game": Slot<NewGameMessage, void>
 }
 
 const eventBus = createEventBus( {
