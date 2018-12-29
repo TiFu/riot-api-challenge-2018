@@ -5,9 +5,23 @@ services:
                 ports:
                         - "80:3000"
                 restart: always
+        achievement-processing:
+                build: ./processing-server/
+                restart: always
         redis:
                 image: redis
+                restart: always
                 volumes:
                         - data:/data
+        postgres:
+                image: postgres
+                restart: always
+                volumes:
+                        - postgresql-volume:/var/lib/postgresql/data
+                        - ./db-server/structure.sql:/docker-entrypoint-initdb.d/structure.sql
+                environment: # TODO: Use docker secrets for production...
+                        POSTGRES_PASSWORD: dev
+                        POSTGRES_USER: dev
+                        POSTGRES_DB: achievements
 volumes:
         data: {}

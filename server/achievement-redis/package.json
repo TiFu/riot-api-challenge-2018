@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/node": "^10.12.18",
     "@types/redis": "^2.8.10",
     "achievement-config": "file:../achievement-config",
     "redis": "^2.8.0"

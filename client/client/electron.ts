@@ -4,6 +4,7 @@ let window: BrowserWindow;
 // otherwise the tray disappears after init app...
 let tray = null;
 
+// TODO: add option to quit
 function initApp() {
     window = new BrowserWindow({ width: 800, height: 600 })
     window.loadFile("index.html");
