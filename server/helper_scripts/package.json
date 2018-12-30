@@ -11,6 +11,8 @@
   "dependencies": {
     "@types/node": "^10.12.18",
     "achievement-config": "file:../achievement-config",
-    "achievement-redis": "file:../achievement-redis"
+    "achievement-db": "file:../achievement-db",
+    "achievement-redis": "file:../achievement-redis",
+    "pg-promise": "^8.5.4"
   }
 }

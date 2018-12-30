@@ -8,8 +8,10 @@ CREATE TABLE players (
 
 CREATE TABLE processed_games (
     game_id bigint,
+    player_id int REFERENCES players(id),
     region varchar(5)
 );
+
 
 CREATE TABLE player_achievements (
     player_id int REFERENCES players(id),
@@ -20,4 +22,5 @@ CREATE TABLE player_achievements (
 
 CREATE UNIQUE INDEX acc_region ON players (account_id, region);
 CREATE UNIQUE INDEX game_region ON processed_games (game_id, region);
+CREATE UNIQUE INDEX processed_game_player ON processed_games(game_id, player_id, region);
 

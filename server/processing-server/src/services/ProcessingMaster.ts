@@ -14,28 +14,31 @@ export class ProcessingMaster {
         this._stop = true
     }
 
-    public run() { 
+    public async run() { 
         if (!this._stop) {
-            console.log("Fetching next game in queue!")
-            this.otherRedis.getNextGameInProcessingQueue().then((game) => this.handleGame(game)).then((result) => {
+            try {
+                console.log("Fetching next game in queue!")
+                const nextGame = await this.otherRedis.getNextGameInProcessingQueue()
+                const result = await this.handleGame(nextGame);
                 if (!result) {
-                    console.log("Subscribing")
-                    this.subscribeRedis.subscribeToProcessingEvents(this.subscribeCallback).then((cb) => {
-                        this.currentSubscribeCallback = cb
-                    }).catch((err) => {
-                        console.log("Failed to subcsribe!", err);
-                        this.run()
-                    })
+                    this.subscribeToNewGameInQueueEvent();
                 } else {
                     this.run();
                 }
-            }).catch((err) => {
+            } catch (err) {
                 console.log("Failed to fetch next game in queue!", err)
                 console.log(err["error"]["options"]["headers"])
                 Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 3000);
                 this.run();
-            })
+
+            }
         }
+    }
+
+    private async subscribeToNewGameInQueueEvent() {
+        console.log("Subscribing");
+        const cb = await this.subscribeRedis.subscribeToProcessingEvents(this.subscribeCallback)
+        this.currentSubscribeCallback = cb;
     }
 
     private handleWakeUp() {
@@ -47,14 +50,13 @@ export class ProcessingMaster {
         this.run();
     }
 
-    private handleGame(game: { gameId: number, platform: string } | null): Promise<boolean> {
+    private async handleGame(game: { gameId: number, platform: string } | null): Promise<boolean> {
         if (game == null) {
             console.log("No game found!")
             return Promise.resolve(false);
         }
         console.log("Processing game!")
-        return this.processingService.processGame(game.gameId, game.platform).then(() => {
-            return true;
-        })
+        await this.processingService.processGame(game.gameId, game.platform);
+        return true;
     }
 }

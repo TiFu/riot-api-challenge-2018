@@ -6,6 +6,12 @@ import { ProcessingService } from './services/ProcessingService';
 
 import {Kayn, REGIONS } from 'kayn'
 
+process.on('unhandledRejection', (reason, p) => {
+    console.warn('Unhandled Rejection at: Promise', p, 'reason:', reason);
+    console.warn(reason.stack);
+    // application specific logging, throwing an error, or other logic here
+});
+
 const config = loadConfigFromEnvironment()
 
 const db = new AchievementDB(config.db)

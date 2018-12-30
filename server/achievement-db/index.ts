@@ -35,6 +35,27 @@ export class AchievementDB {
         return this.db.connect()
     }
 
+    public addGameToProcessedGames(playerId: number, region: string, gameId: number): Promise<void> {
+        const vals = {
+            "game_id": gameId,
+            "player_id": playerId,
+            "region": region
+        }
+        return this.db.query("INSERT INTO processed_games (player_id, game_id, region) VALUES (${player_id}, ${game_id}, ${region})", vals).then((result) => {
+        })
+    }
+    
+    public checkIfPlayerAndGameWereAlreadyProcessed(playerId: number, region: string, gameId: number): Promise<boolean> {
+        const vals = {
+            "game_id": gameId,
+            "player_id": playerId,
+            "region": region
+        }
+        return this.db.query("SELECT 1 FROM processed_games WHERE player_id = ${player_id} AND game_id = ${game_id} AND region = ${region}", vals).then((result) => {
+            return result.length > 0
+        })
+    }
+
     public addAchievement(playerId: number, achievementId: number): Promise<number> {
         const vals = {
             "achievement_id": achievementId,
