@@ -14,6 +14,7 @@ export class AchievementDB {
     private db: IDatabase<any>;
     private static PlayerTableMap: { [k in keyof PlayerTableEntry]: keyof Player} = {
         "account_id": "accountId",
+        "encrypted_account_id": "encryptedAccountId",
         "id": "id",
         "player_name": "name",
         "region": "region"
@@ -33,34 +34,59 @@ export class AchievementDB {
     public connect(): Promise<IConnected<any>> {
         return this.db.connect()
     }
-    public retrievePlayer(accountId: number, region: string, playerName: string): Promise<Player> {
+
+    public addAchievement(playerId: number, achievementId: number): Promise<number> {
         const vals = {
-            "account_id": accountId,
-            "region": region
+            "achievement_id": achievementId,
+            "player_id": playerId
         }
-        return this.db.tx(t => {
-            return t.query("SELECT * FROM players WHERE account_id = ${account_id} and region = ${region} LIMIT 1", vals).
-            then((response: PlayerTableEntry[]) => {
-                if (response.length == 0) {
-                    return this.createPlayer(accountId, region, playerName);
-                } else {
-                    return this.mapFields<PlayerTableEntry, Player>(AchievementDB.PlayerTableMap, response[0])
-                }
-            })
-        }); 
+        return this.db.query("INSERT INTO player_achievements (achievement_id, player_id) VALUES (${achievement_id}, ${player_id})", vals).catch((err) => {
+            throw achievementId
+        }).then(() => {
+            return achievementId;
+        });
     }
 
-    public createPlayer(accountId: number, region: string, playerName: string): Promise<Player> {
+    public getPlayerByAccountId(accountId: number, region: string): Promise<Player | null> {
+        const vals = {
+            "account_id": accountId,
+            "region": region.toLowerCase()
+        }
+        return this.db.query("SELECT * from players WHERE account_id = ${account_id} and region = ${region} LIMIT 1", vals)
+        .then((response: PlayerTableEntry[]) => {
+            if (response.length == 0) {
+                return null; 
+            } else {
+                return this.mapFields<PlayerTableEntry, Player>(AchievementDB.PlayerTableMap, response[0])
+            }
+        })
+    }
+    public getPlayer(encryptedAccountId: string, region: string): Promise<Player | null> {
+        const vals = {
+            "encrypted_account_id": encryptedAccountId,
+            "region": region.toLowerCase()
+        }
+        return this.db.query("SELECT * from players WHERE encrypted_account_id = ${encrypted_account_id} and region = ${region} LIMIT 1", vals)
+        .then((response: PlayerTableEntry[]) => {
+            if (response.length == 0) {
+                return null; 
+            } else {
+                return this.mapFields<PlayerTableEntry, Player>(AchievementDB.PlayerTableMap, response[0])
+            }
+        })
+    }
+
+    public createPlayer(accountId: number, region: string, playerName: string, encryptedAccountId: string): Promise<Player | null> {
         const vals = {
             "account_id": accountId,
             "region": region,
-            "player_name": playerName
+            "player_name": playerName,
+            "encrypted_account_id": encryptedAccountId
         }
-        return this.db.query("INSERT INTO players (account_id, region, player_name) VALUES (${account_id}, ${region}, ${player_name})", vals)
+        return this.db.query("INSERT INTO players (account_id, region, player_name, encrypted_account_id) VALUES (${account_id}, ${region}, ${player_name}, ${encrypted_account_id})", vals)
         .then((res) => {
-            console.log(res);
-            return res;
-        })
+            return this.getPlayer(encryptedAccountId, region);
+        });
     }
 
     private mapFields<T, V>(fieldMap: { [k in keyof T]: keyof V}, response: T): V {

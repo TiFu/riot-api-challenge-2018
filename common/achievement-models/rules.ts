@@ -7,7 +7,7 @@ export class KillRule extends PlayerRule {
         super();
     }
 
-    public verify(summonerId: number, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
+    public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         console.log("Verifying kill rule!")
         return true;
     }

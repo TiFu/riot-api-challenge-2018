@@ -9,7 +9,8 @@ import { AchievementService } from './services/achievement-service';
 import { GroupService } from './services/group-service';
 import { NotificationService } from './services/notification-service';
 import { AchievementDB } from 'achievement-db';
-import { AchievementRedis } from '../../achievement-redis/index';
+import { AchievementRedis } from 'achievement-redis';
+import {Kayn } from 'kayn';
 
 const config = loadConfigFromEnvironment()
 console.log(config)
@@ -25,12 +26,14 @@ app.get('/', (req: any, res: any) => {
   res.sendFile(path.resolve('./index.html'));
 });
 
+const riotApi = Kayn(config.riotApi.apiKey)()
 const achievementdb = new AchievementDB(config.db);
 const achievementRedis = new AchievementRedis(config.redis)
+const subscribeRedis = new AchievementRedis(config.redis);
 
-const achievementService = new AchievementService(achievementRedis);
+const notificationService = new NotificationService(io.of("/web"), io.of("/local"), achievementdb, riotApi);
+const achievementService = new AchievementService(achievementRedis, subscribeRedis, notificationService);
 const groupService = new GroupService();
-const notificationService = new NotificationService(io.of("/web"), io.of("/local"), achievementdb);
 
 io.of("/web").on("connection", (socket: any) => {
     console.log("new web connection")

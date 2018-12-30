@@ -1,4 +1,3 @@
-import { AchievementDB } from '../../server/achievement-db/index';
 import { ServerDefinition, SimpleNamespace,
     RootServer, ClientSideSocket, ServerSideClientSocketNS, internal } from "typed-socket.io";
 
@@ -25,18 +24,16 @@ export type HelloMessage = {
 export type NewGameMessage = number
 
 export type Achievement = {
-    achievement_id: string,
+    achievement_id: number,
     achievement_level: number,
     timestamp: number
 }
 
 // Server Messages
 export type AchievementNotification = {
-    achievement_id: string,
-    achievement_level: number,
+    achievement_ids: number[],
     acquirer: PlayerPartialInfo | GroupId,
-    acquirer_type: "USER" | "GROUP",
-    timestamp: number
+    acquirer_type: "PLAYER" | "GROUP"
 }
 
 export type PlayerData = {
@@ -152,3 +149,12 @@ export type AchievementServerWebNS = ServerSideClientSocketNS<AchievementServerD
 export type AchievementServerLocalNS = ServerSideClientSocketNS<AchievementServerDefinition, LocalClientNamespace>
 export type AchievementServerWeb = internal.ServerNamespaceNSI<AchievementServerDefinition, WebNamespace>
 export type AchievementServerLocal = internal.ServerNamespaceNSI<AchievementServerDefinition, LocalClientNamespace>
+
+
+
+export function getPlayerRoomFromId(region: string, accountId: number): string {
+        return region + "_player_" + accountId
+}
+export function getGroupRoom(region: string, id: number): string {
+        return region + "_group_" + id
+}

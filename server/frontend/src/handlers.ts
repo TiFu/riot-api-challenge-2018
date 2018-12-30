@@ -13,7 +13,8 @@ interface SocketState {
 
 export class WebAchievementSocketHandler {
 
-    public constructor(private socket: AchievementServerWebNS, private achievementService: AchievementService, private groupService: GroupService, private notificationService: NotificationService) {
+    public constructor(private socket: AchievementServerWebNS, private achievementService: AchievementService, private groupService: GroupService, 
+        private notificationService: NotificationService) {
         this.handleConnect();
     }
 
@@ -56,7 +57,7 @@ export class LocalAchievementSocketHandler {
     }
 
     public handleNewGameMessage(msg: NewGameMessage) {
-        console.log("New game: " + msg)
+        console.log("New game: " + msg, this.socketState.player)
         if (this.socketState.player) {
             this.achievementService.processNewGameMessage(msg, this.socketState.player.region)
         }
@@ -81,7 +82,12 @@ export class LocalAchievementSocketHandler {
         
         return this.notificationService.registerUser(msg, this.socket as any)
         .then((player) => {
+            console.log(player)
             this.socketState["player"] = player
+        }).catch((err) => {
+            // disconnect if error ocurres
+            console.log(err);
+            this.socket.disconnect();
         })
     }
 

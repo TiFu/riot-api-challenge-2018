@@ -6,6 +6,7 @@ import { AchievementState } from '../store/index';
 import {Store} from 'redux'
 import { updateFrontendConnectedState } from '../store/lcu/actions';
 import { NewGameMessage } from 'achievement-sio';
+import { getPlayerRoomFromId, AchievementNotification } from 'achievement-sio';
 
 export class AchievementSocketIOService {
     private socket: AchievementLocalClient
@@ -45,6 +46,11 @@ export class AchievementSocketIOService {
                 console.log(err)
             }
         })
+        this.socket.on("achievementNotification", (notification) => this.handleAchievementNotification(notification))
+    }
+    
+    private handleAchievementNotification(msg: AchievementNotification) {
+        console.log("Received achievement notification!", msg)
     }
 
     private deregisterEvents() {
@@ -96,5 +102,6 @@ export class AchievementSocketIOService {
 
     private emitHelloMessage(player: PlayerInfo) {
         this.socket.emit("hello", player);
+        console.log("Joining room for player!");
     }
 }

@@ -19,5 +19,5 @@ store.subscribe(() => {
 lcu.start()
 
 setTimeout(() => {
-    store.dispatch(endOfGameDetected(1234))
+    store.dispatch(endOfGameDetected(3876439142))
 }, 5000)

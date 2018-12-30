@@ -24,6 +24,7 @@
     "achievement-redis": "file:../../achievement-redis",
     "achievement-sio": "file:../../../common/achievement-sio",
     "express": "^4.16.4",
+    "kayn": "^0.9.2",
     "pg": "^7.7.1",
     "pg-promise": "^8.5.4",
     "redis": "^2.8.0",

@@ -1,12 +1,23 @@
 import { RedisConfig} from 'achievement-config'
 import redis from 'redis'
 
+export type AchievementMessage = {
+    "playerAchievements": PlayerAchievementMessage[]
+}
+export type PlayerAchievementMessage = {
+    "accountId": number,
+    "playerName": string,
+    "platform": string,
+    "achievements": number[]
+}
+
 export class AchievementRedis {
     private redisClient: redis.RedisClient
     private static PROCESSING_ID_CTR = "processing_id_counter"
     private static PROCESSING_PREFIX = "processing_"
     private static PROCESSING_LIST = "processing_list"
     private static PROCESSING_EVENT_CHANNEL = "processing_channel"
+    private static ACHIEVEMENT_EVENT_CHANNEL = "achievement_channel"
 
     private subscriberFunctions: Array<() => void> = []
     private isInSubMode = false
@@ -26,9 +37,32 @@ export class AchievementRedis {
         // TODO: transfered info?
     }
 
-    public subscribeToProcessingEvents(cb: () => void) {
+    public publishAchievementMessage(achievementMessage: AchievementMessage): Promise<number> {
         return new Promise((resolve, reject) => {
-            this.redisClient.subscribe(AchievementRedis.PROCESSING_EVENT_CHANNEL, (err, msg) => {
+            this.redisClient.publish(AchievementRedis.ACHIEVEMENT_EVENT_CHANNEL, JSON.stringify(achievementMessage), (err, msg) => {
+                if (!err) {
+                    resolve(msg);
+                } else {
+                    reject(err);
+                }
+            })    
+        })
+    }
+
+    public subscribeToAchievementEvents(cb: (msg: AchievementMessage) => void) {
+        return this.subscribeToEvents(AchievementRedis.ACHIEVEMENT_EVENT_CHANNEL, (msg) => {
+            console.log("Received message!");
+            cb(JSON.parse(msg))
+        });
+    }
+
+    public subscribeToProcessingEvents(cb: () => void) {
+        return this.subscribeToEvents(AchievementRedis.PROCESSING_EVENT_CHANNEL, cb);
+    }
+
+    private subscribeToEvents(channel: string, cb: (msg: string) => void) {
+        return new Promise((resolve, reject) => {
+            this.redisClient.subscribe(channel, (err, msg) => {
                 if (!err) {
                     resolve(msg)
                 } else {
@@ -36,9 +70,9 @@ export class AchievementRedis {
                 }
             })
         }).then(() => {
-            const cbHandler = (channel: string, message: string) =>{ 
-                if (channel == AchievementRedis.PROCESSING_EVENT_CHANNEL) {
-                    cb()
+            const cbHandler = (eventChannel: string, message: string) =>{ 
+                if (eventChannel == channel) {
+                    cb(message)
                 }
             }
             this.redisClient.addListener("message", cbHandler)
@@ -46,17 +80,21 @@ export class AchievementRedis {
         })
     }
 
-    public unsubscribeFromProcessingEvents(cb: () => void) {
+    private unsubcribeFromEvents(channel: string, cb: () => void) {
         this.redisClient.removeListener("message", cb);
         return new Promise((resolve, reject) => {
-            this.redisClient.unsubscribe(AchievementRedis.PROCESSING_EVENT_CHANNEL, (err, msg) => {
+            this.redisClient.unsubscribe(channel, (err, msg) => {
                 if (!err) {
                     resolve(msg)
                 } else {
                     reject(err);
                 }
             })
-        })
+        })        
+    }
+
+    public unsubscribeFromProcessingEvents(cb: () => void) {
+        return this.unsubcribeFromEvents(AchievementRedis.PROCESSING_EVENT_CHANNEL, cb);
     }
 
     public addGameToProcessingQueue(gameId: number, platform: string): Promise<void> {

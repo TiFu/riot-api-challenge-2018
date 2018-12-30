@@ -1,4 +1,4 @@
-import { AchievementRedis } from '../../../achievement-redis/index';
+import { AchievementRedis } from 'achievement-redis';
 import { ProcessingService } from './ProcessingService';
 
 export class ProcessingMaster {
@@ -31,6 +31,7 @@ export class ProcessingMaster {
                 }
             }).catch((err) => {
                 console.log("Failed to fetch next game in queue!", err)
+                console.log(err["error"]["options"]["headers"])
                 Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 3000);
                 this.run();
             })
