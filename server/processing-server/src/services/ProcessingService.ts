@@ -106,7 +106,6 @@ export class ProcessingService {
             }));
         }
         const done = await Promise.all(promises);
-
         return {
             "accountId": player.accountId,
             "playerName": player.name,
