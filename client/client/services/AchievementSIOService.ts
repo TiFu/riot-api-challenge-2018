@@ -7,7 +7,7 @@ import {Store} from 'redux'
 import { updateFrontendConnectedState } from '../store/lcu/actions';
 import { NewGameMessage } from 'achievement-sio';
 import { getPlayerRoomFromId, AchievementNotification } from 'achievement-sio';
-import { PlayerData } from '../../../common/achievement-sio/index';
+import { PlayerData } from 'achievement-sio';
 import { updateAchievements } from '../store/player/actions';
 
 export class AchievementSocketIOService {

@@ -25,7 +25,7 @@ export type NewGameMessage = number
 
 export type Achievement = {
     achievementId: number,
-    achievedAt: number
+    achievedAt: string
 }
 
 // Server Messages

@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - "node"
+env:
+  - NODE_ENV=TEST
+before_script: ./scripts/install.sh
+script: ./scripts/build.sh

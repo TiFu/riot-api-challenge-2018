@@ -5,6 +5,7 @@
   "main": "dist/electron.js",
   "scripts": {
     "start": "electron .",
+    "build": "tsc",
     "debug": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -30,6 +31,7 @@
     "ws": "^6.1.2"
   },
   "devDependencies": {
-    "electron": "^4.0.0"
+    "electron": "^4.0.0",
+    "typescript": "^3.2.2"
   }
 }

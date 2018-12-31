@@ -23,7 +23,7 @@ const reducer: Reducer<PlayerState> = (state: PlayerState = initialState, action
 function handleAchievementsUpdated(state: PlayerState, achievements: Achievement[]) {
     const mappedAchievements = achievements.map((a) => {
         return {
-        "achievedAt": a.achievedAt,
+        "achievedAt": new Date(Date.parse(a.achievedAt)),
         "achievement": achievementMap[a.achievementId]
         }
     });

@@ -14,5 +14,8 @@
     "achievement-db": "file:../achievement-db",
     "achievement-redis": "file:../achievement-redis",
     "pg-promise": "^8.5.4"
+  },
+  "devDependencies": {
+    "typescript": "^3.2.2"
   }
 }

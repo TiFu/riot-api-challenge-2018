@@ -2,22 +2,22 @@ import * as React from "react";
 import { AchievementState } from "../store";
 import { connect } from 'react-redux';
 import { updatePlayerInfo } from '../store/player/actions';
-import { PlayerInfo } from '../store/player/types'
+import { PlayerInfo, PlayerState } from '../store/player/types';
 
 interface MainComponentProps {
     lcu: boolean
     backend: boolean
-    player?: PlayerInfo
+    player?: PlayerState
 }
 
 interface MainComponentActions {
-    dispatchGame(): () => void
+    dispatchNewSummoner(): () => void
 }
 
 class MainComponent extends React.Component<MainComponentProps & MainComponentActions, {}> {
     private renderPlayer() {
         if (this.props.player) {
-            return this.props.player.accountId + " | " + this.props.player.platformId + " | " + this.props.player.playerName
+            return JSON.stringify(this.props.player)
         } else {
             return "None"
         }
@@ -27,7 +27,7 @@ class MainComponent extends React.Component<MainComponentProps & MainComponentAc
       return <div>
           I am {this.props.lcu ? "" : "not"} connected to LCU!<br />
           I am {this.props.backend ? "" : "not"} connected to the backend!<br />
-          <button onClick={this.props.dispatchGame}>Set summoner!</button><br />
+          <button onClick={this.props.dispatchNewSummoner}>Set summoner!</button><br />
           Summoner: {this.renderPlayer()}<br />
       </div>;
   
@@ -42,7 +42,7 @@ class MainComponent extends React.Component<MainComponentProps & MainComponentAc
   
       lcu: state.lcu.connectedToLcu,
       backend: state.lcu.connectedToFrontend,
-      player: state.player.playerInfo
+      player: state.player
   
     };
   
@@ -50,7 +50,7 @@ class MainComponent extends React.Component<MainComponentProps & MainComponentAc
   
   function mapDispatchToProps(dispatch): MainComponentActions {
       return {
-        dispatchGame: () => dispatch(updatePlayerInfo({
+        dispatchNewSummoner: () => dispatch(updatePlayerInfo({
             "playerName": "Tifu",
             "accountId": Math.ceil(Math.random() * 10000),
             "platformId": "euw"
