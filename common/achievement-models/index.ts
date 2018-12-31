@@ -18,6 +18,14 @@ export const achievements: (PlayerAchievement | TeamAchievement | GroupAchieveme
     testAchievement
 ]
 
+export let achievementMap: { [key: number]: (PlayerAchievement | TeamAchievement | GroupAchievement)} = {
+
+}
+for (const achv of achievements) {
+    achievementMap[achv.id] = achv;
+}
+
+
 export function checkPlayerAchievement(encryptedAccountId: string, achievement: PlayerAchievement, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto) {
     console.log("Checking player achievement")
     let success = true;

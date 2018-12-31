@@ -25,6 +25,7 @@ const eventBus = createEventBus( {
 export const eventBusMiddleware = (store: AchievementStore)  => (next: (action: AnyAction) => any) => (action: AnyAction) => {
     const result = next(action);
     console.log("ACTION", action);
+    console.log("State after action", JSON.stringify(store.getState()))
     switch ((action as AllActions).type) {
         case '@@lcu/LCU_CONNECTION_STATE_UPDATED':
             eventBus.lcu_connection_update(action.payload)

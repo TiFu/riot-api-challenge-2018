@@ -24,9 +24,8 @@ export type HelloMessage = {
 export type NewGameMessage = number
 
 export type Achievement = {
-    achievement_id: number,
-    achievement_level: number,
-    timestamp: number
+    achievementId: number,
+    achievedAt: number
 }
 
 // Server Messages
@@ -101,7 +100,9 @@ type WebNamespace = SimpleNamespace<{
 type LocalClientNamespace = SimpleNamespace<{
     ServerMessages: {
         achievementNotification: AchievementNotification
+        playerData: PlayerData
         groupInvite: GroupInvite
+        error: string
     }
     ClientRPCs: {
         searchPlayer: {

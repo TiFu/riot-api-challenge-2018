@@ -6,7 +6,13 @@ export interface Player {
     name: string
 }
 
+export interface PlayerAchievement {
+    achievementId: number
+    achievedAt: Date
+}
+
 export interface Group {
     id: number
     region: string
 }
+

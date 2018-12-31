@@ -2,22 +2,27 @@
 import {DBConfig} from 'achievement-config'
 
 import {IMain, IDatabase, IConnected} from 'pg-promise';
-import {Player} from './models'
+import { Player, PlayerAchievement } from './models';
 
 import pgPromise from 'pg-promise';
-import { PlayerTableEntry } from './tables';
+import { PlayerTableEntry, PlayerAchievementEntry } from './tables';
 import { loadConfigFromEnvironment } from 'achievement-config';
 
 export * from './models';
 
 export class AchievementDB {
     private db: IDatabase<any>;
-    private static PlayerTableMap: { [k in keyof PlayerTableEntry]: keyof Player} = {
+    private static PlayerTableMap: { [k in keyof PlayerTableEntry]: keyof Player | null} = {
         "account_id": "accountId",
         "encrypted_account_id": "encryptedAccountId",
         "id": "id",
         "player_name": "name",
         "region": "region"
+    }
+    private static PlayerAchievementTableMap: { [k in keyof PlayerAchievementEntry]: keyof PlayerAchievement | null } = {
+        "achievement_id": "achievementId",
+        "achieved_at": "achievedAt",
+        "player_id": null
     }
 
     constructor(config: DBConfig) {
@@ -75,13 +80,29 @@ export class AchievementDB {
         }
         return this.db.query("SELECT * from players WHERE account_id = ${account_id} and region = ${region} LIMIT 1", vals)
         .then((response: PlayerTableEntry[]) => {
-            if (response.length == 0) {
-                return null; 
-            } else {
-                return this.mapFields<PlayerTableEntry, Player>(AchievementDB.PlayerTableMap, response[0])
-            }
+            return this.handleMappingSingleRow<PlayerTableEntry, Player>(response, AchievementDB.PlayerTableMap);
         })
     }
+
+    public getPlayerById(playerId: number) {
+        const vals = {
+            "id": playerId
+        }
+        return this.db.query("SELECT * from players WHERE id = ${id} LIMIT 1", vals).then((response) =>{ 
+            return this.handleMappingSingleRow<PlayerTableEntry, Player>(response, AchievementDB.PlayerTableMap);
+        });
+    }
+
+    public getPlayerAchievements(playerId: number) {
+        const vals = {
+            "id": playerId
+        }
+        return this.db.query("SELECT achievement_id, achieved_at FROM player_achievements WHERE player_id = ${id}", vals).then((entries) => {
+            console.log("Achievement Entries", entries);
+            return entries.map((e: PlayerAchievementEntry) => this.handleMappingSingleRow<PlayerAchievementEntry, PlayerAchievement>([e], AchievementDB.PlayerAchievementTableMap));
+        })
+    }
+
     public getPlayer(encryptedAccountId: string, region: string): Promise<Player | null> {
         const vals = {
             "encrypted_account_id": encryptedAccountId,
@@ -89,11 +110,7 @@ export class AchievementDB {
         }
         return this.db.query("SELECT * from players WHERE encrypted_account_id = ${encrypted_account_id} and region = ${region} LIMIT 1", vals)
         .then((response: PlayerTableEntry[]) => {
-            if (response.length == 0) {
-                return null; 
-            } else {
-                return this.mapFields<PlayerTableEntry, Player>(AchievementDB.PlayerTableMap, response[0])
-            }
+            return this.handleMappingSingleRow<PlayerTableEntry, Player>(response, AchievementDB.PlayerTableMap);
         })
     }
 
@@ -110,18 +127,31 @@ export class AchievementDB {
         });
     }
 
-    private mapFields<T, V>(fieldMap: { [k in keyof T]: keyof V}, response: T): V {
+    private handleMappingSingleRow<T, V>(response: T[], map: { [k in keyof T]: keyof V | null}): V | null {
+        if (response.length == 0) {
+            return null; 
+        } else {
+            return this.mapFields<T, V>(map, response[0]);
+        }
+    }
+
+    private mapFields<T, V>(fieldMap: { [k in keyof T]: keyof V | null}, response: T): V {
         const result: any = {} 
         for (let key in fieldMap) {
-            result[fieldMap[key]] = response[key]
+            if (fieldMap[key] != null) {
+                result[fieldMap[key]] = response[key]
+            }
         }
         return result;
     }
 
-    private mapFieldsReverse<T, V>(fieldMap: { [k in keyof T]: keyof V}, response: V): T {
+    private mapFieldsReverse<T, V>(fieldMap: { [k in keyof T]: keyof V | null}, response: V): T {
         const result: any = {} 
         for (let key in fieldMap) {
-            result[key] = response[fieldMap[key]]
+            const index = fieldMap[key]
+            if (index != null) {
+                result[key] = response[index as keyof V]
+            }
         }
         return result;
     }

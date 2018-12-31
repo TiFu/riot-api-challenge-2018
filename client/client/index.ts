@@ -4,7 +4,7 @@ import configureStore from './store/index';
 import { updateLCUConnectedState } from './store/lcu/actions';
 import { AchievementSocketIOService } from './services/AchievementSIOService';
 import eventBus from './store/events';
-import { endOfGameDetected } from './store/player/actions';
+import { endOfGameDetected, updatePlayerInfo } from './store/player/actions';
 
 const store = configureStore();
 
@@ -16,8 +16,12 @@ lcu.setListener(lcuListener)
 store.subscribe(() => {
     console.log(store.getState());
 })
-lcu.start()
+//lcu.start()
 
 setTimeout(() => {
-    store.dispatch(endOfGameDetected(3876439142))
+    store.dispatch(updatePlayerInfo({
+        playerName: "TiFu",
+        accountId: 36904072,
+        platformId: "euw1"
+    }))
 }, 5000)

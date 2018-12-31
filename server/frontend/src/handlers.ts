@@ -4,6 +4,7 @@ import { GroupService } from './services/group-service'
 import { NotificationService } from './services/notification-service';
 import socketio from 'socket.io';
 import {Player} from 'achievement-db';
+import { PlayerData } from 'achievement-sio';
 
 interface SocketState {
     player?: Player
@@ -84,6 +85,16 @@ export class LocalAchievementSocketHandler {
         .then((player) => {
             console.log(player)
             this.socketState["player"] = player
+            return this.notificationService.getPlayerData(player.id);
+        }).then((data: PlayerData | null) => {
+            console.log("Emitting player data!");
+            if (data == null) {
+                console.log("error!")
+                this.socket.emit("error", "Failed to load player data!")
+            } else {
+                console.log("Player Data", data);
+                this.socket.emit("playerData", data);
+            }
         }).catch((err) => {
             // disconnect if error ocurres
             console.log(err);

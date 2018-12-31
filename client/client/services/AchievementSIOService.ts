@@ -7,6 +7,8 @@ import {Store} from 'redux'
 import { updateFrontendConnectedState } from '../store/lcu/actions';
 import { NewGameMessage } from 'achievement-sio';
 import { getPlayerRoomFromId, AchievementNotification } from 'achievement-sio';
+import { PlayerData } from '../../../common/achievement-sio/index';
+import { updateAchievements } from '../store/player/actions';
 
 export class AchievementSocketIOService {
     private socket: AchievementLocalClient
@@ -47,6 +49,12 @@ export class AchievementSocketIOService {
             }
         })
         this.socket.on("achievementNotification", (notification) => this.handleAchievementNotification(notification))
+        this.socket.on("playerData", (playerData) => this.handlePlayerData(playerData));
+    }
+
+    private handlePlayerData(playerData: PlayerData) {
+        this.store.dispatch(updateAchievements(playerData.achievements))
+        console.log("Player Data: ", playerData);
     }
     
     private handleAchievementNotification(msg: AchievementNotification) {

@@ -5,3 +5,9 @@ export interface PlayerTableEntry {
     region: string
     player_name: string   
 }
+
+export interface PlayerAchievementEntry {
+    player_id: number
+    achievement_id: number
+    achieved_at: Date
+}

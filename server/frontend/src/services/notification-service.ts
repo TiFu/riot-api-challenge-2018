@@ -1,4 +1,4 @@
-import {AchievementServerLocal, AchievementServerWeb, PlayerId, GroupId, AchievementNotification, HelloMessage, Achievement } from 'achievement-sio'
+import {AchievementServerLocal, AchievementServerWeb, PlayerId, GroupId, AchievementNotification, HelloMessage, Achievement, PlayerData } from 'achievement-sio'
 import socketio from 'socket.io'
 import { AchievementDB } from 'achievement-db';
 import {Player, Group} from 'achievement-db';
@@ -9,6 +9,7 @@ import { rejects } from 'assert';
 import { SummonerV4SummonerDTO } from 'kayn/typings/dtos';
 import { getPlayerRoomFromId, getGroupRoom } from 'achievement-sio';
 
+// TODO: Rename to user service
 export class NotificationService {
 
     public constructor(private webNS: AchievementServerWeb, private localNS: AchievementServerLocal, 
@@ -17,6 +18,20 @@ export class NotificationService {
 
     public deregisterUser(player: Player, socket: socketio.Socket) {
         return this.quitPlayer(player, socket);
+    }
+
+    public async getPlayerData(playerId: number): Promise<PlayerData | null> {
+        const player = await this.database.getPlayerById(playerId);
+        if (!player) {
+            return null;
+        }
+        const playerAchievements = await this.database.getPlayerAchievements(playerId);
+        return {
+            "playerName": player.name,
+            "achievements": playerAchievements,
+            "groups": [],
+            "invites": []
+        }
     }
 
     public registerUser(msg: HelloMessage, socket: socketio.Socket): Promise<Player> {
