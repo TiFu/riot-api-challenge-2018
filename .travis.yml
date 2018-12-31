@@ -5,3 +5,6 @@ env:
   - NODE_ENV=TEST
 before_script: ./scripts/install.sh
 script: ./scripts/build.sh
+cache:
+  directories:
+  - "$HOME/.npm"
