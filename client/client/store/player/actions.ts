@@ -2,23 +2,27 @@ import { PlayerStateUpdatedAction, PlayerInfo,EndOfGameAction,UpdateAchievements
 import { ActionCreator } from 'redux';
 import { GameData } from './types'
 import { Achievement } from 'achievement-sio';
-export const updatePlayerInfo: ActionCreator<PlayerStateUpdatedAction> = (playerInfo?: PlayerInfo) => {
+export const updatePlayerInfo = (playerInfo?: PlayerInfo) => {
     return {
         type: '@@player/PLAYER_STATE_UPDATED',
         payload: playerInfo
-    }
+    } as PlayerStateUpdatedAction
 }
 
-export const endOfGameDetected: ActionCreator<EndOfGameAction> = (game: number) => {
+export const endOfGameDetected = (gameId: number, champId: number, skinId: number) => {
     return {
         type: '@@player/END_OF_GAME',
-        payload: game
-    }
+        payload: {
+            gameId: gameId,
+            champId: champId,
+            skinId: skinId
+        }
+    } as EndOfGameAction
 }
 
-export const updateAchievements: ActionCreator<UpdateAchievementsAction> = (achievements: Achievement[]) => {
+export const updateAchievements = (achievements: Achievement[]) => {
     return {
         type: '@@player/ACHIEVEMENTS_UPDATED',
         payload: achievements
-    }
+    } as UpdateAchievementsAction
 }

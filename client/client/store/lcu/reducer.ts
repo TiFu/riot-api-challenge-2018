@@ -3,7 +3,11 @@ import { LCUState, LCUConnectionStateUpdatedAction, LCUActions, FrontendConnecti
 
 export const initialState: LCUState = {
     connectedToLcu: false,
-    connectedToFrontend: false
+    connectedToFrontend: false,
+    champselect: {
+        champId: null,
+        skinId: null
+    }
 }
 
 const reducer: Reducer<LCUState> = (state: LCUState = initialState, action) => {
@@ -14,6 +18,8 @@ const reducer: Reducer<LCUState> = (state: LCUState = initialState, action) => {
             return Object.assign({}, state, {connectedToLcu: (action as LCUConnectionStateUpdatedAction).payload});
         case '@@lcu/FRONTEND_CONNECTION_STATE_UPDATED':
             return Object.assign({}, state, {connectedToFrontend: (action as FrontendConnectionStateUpdatedAction).payload})
+        case '@@lcu/UPDATE_SELECTED_CHAMP_ACTION':
+            return Object.assign({}, state, { champselect: { champId: action.payload.champId, skinId: action.payload.skinId}})
         default:
             return state;
     }

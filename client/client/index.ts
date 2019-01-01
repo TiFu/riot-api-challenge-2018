@@ -9,14 +9,14 @@ import { endOfGameDetected, updatePlayerInfo } from './store/player/actions';
 const store = configureStore();
 
 const lcu = new LCUService();
-const sioService = new AchievementSocketIOService(store, "http://localhost:" + 3000, eventBus);
-const lcuListener = new LCUUpdateHandler(lcu, store, sioService);
+//const sioService = new AchievementSocketIOService(store, "http://localhost:" + 3000, eventBus);
+const lcuListener = new LCUUpdateHandler(lcu, store, null);
 lcu.setListener(lcuListener)
 
 store.subscribe(() => {
     console.log(store.getState());
 })
-//lcu.start()
+lcu.start()
 
 setTimeout(() => {
     store.dispatch(updatePlayerInfo({

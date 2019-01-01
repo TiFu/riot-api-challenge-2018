@@ -18,6 +18,7 @@ export interface LCUListener {
     onConnectionStateChanged(connected: boolean): void;
     onUserLogin(): void;
     onGameEnd(gameId: number): void;
+    onChampAndSkinChanged(champId: number, skinId: number): void;
 }
 
 export class LCUService {
@@ -26,7 +27,8 @@ export class LCUService {
     private ws: WebSocket | null = null
     private subscribeEvents = [
         "OnJsonApiEvent_lol-summoner_v1_current-summoner",
-        "OnJsonApiEvent_lol-gameflow_v1_session"
+        "OnJsonApiEvent_lol-gameflow_v1_session",
+        "OnJsonApiEvent_lol-champ-select_v1_session",
 //        "OnJsonApiEvent"
     ]
     private LOGIN_NS: string = "LoginDataPacket"
@@ -126,9 +128,8 @@ export class LCUService {
                 
                 this.ws.on('message', (msg) => {
                     // TODO emit message based on end point
-//                    console.log(msg)
                     msg = JSON.parse(msg.toString())[2]
-                    console.log(msg)
+                    console.log(JSON.stringify(msg))
 
                     if (this.listener) {
                         if (msg["eventType"] == "Update" && msg["uri"] == "/lol-summoner/v1/current-summoner" && msg["data"]["accountId"]) {
@@ -136,6 +137,11 @@ export class LCUService {
                             this.listener.onUserLogin()
                         } else if (msg["uri"] == "/lol-gameflow/v1/session" && msg["data"]["phase"] == "EndOfGame") {
                             this.listener.onGameEnd(msg["data"]["gameData"]["gameId"])
+                        } else if (msg["uri"] == "/lol-champ-select/v1/session" && msg["eventType"] == "Update") {
+                            // find champ and skin id
+                            const localCellId = msg["data"]["localPlayerCellId"]
+                            const cell = msg["data"]["myTeam"].filter(c => c["cellId"] == localCellId)[0]
+                            this.listener.onChampAndSkinChanged(cell["championId"], cell["selectedSkinId"]);
                         }
                     }
                 });

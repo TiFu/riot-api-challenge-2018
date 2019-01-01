@@ -1,7 +1,6 @@
 import { Reducer } from 'redux'
 import { PlayerState, PlayerActions,PlayerStateUpdatedAction } from './types';
 import {Achievement} from 'achievement-sio'
-import { achievementMap } from 'achievement-models'
 
 export const initialState: PlayerState = {
     playerInfo: null
@@ -20,11 +19,13 @@ const reducer: Reducer<PlayerState> = (state: PlayerState = initialState, action
     }
   };
   
-function handleAchievementsUpdated(state: PlayerState, achievements: Achievement[]) {
+function handleAchievementsUpdated(state: PlayerState, achievements: Achievement[]): PlayerState {
     const mappedAchievements = achievements.map((a) => {
         return {
         "achievedAt": new Date(Date.parse(a.achievedAt)),
-        "achievement": achievementMap[a.achievementId]
+        "achievementId": a.achievementId,
+        "championId": a.championId,
+        "skinId": a.skinId
         }
     });
     console.log("Mapped Achievements", mappedAchievements)

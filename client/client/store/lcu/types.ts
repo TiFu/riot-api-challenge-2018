@@ -3,6 +3,10 @@ import {Action} from 'redux'
 export interface LCUState {
     connectedToLcu: boolean
     connectedToFrontend: boolean
+    champselect: {
+        champId?: number
+        skinId?: number
+    }
 }
 
 
@@ -16,4 +20,13 @@ export interface FrontendConnectionStateUpdatedAction extends Action {
     payload: boolean
 }
 
-export type LCUActions = LCUConnectionStateUpdatedAction | FrontendConnectionStateUpdatedAction; // use union type here
+export interface UpdateChampSelectAction extends Action {
+    type: '@@lcu/UPDATE_SELECTED_CHAMP_ACTION'
+    payload: {
+        champId: number,
+        skinId: number
+    }
+}
+
+
+export type LCUActions = LCUConnectionStateUpdatedAction | FrontendConnectionStateUpdatedAction | UpdateChampSelectAction; // use union type here

@@ -1,11 +1,11 @@
 import {Action} from 'redux'
 import { NewGameMessage, Achievement } from 'achievement-sio';
-import { PlayerAchievement } from 'achievement-models';
-import { TeamAchievement } from 'achievement-models';
 
 export interface PlayerAchievementEntry {
+    achievementId: number,
     achievedAt: Date
-    achievement: PlayerAchievement | TeamAchievement
+    champId: number,
+    skinId: number
 }
 
 
