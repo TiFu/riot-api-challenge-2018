@@ -26,9 +26,18 @@ export class NotificationService {
             return null;
         }
         const playerAchievements = await this.database.getPlayerAchievements(playerId);
+        const mappedAchievements = playerAchievements.map((a) => { 
+            return {
+                achievedAt: a.achievedAt.toString(),
+                achievementId: a.achievementId,
+                championId: a.champId,
+                skinId: a.skinId
+            }
+        })
+
         return {
             "playerName": player.name,
-            "achievements": playerAchievements,
+            "achievements": mappedAchievements,
             "groups": [],
             "invites": []
         }
