@@ -20,6 +20,8 @@ export class AchievementDB {
         "region": "region"
     }
     private static PlayerAchievementTableMap: { [k in keyof PlayerAchievementEntry]: keyof PlayerAchievement | null } = {
+        "champ_id": "champId",
+        "skin_id": "skinId",
         "achievement_id": "achievementId",
         "achieved_at": "achievedAt",
         "player_id": null
@@ -61,12 +63,14 @@ export class AchievementDB {
         })
     }
 
-    public addAchievement(playerId: number, achievementId: number): Promise<number> {
+    public addAchievement(playerId: number, achievementId: number, champId: number, skinId: number): Promise<number> {
         const vals = {
             "achievement_id": achievementId,
-            "player_id": playerId
+            "player_id": playerId,
+            "skin_id": skinId,
+            "champ_id": champId
         }
-        return this.db.query("INSERT INTO player_achievements (achievement_id, player_id) VALUES (${achievement_id}, ${player_id})", vals).catch((err) => {
+        return this.db.query("INSERT INTO player_achievements (achievement_id, player_id, champ_id, skin_id) VALUES (${achievement_id}, ${player_id}, ${champ_id}, ${skin_id})", vals).catch((err) => {
             throw achievementId
         }).then(() => {
             return achievementId;
@@ -93,7 +97,7 @@ export class AchievementDB {
         });
     }
 
-    public getPlayerAchievements(playerId: number) {
+    public getPlayerAchievements(playerId: number): Promise<PlayerAchievement[]> {
         const vals = {
             "id": playerId
         }

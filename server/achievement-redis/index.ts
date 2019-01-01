@@ -13,6 +13,14 @@ export type PlayerAchievementMessage = {
     "achievements": number[]
 }
 
+export interface Game { 
+    playerId: number,
+    gameId: number, 
+    platform: string, 
+    champId: number, 
+    skinId: number
+}
+
 export class AchievementRedis {
     private redisClient: redis.RedisClient
     private static PROCESSING_ID_CTR = "processing_id_counter"
@@ -99,18 +107,20 @@ export class AchievementRedis {
         return this.unsubcribeFromEvents(AchievementRedis.PROCESSING_EVENT_CHANNEL, cb);
     }
 
-    public addGameToProcessingQueue(gameId: number, platform: string, champId: number, skinId: number): Promise<void> {
-        return this.addProcessingIdToQueue(this.getProcessingId(gameId, platform, champId, skinId)).then(() => {});
+    public async addGameToProcessingQueue(game: Game): Promise<void> {
+        const processingId = await this.getProcessingId(game)
+        return this.addProcessingIdToQueue(processingId).then(() => {});
+
     }
 
-    public getNextGameInProcessingQueue(): Promise<{ gameId: number, platform: string } | null> {
+    public getNextGameInProcessingQueue(): Promise<Game | null> {
         return new Promise((resolve, reject) => {
             this.redisClient.spop(AchievementRedis.PROCESSING_LIST, (err: any, element: string) => {
                 if (!err) {
                     if (element == null) {
                         resolve(null);
                     } else {
-                        const result = this.getGameIdAndPlatformFromProcessingId(element)
+                        const result = this.getGame(element)
                         resolve(result)
                     }
                 } else {
@@ -151,15 +161,45 @@ export class AchievementRedis {
         });
     }
 
-    private getGameIdAndPlatformFromProcessingId(processingId: string): { gameId: number, platform: string } {
-        const split = processingId.split("_")
-        return {
-            gameId: parseInt(split[2]),
-            platform: split[1]
-        }
+    private getGame(processingId: string): Promise<Game> {
+        return new Promise((resolve, reject) => {
+            this.redisClient.get(processingId, (err, msg) => {
+                if (!err) {
+                    resolve(JSON.parse(msg))
+                } else {
+                    reject(err);
+                }
+            })
+        })
     }
 
-    private getProcessingId(gameId: number, platform: string, champId: number, skinId: number): string {
-        return AchievementRedis.PROCESSING_PREFIX + platform + "_" + gameId + "_" + champId + "_" + skinId;
+    private async getNextProcessingId(): Promise<string> {
+        return new Promise((resolve, reject) => {
+            this.redisClient.incr(AchievementRedis.PROCESSING_ID_CTR, (err: any, result: number) => {
+                if (!err) {
+                    resolve(AchievementRedis.PROCESSING_PREFIX + "_" + result);
+                } else {
+                    reject(err);
+                }
+            })
+        })
+    }
+
+    private saveGame(processingId: string, game: Game): Promise<void> {
+        return new Promise((resolve, reject) =>{ 
+            this.redisClient.set(processingId, JSON.stringify(game), (err, done) => {
+                if (!err) {
+                    resolve();
+                } else {
+                    reject(err);
+                }
+            });
+        })
+    }
+
+    private async getProcessingId(game: Game): Promise<string> {
+        const processingId = await this.getNextProcessingId();
+        await this.saveGame(processingId, game);
+        return processingId;
     }
 }

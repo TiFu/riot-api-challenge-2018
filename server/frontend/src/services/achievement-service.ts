@@ -1,7 +1,8 @@
 import {NewGameMessage, SearchPlayerMessage, PublicPlayerData} from 'achievement-sio'
 import { AchievementRedis } from 'achievement-redis';
 import { NotificationService } from './notification-service';
-import { PlayerPartialInfo } from '../../../../common/achievement-sio/types/player';
+import { PlayerPartialInfo } from 'achievement-sio';
+import { Game } from 'achievement-redis';
 
 export class AchievementService {
 
@@ -24,10 +25,17 @@ export class AchievementService {
         })
     }
     
-    public processNewGameMessage(msg: NewGameMessage, platform: string): void {
+    public processNewGameMessage(msg: NewGameMessage, platform: string, playerId: number): void {
         console.log("Processing new game message: "+ msg);
-        this.achievementRedis.addGameToProcessingQueue(msg.gameId, platform, msg.champId, msg.skinId).then(() => {
-            console.log("Added game ", msg, " on platform " + platform + " to the processing queue!")
+        const game: Game ={ 
+            playerId: playerId,
+            platform: platform,
+            gameId: msg.gameId,
+            champId: msg.champId,
+            skinId: msg.skinId
+        }
+        this.achievementRedis.addGameToProcessingQueue(game).then(() => {
+            console.log("Added game ", game, " to the processing queue!")
         }).catch((err) => {
             console.error("Failed to add game to processing queue: ", err)
         });

@@ -13,10 +13,10 @@
     "typescript": "^3.2.2"
   },
   "dependencies": {
-    "kayn": "^0.9.2",
     "achievement-config": "file:../../achievement-config",
     "achievement-db": "file:../../achievement-db",
     "achievement-models": "file:../../../common/achievement-models",
-    "achievement-redis": "file:../../achievement-redis"
+    "achievement-redis": "file:../../achievement-redis",
+    "kayn": "^0.9.3"
   }
 }

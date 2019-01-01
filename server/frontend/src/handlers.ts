@@ -60,7 +60,7 @@ export class LocalAchievementSocketHandler {
     public handleNewGameMessage(msg: NewGameMessage) {
         console.log("New game: " + msg, this.socketState.player)
         if (this.socketState.player) {
-            this.achievementService.processNewGameMessage(msg, this.socketState.player.region)
+            this.achievementService.processNewGameMessage(msg, this.socketState.player.region, this.socketState.player.id)
         }
     }
 

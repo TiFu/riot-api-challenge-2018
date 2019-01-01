@@ -16,6 +16,8 @@ CREATE TABLE processed_games (
 CREATE TABLE player_achievements (
     player_id int REFERENCES players(id),
     achievement_id int,
+    champ_id int,
+    skin_id int,
     achieved_at TIMESTAMP DEFAULT NOW(),
     PRIMARY KEY(player_id, achievement_id)
 );

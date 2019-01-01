@@ -1,5 +1,6 @@
 import { AchievementRedis } from 'achievement-redis';
 import { ProcessingService } from './ProcessingService';
+import { Game } from 'achievement-redis';
 
 export class ProcessingMaster {
     private _stop: boolean = false;
@@ -48,13 +49,13 @@ export class ProcessingMaster {
         this.run();
     }
 
-    private async handleGame(game: { gameId: number, platform: string } | null): Promise<boolean> {
+    private async handleGame(game: Game | null): Promise<boolean> {
         if (game == null) {
             console.log("No game found!")
             return Promise.resolve(false);
         }
         console.log("Processing game!")
-        await this.processingService.processGame(game.gameId, game.platform);
+        await this.processingService.processGame(game);
         return true;
     }
 }

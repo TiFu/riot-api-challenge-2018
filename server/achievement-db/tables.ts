@@ -8,6 +8,8 @@ export interface PlayerTableEntry {
 
 export interface PlayerAchievementEntry {
     player_id: number
+    champ_id: number
+    skin_id: number
     achievement_id: number
     achieved_at: Date
 }
