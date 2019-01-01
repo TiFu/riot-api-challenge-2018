@@ -19,7 +19,8 @@ export class AchievemenCategory<T extends Achievement<any>> {
             }
             currentAchievementGroup = queue.pop();
         }
-        return obtainableAchievements.filter(a => obtainedAchievements.has(a.id))
+        console.log("Obtainable achievements: ", obtainableAchievements);
+        return obtainableAchievements.filter(a => !obtainedAchievements.has(a.id))
     }
 }
 

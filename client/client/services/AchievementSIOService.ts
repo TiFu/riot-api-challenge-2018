@@ -12,12 +12,13 @@ import { updateAchievements } from '../store/player/actions';
 
 export class AchievementSocketIOService {
     private socket: AchievementLocalClient
-    private unrecordedEndOfGames = new Set();
+    private unrecordedEndOfGames = new Set<NewGameMessage>();
     private unsubscribes = new Set();
 
     public constructor(private store: Store<AchievementState>, private url: string, private eventBus: AchievementEventBus) {
         console.log(url)
         this.reset();
+        this.registerEventListeners();
     }
 
     public reset() {
@@ -25,7 +26,6 @@ export class AchievementSocketIOService {
             this.socket.disconnect()
         this.socket = io(this.url + "/local") as any;
         this.socket.on("connect", () => {
-            this.registerEventListeners()
             // If player info is available send it to the server
             if (this.store.getState().player.playerInfo) {
                 this.emitHelloMessage(this.store.getState().player.playerInfo)
@@ -35,12 +35,10 @@ export class AchievementSocketIOService {
             console.log("Connected to frontend server!");
         })
         this.socket.on("disconnect", () => {
-            this.deregisterEvents();
             this.store.dispatch(updateFrontendConnectedState(false))
         });
         
         this.socket.on("connect_error", (err) => {
-            this.deregisterEvents();
             this.store.dispatch(updateFrontendConnectedState(false))
             if (err["description"] == 503) {
                 console.log("Failed to connect to frontend server!");
@@ -79,11 +77,13 @@ export class AchievementSocketIOService {
         }))
 
         this.unsubscribes.add(this.eventBus.end_of_game.on((gameId: NewGameMessage) => {
+            console.log("Handling end of game in achievementSioService");
             this.handleEndOfGame(gameId);
         }));
     }
 
     private sendStoredEndOfGames() {
+        console.log("sending stored end of games!");
         for (const gameId of this.unrecordedEndOfGames) {
             this.socket.emit("newGame", gameId);
             this.unrecordedEndOfGames.delete(gameId);
@@ -94,8 +94,10 @@ export class AchievementSocketIOService {
         console.log("emitting eog")
         // TODO: handle end of game
         if (this.socket.connected) {
+            console.log("emitting end of game because we are connected");
             this.socket.emit("newGame", game);
         } else {
+            console.log("storing for unrecorded end of game!");
             this.unrecordedEndOfGames.add(game)
         }
     }

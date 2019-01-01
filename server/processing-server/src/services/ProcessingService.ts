@@ -10,7 +10,7 @@ import { AchievementRedis } from 'achievement-redis';
 import { Player } from 'achievement-db';
 import { Game } from 'achievement-redis';
 import { checkPlayerAchievementCategories } from 'achievement-models';
-import { playerAchievementCategories } from '../../../../common/achievement-models/achievements';
+import { playerAchievementCategories } from 'achievement-models';
 
 export class ProcessingService {
     private region: { [key: string]: string} = {
@@ -77,7 +77,7 @@ export class ProcessingService {
         const obtainedAchievementsArray = await this.db.getPlayerAchievements(player.id).then((a) => a.map(e => e.achievementId)) as ReadonlyArray<number>;
         const obtainedAchievementsSet = new Set<number>(obtainedAchievementsArray);
         const successIds = checkPlayerAchievementCategories(encryptedAccountId, obtainedAchievementsSet, matchData, timelineData, playerAchievementCategories)
-        
+        console.log(player, " obtained " + successIds.length + " new achievements for his perfomance in ", game);
         const promises = [];
         const failedIds: number[] = [];
         for (const achievement of successIds) {

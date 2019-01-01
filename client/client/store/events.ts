@@ -37,6 +37,7 @@ export const eventBusMiddleware = (store: AchievementStore)  => (next: (action: 
             eventBus.frontend_connection_update(action.payload);
         break;
         case '@@player/END_OF_GAME':
+            console.log("emitting end of game in event bus middleware", action.payload);
             eventBus.end_of_game(action.payload)
         break;
     }

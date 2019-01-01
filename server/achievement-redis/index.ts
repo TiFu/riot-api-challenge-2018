@@ -109,6 +109,7 @@ export class AchievementRedis {
 
     public async addGameToProcessingQueue(game: Game): Promise<void> {
         const processingId = await this.getProcessingId(game)
+        console.log("Using processing id "+ processingId);
         return this.addProcessingIdToQueue(processingId).then(() => {});
 
     }
@@ -120,6 +121,7 @@ export class AchievementRedis {
                     if (element == null) {
                         resolve(null);
                     } else {
+                        console.log("Found processing item " + element + " in queue!");
                         const result = this.getGame(element)
                         resolve(result)
                     }
@@ -164,6 +166,7 @@ export class AchievementRedis {
     private getGame(processingId: string): Promise<Game> {
         return new Promise((resolve, reject) => {
             this.redisClient.get(processingId, (err, msg) => {
+                console.log("Read msg: ", msg);
                 if (!err) {
                     resolve(JSON.parse(msg))
                 } else {
@@ -176,6 +179,7 @@ export class AchievementRedis {
     private async getNextProcessingId(): Promise<string> {
         return new Promise((resolve, reject) => {
             this.redisClient.incr(AchievementRedis.PROCESSING_ID_CTR, (err: any, result: number) => {
+                console.log("Received ", result, " as processing id");
                 if (!err) {
                     resolve(AchievementRedis.PROCESSING_PREFIX + "_" + result);
                 } else {

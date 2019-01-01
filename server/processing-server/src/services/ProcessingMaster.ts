@@ -20,6 +20,7 @@ export class ProcessingMaster {
             try {
                 console.log("Fetching next game in queue!")
                 const nextGame = await this.otherRedis.getNextGameInProcessingQueue()
+                console.log("Processing game: ", nextGame);
                 const result = await this.handleGame(nextGame);
                 if (!result) {
                     this.subscribeToNewGameInQueueEvent();

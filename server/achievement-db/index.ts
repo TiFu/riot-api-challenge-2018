@@ -70,6 +70,7 @@ export class AchievementDB {
             "skin_id": skinId,
             "champ_id": champId
         }
+        console.log("Using vals: ", vals);
         return this.db.query("INSERT INTO player_achievements (achievement_id, player_id, champ_id, skin_id) VALUES (${achievement_id}, ${player_id}, ${champ_id}, ${skin_id})", vals).catch((err) => {
             throw achievementId
         }).then(() => {
@@ -101,7 +102,7 @@ export class AchievementDB {
         const vals = {
             "id": playerId
         }
-        return this.db.query("SELECT achievement_id, achieved_at FROM player_achievements WHERE player_id = ${id}", vals).then((entries) => {
+        return this.db.query("SELECT achievement_id, achieved_at, champ_id, skin_id FROM player_achievements WHERE player_id = ${id}", vals).then((entries) => {
             console.log("Achievement Entries", entries);
             return entries.map((e: PlayerAchievementEntry) => this.handleMappingSingleRow<PlayerAchievementEntry, PlayerAchievement>([e], AchievementDB.PlayerAchievementTableMap));
         })
