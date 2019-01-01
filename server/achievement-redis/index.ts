@@ -7,6 +7,8 @@ export type AchievementMessage = {
 export type PlayerAchievementMessage = {
     "accountId": number,
     "playerName": string,
+    "champId": number,
+    "skinId": number,
     "platform": string,
     "achievements": number[]
 }
@@ -97,8 +99,8 @@ export class AchievementRedis {
         return this.unsubcribeFromEvents(AchievementRedis.PROCESSING_EVENT_CHANNEL, cb);
     }
 
-    public addGameToProcessingQueue(gameId: number, platform: string): Promise<void> {
-        return this.addProcessingIdToQueue(this.getProcessingId(gameId, platform)).then(() => {});
+    public addGameToProcessingQueue(gameId: number, platform: string, champId: number, skinId: number): Promise<void> {
+        return this.addProcessingIdToQueue(this.getProcessingId(gameId, platform, champId, skinId)).then(() => {});
     }
 
     public getNextGameInProcessingQueue(): Promise<{ gameId: number, platform: string } | null> {
@@ -157,7 +159,7 @@ export class AchievementRedis {
         }
     }
 
-    private getProcessingId(gameId: number, platform: string): string {
-        return AchievementRedis.PROCESSING_PREFIX + platform + "_" + gameId;
+    private getProcessingId(gameId: number, platform: string, champId: number, skinId: number): string {
+        return AchievementRedis.PROCESSING_PREFIX + platform + "_" + gameId + "_" + champId + "_" + skinId;
     }
 }

@@ -13,7 +13,7 @@ type WebNamespace = SimpleNamespace<{
     ClientRPCs: {
         searchPlayer: {
             request: SearchPlayerMessage,
-            response: PlayerPartialInfo,
+            response: PlayerPartialInfo[],
             error: SearchPlayerError
         },
         openPlayer: {
@@ -36,7 +36,7 @@ type LocalClientNamespace = SimpleNamespace<{
     ClientRPCs: {
         searchPlayer: {
             request: SearchPlayerMessage,
-            response: PublicPlayerData, // TODO: add possiblity to display list of players
+            response: PlayerPartialInfo[], // TODO: add possiblity to display list of players
             error: SearchPlayerError
         },
         createGroup: {

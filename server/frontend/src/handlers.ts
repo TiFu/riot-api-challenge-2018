@@ -23,7 +23,7 @@ export class WebAchievementSocketHandler {
         this.socket.on("searchPlayer", (msg, cb) => this.handleSearchPlayer(msg, cb))
     }
 
-    public handleSearchPlayer(msg: SearchPlayerMessage, cb: (err: string | null, data?: PublicPlayerData) => void) {        
+    public handleSearchPlayer(msg: SearchPlayerMessage, cb: (err: string | null, data?: PlayerPartialInfo[]) => void) {        
         this.achievementService.searchPlayer(msg).then((data) => {
             cb(null, data)
         }).catch((err) =>{ 
@@ -64,7 +64,7 @@ export class LocalAchievementSocketHandler {
         }
     }
 
-    public handleSearchPlayer(msg: SearchPlayerMessage, cb: (err: string | null, data?: PublicPlayerData) => void) {        
+    public handleSearchPlayer(msg: SearchPlayerMessage, cb: (err: string | null, data?: PlayerPartialInfo[]) => void) {        
         this.achievementService.searchPlayer(msg).then((data) => {
             cb(null, data)
         }).catch((err) =>{ 
