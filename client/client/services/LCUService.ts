@@ -129,7 +129,7 @@ export class LCUService {
                 this.ws.on('message', (msg) => {
                     // TODO emit message based on end point
                     msg = JSON.parse(msg.toString())[2]
-                    console.log(JSON.stringify(msg))
+//                    console.log(JSON.stringify(msg))
 
                     if (this.listener) {
                         if (msg["eventType"] == "Update" && msg["uri"] == "/lol-summoner/v1/current-summoner" && msg["data"]["accountId"]) {
@@ -141,6 +141,7 @@ export class LCUService {
                             // find champ and skin id
                             const localCellId = msg["data"]["localPlayerCellId"]
                             const cell = msg["data"]["myTeam"].filter(c => c["cellId"] == localCellId)[0]
+                            console.log("Changed champ/skin: ", cell["championId"], cell["selectedSkinId"])
                             this.listener.onChampAndSkinChanged(cell["championId"], cell["selectedSkinId"]);
                         }
                     }

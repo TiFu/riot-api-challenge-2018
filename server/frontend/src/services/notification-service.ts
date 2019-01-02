@@ -1,7 +1,7 @@
 import {AchievementServerLocal, AchievementServerWeb, PlayerId, GroupId, AchievementNotification, HelloMessage, Achievement, PlayerData } from 'achievement-sio'
 import socketio from 'socket.io'
-import { AchievementDB } from 'achievement-db';
-import {Player, Group} from 'achievement-db';
+import { AchievementDatabase } from 'achievement-db';
+import {Player, GroupInfo} from 'achievement-db';
 import { AchievementRedis } from 'achievement-redis';
 import { KaynClass } from 'kayn';
 import {regionMap} from '../util';
@@ -9,11 +9,10 @@ import { rejects } from 'assert';
 import { SummonerV4SummonerDTO } from 'kayn/typings/dtos';
 import { getPlayerRoomFromId, getGroupRoom } from 'achievement-sio';
 
-// TODO: Rename to user service
 export class NotificationService {
 
     public constructor(private webNS: AchievementServerWeb, private localNS: AchievementServerLocal, 
-            private database: AchievementDB, private kayn: KaynClass) {
+            private database: AchievementDatabase, private kayn: KaynClass) {
     }
 
     public deregisterUser(player: Player, socket: socketio.Socket) {
@@ -21,11 +20,11 @@ export class NotificationService {
     }
 
     public async getPlayerData(playerId: number): Promise<PlayerData | null> {
-        const player = await this.database.getPlayerById(playerId);
+        const player = await this.database.PlayerDB.getPlayerById(playerId);
         if (!player) {
             return null;
         }
-        const playerAchievements = await this.database.getPlayerAchievements(playerId);
+        const playerAchievements = await this.database.AchievementDB.getPlayerAchievements(playerId);
         const mappedAchievements = playerAchievements.map((a) => { 
             return {
                 achievedAt: a.achievedAt.toString(),
@@ -44,7 +43,7 @@ export class NotificationService {
     }
 
     public registerUser(msg: HelloMessage, socket: socketio.Socket): Promise<Player> {
-        return this.database.getPlayerByAccountId(msg.accountId, msg.platformId).then((player) => {
+        return this.database.PlayerDB.getPlayerByAccountId(msg.accountId, msg.platformId).then((player) => {
             if (player == null) {
                 return new Promise<SummonerV4SummonerDTO>((resolve, reject) => {
                     this.kayn.SummonerV4.by.name(msg.playerName).region(regionMap[msg.platformId]).then((player) => {
@@ -54,7 +53,7 @@ export class NotificationService {
                     })
                 }).then((player: SummonerV4SummonerDTO) => {
                     console.log("Saving summoner in database: ", player);
-                    return this.database.createPlayer(msg.accountId, msg.platformId, msg.playerName, player.accountId as string);
+                    return this.database.PlayerDB.createPlayer(msg.accountId, msg.platformId, msg.playerName, player.accountId as string);
                 }).then((player) => {
                     console.log("Set player to ", player);
                     if (player == null) {
@@ -77,17 +76,17 @@ export class NotificationService {
         this.localNS.to(room).emit("achievementNotification", achievement);
     }
 
-    public notifyGroupAchievement(group: Group, achievement: AchievementNotification) {
+    public notifyGroupAchievement(group: GroupInfo, achievement: AchievementNotification) {
         const room = this._getGroupRoom(group)
         this.webNS.to(room).emit("achievementNotification", achievement)
         this.localNS.to(room).emit("achievementNotification", achievement);
     }
 
-    public spectateGroup(group: Group, socket: socketio.Socket) {
+    public spectateGroup(group: GroupInfo, socket: socketio.Socket) {
         socket.join(this._getGroupRoom(group))
     }
 
-    public quitGroup(group: Group, socket: socketio.Socket) {
+    public quitGroup(group: GroupInfo, socket: socketio.Socket) {
         socket.leave(this._getGroupRoom(group))
     }
     public spectatePlayer(player: Player, socket: socketio.Socket) {
@@ -106,7 +105,7 @@ export class NotificationService {
         return this._getPlayerRoomFromId(player.region, player.accountId)
     }
 
-    private _getGroupRoom(group: Group): string {
-        return getGroupRoom(group.region, group.id);
+    private _getGroupRoom(group: GroupInfo): string {
+        return getGroupRoom(group.id);
     }
 }

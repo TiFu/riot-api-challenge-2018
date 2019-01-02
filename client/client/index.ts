@@ -18,7 +18,7 @@ store.subscribe(() => {
 })
 lcu.start()
 
-setTimeout(() => {
+/*setTimeout(() => {
     store.dispatch(updateChampSelect(1, 2000));
     store.dispatch(updatePlayerInfo({
         playerName: "TiFu",
@@ -26,4 +26,4 @@ setTimeout(() => {
         platformId: "euw1"
     }))
     store.dispatch(endOfGameDetected(3876439142, 1, 2000))
-}, 5000)
+}, 5000)*/

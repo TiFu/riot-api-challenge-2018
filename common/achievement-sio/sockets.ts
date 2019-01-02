@@ -85,6 +85,6 @@ export type AchievementServerLocal = internal.ServerNamespaceNSI<AchievementServ
 export function getPlayerRoomFromId(region: string, accountId: number): string {
         return region + "_player_" + accountId
 }
-export function getGroupRoom(region: string, id: number): string {
-        return region + "_group_" + id
+export function getGroupRoom(id: number): string {
+        return "group_" + id
 }

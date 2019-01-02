@@ -1,3 +1,4 @@
+
 CREATE TABLE players (
     id serial PRIMARY KEY,
     account_id int, 
@@ -22,7 +23,42 @@ CREATE TABLE player_achievements (
     PRIMARY KEY(player_id, achievement_id)
 );
 
+CREATE TABLE groups (
+    id serial PRIMARY KEY,
+    name varchar(70),
+    region varchar(5)
+)
+
+CREATE TABLE group_players (
+    id serial primary key,
+    group_id int REFERENCES groups(id),
+    player_id int REFERENCES players(id),
+    owner boolean
+);
+
+CREATE TABLE group_achievements (
+    id serial primary key,
+    group_id int REFERENCES groups(id),
+    achievement_id int,
+    achieved_at TIMESTAMP DEFAULT NOW()
+)
+
+CREATE TABLE group_achievement_participants (
+    group_achievement_id int references group_achievements(id),
+    group_player_id int references group_players(id)
+)
+
+CREATE TYPE invite_status AS ENUM ('accepted', 'declined', 'pending');
+CREATE TABLE group_invites {
+    group_id int references groups(id),
+    invitee int references players(id),
+    inviter int references players(id),
+    status invite_status default 'pending'
+}
+
+CREATE UNIQUE INDEX group_invite_player ON group_invites(group_id, invitee);
+
 CREATE UNIQUE INDEX acc_region ON players (account_id, region);
 CREATE UNIQUE INDEX game_region ON processed_games (game_id, region);
 CREATE UNIQUE INDEX processed_game_player ON processed_games(game_id, player_id, region);
-
+CREATE UNIQUE INDEX group_players_idx ON group_players(group_id, player_id);

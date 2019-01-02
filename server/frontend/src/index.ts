@@ -8,7 +8,7 @@ import { WebAchievementSocketHandler, LocalAchievementSocketHandler } from './ha
 import { AchievementService } from './services/achievement-service';
 import { GroupService } from './services/group-service';
 import { NotificationService } from './services/notification-service';
-import { AchievementDB } from 'achievement-db';
+import { AchievementDatabase } from 'achievement-db';
 import { AchievementRedis } from 'achievement-redis';
 import {Kayn } from 'kayn';
 
@@ -27,7 +27,7 @@ app.get('/', (req: any, res: any) => {
 });
 
 const riotApi = Kayn(config.riotApi.apiKey)()
-const achievementdb = new AchievementDB(config.db);
+const achievementdb = new AchievementDatabase(config.db);
 const achievementRedis = new AchievementRedis(config.redis)
 const subscribeRedis = new AchievementRedis(config.redis);
 

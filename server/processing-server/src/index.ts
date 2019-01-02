@@ -1,4 +1,4 @@
-import { AchievementDB } from 'achievement-db'
+import { AchievementDatabase } from 'achievement-db'
 import { loadConfigFromEnvironment } from 'achievement-config';
 import { AchievementRedis } from 'achievement-redis';
 import { ProcessingMaster } from './services/ProcessingMaster';
@@ -14,7 +14,7 @@ process.on('unhandledRejection', (reason, p) => {
 
 const config = loadConfigFromEnvironment()
 
-const db = new AchievementDB(config.db)
+const db = new AchievementDatabase(config.db)
 
 const riotApi = Kayn(config.riotApi.apiKey)()
 const subscribeRedis = new AchievementRedis(config.redis) // redis subscribed mode doesn't allow publish etc

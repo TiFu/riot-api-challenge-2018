@@ -2,7 +2,7 @@ import {KaynClass, REGIONS} from 'kayn'
 import { MatchV4MatchDto, MatchV4MatchTimelineDto } from 'kayn/typings/dtos';
 import { KaynRequest} from 'kayn'
 
-import { AchievementDB } from 'achievement-db';
+import { AchievementDatabase } from 'achievement-db';
 import { PlayerAchievement } from 'achievement-models';
 
 import { PlayerAchievementMessage } from 'achievement-redis';
@@ -37,13 +37,13 @@ export class ProcessingService {
         "pbe": "pbe1",
         "pbe1": "pbe"
     }
-    public constructor(private riotApi: KaynClass, private db: AchievementDB, private redis: AchievementRedis) {
+    public constructor(private riotApi: KaynClass, private db: AchievementDatabase, private redis: AchievementRedis) {
 
     }
 
     public async processGame(game: Game): Promise<void> {
         console.log("Processing game " + game)
-        const player = await this.db.getPlayerById(game.playerId);
+        const player = await this.db.PlayerDB.getPlayerById(game.playerId);
         if (!player) {
             console.log("Player " + game.playerId + " not found!");
             return null;
@@ -63,25 +63,25 @@ export class ProcessingService {
 
     private async processAchievementsForSummoner(game: Game, player: Player, 
                                             matchData: MatchV4MatchDto, timelineData: MatchV4MatchTimelineDto): Promise<PlayerAchievementMessage | null> {
-        const alreadyChecked = await this.db.checkIfPlayerAndGameWereAlreadyProcessed(player.id, player.region, matchData.gameId as number);
+        const alreadyChecked = await this.db.AchievementDB.checkIfPlayerAndGameWereAlreadyProcessed(player.id, player.region, matchData.gameId as number);
         if (alreadyChecked) {
             console.log("Already checked game " + matchData.gameId + " for player " + player);
             return null;
         }        
         
-        await this.db.addGameToProcessedGames(player.id, player.region, matchData.gameId);
+        await this.db.AchievementDB.addGameToProcessedGames(player.id, player.region, matchData.gameId);
         return this.processAchievementsForExistingSummoner(game, player, player.encryptedAccountId, matchData, timelineData)
     }
 
     private async processAchievementsForExistingSummoner(game: Game, player: Player, encryptedAccountId: string, matchData: MatchV4MatchDto, timelineData: MatchV4MatchTimelineDto) {      
-        const obtainedAchievementsArray = await this.db.getPlayerAchievements(player.id).then((a) => a.map(e => e.achievementId)) as ReadonlyArray<number>;
+        const obtainedAchievementsArray = await this.db.AchievementDB.getPlayerAchievements(player.id).then((a) => a.map(e => e.achievementId)) as ReadonlyArray<number>;
         const obtainedAchievementsSet = new Set<number>(obtainedAchievementsArray);
         const successIds = checkPlayerAchievementCategories(encryptedAccountId, obtainedAchievementsSet, matchData, timelineData, playerAchievementCategories)
         console.log(player, " obtained " + successIds.length + " new achievements for his perfomance in ", game);
         const promises = [];
         const failedIds: number[] = [];
         for (const achievement of successIds) {
-            promises.push(this.db.addAchievement(player.id, achievement, game.champId, game.skinId).catch((err) => {
+            promises.push(this.db.AchievementDB.addAchievement(player.id, achievement, game.champId, game.skinId).catch((err) => {
                 failedIds.push(err);
             }));
         }
