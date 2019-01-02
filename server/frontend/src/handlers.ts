@@ -123,15 +123,3 @@ export class LocalAchievementSocketHandler {
     }
 
 }
-
-interface Handler {
-    
-}
-
-class AchievementHandler {
-
-}
-
-class GroupHandler {
-
-}

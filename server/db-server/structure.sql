@@ -59,6 +59,12 @@ CREATE TABLE group_achievement_participants (
     member_id int references group_members(id)
 );
 
+CREATE TABLE processed_group_game (
+    game_id bigint,
+    group_id int REFERENCES groups(id)
+);
+
+
 CREATE UNIQUE INDEX group_invite_player ON group_invites(group_id, invitee);
 CREATE UNIQUE INDEX group_achievements_unique ON group_achievements(group_id, achievement_id);
 
