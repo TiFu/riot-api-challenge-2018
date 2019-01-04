@@ -1,6 +1,6 @@
 import { AchievementNotification, NewGameMessage } from './types/achievement';
 import { PlayerId, SearchPlayerMessage, PublicPlayerData, SearchPlayerError, PlayerData, PlayerPartialInfo, OpenPlayerMessage, HelloMessage } from './types/player';
-import { GroupInvite, CreateGroup, Group, GroupId, GroupInviteResponse, GroupInviteRequest } from './types/group';
+import { GroupInvite, CreateGroup, Group, GroupId, GroupInviteResponse, GroupInviteRequest, GroupInviteRequestMessage, GroupInvitationNotification } from './types/group';
 
 import { ServerDefinition, SimpleNamespace,
     RootServer, ClientSideSocket, ServerSideClientSocketNS, internal } from "typed-socket.io";
@@ -30,10 +30,16 @@ type LocalClientNamespace = SimpleNamespace<{
     ServerMessages: {
         achievementNotification: AchievementNotification
         playerData: PlayerData
-        groupInvite: GroupInvite
+        groupInvite: GroupInvitationNotification
+        inviteUpdate: { groupId: number, player: PlayerPartialInfo, newStatus: "accepted" | "canceled" | "declined" | "pending" }
         error: string
     }
     ClientRPCs: {
+        leaveGroup: {
+            request: GroupId,
+            response: boolean,
+            error: string
+        }
         searchPlayer: {
             request: SearchPlayerMessage,
             response: PlayerPartialInfo[], // TODO: add possiblity to display list of players
@@ -55,7 +61,7 @@ type LocalClientNamespace = SimpleNamespace<{
             error: string
         },
         groupInviteRequest: {
-            request: GroupInviteRequest,
+            request: GroupInviteRequestMessage,
             response: boolean,
             error: string
         }

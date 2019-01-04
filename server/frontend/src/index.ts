@@ -33,7 +33,7 @@ const subscribeRedis = new AchievementRedis(config.redis);
 
 const notificationService = new NotificationService(io.of("/web"), io.of("/local"), achievementdb, riotApi);
 const achievementService = new AchievementService(achievementRedis, subscribeRedis, notificationService);
-const groupService = new GroupService();
+const groupService = new GroupService(achievementdb, notificationService);
 
 io.of("/web").on("connection", (socket: any) => {
     console.log("new web connection")

@@ -15,7 +15,7 @@ export class AchievementService {
                     "championId": player.champId,
                     "skinId": player.skinId,
                     "acquirer": { 
-                        "id": player.accountId,
+                        "accountId": player.accountId,
                         "region": player.platform,
                         "name": player.playerName 
                     },
@@ -42,8 +42,9 @@ export class AchievementService {
     }
 
     public searchPlayer(msg: SearchPlayerMessage): Promise<PlayerPartialInfo[]> {        
+        // TODO: implement (possibly in notification-service , renamed to player service))
         return Promise.resolve([{
-            id: 4,
+            accountId: 4,
             name: "Test",
             region: "euw1"
         }]);

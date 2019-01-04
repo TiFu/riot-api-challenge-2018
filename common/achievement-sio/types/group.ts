@@ -10,18 +10,32 @@ export type GroupPartialInfo = {
 }
 
 export type GroupInvite = {
-    groupId: GroupId
+    inviteId: number,
+    groupId: number,
     inviter: PlayerPartialInfo
+}
+
+export type GroupInvitationNotification = {
+    inviteId: number
+    groupName: string
+    inviter: PlayerPartialInfo
+}
+
+export type GroupInviteRequestMessage = {
+    group: GroupId
+    invitee: PlayerPartialInfo
 }
 
 export type GroupInviteRequest = {
-    group: GroupPartialInfo,
+    groupId: number,
+    inviteId: number,
     inviter: PlayerPartialInfo
-    state: "PENDING" | "CANCELLED" | "ACCEPTED"
+    invitee: PlayerPartialInfo
+    status: "pending" | "canceled" | "accepted" | "declined"
 }
 
 export type GroupInviteResponse = {
-    groupId: GroupId
+    inviteId: number
     accept: boolean
 }
 
@@ -29,9 +43,16 @@ export type CreateGroup = {
     name: string
 }
 
+export type DetailedGroupInvite = {
+    inviteId: number,
+    inviter: PlayerPartialInfo
+    invitee: PlayerPartialInfo
+    status: "pending" | "canceled" | "accepted" | "declined"
+}
 export type Group = {
+    id: number
     name: string
-    players: PlayerId[]
+    players: PlayerPartialInfo[]
     achievements: Achievement[]
-    invites: GroupInviteRequest
+    invites: DetailedGroupInvite[]
 }

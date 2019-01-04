@@ -1,4 +1,4 @@
-import {AchievementServerLocal, AchievementServerWeb, PlayerId, GroupId, AchievementNotification, HelloMessage, Achievement, PlayerData } from 'achievement-sio'
+import { AchievementServerLocal, AchievementServerWeb, PlayerId, GroupId, AchievementNotification, HelloMessage, Achievement, PlayerData, Group, GroupInvite, GroupInviteRequest } from 'achievement-sio';
 import socketio from 'socket.io'
 import { AchievementDatabase } from 'achievement-db';
 import {Player, GroupInfo} from 'achievement-db';
@@ -8,11 +8,40 @@ import {regionMap} from '../util';
 import { rejects } from 'assert';
 import { SummonerV4SummonerDTO } from 'kayn/typings/dtos';
 import { getPlayerRoomFromId, getGroupRoom } from 'achievement-sio';
+import { GroupPartialInfo } from '../../../../common/achievement-sio/types/group';
 
 export class NotificationService {
 
     public constructor(private webNS: AchievementServerWeb, private localNS: AchievementServerLocal, 
             private database: AchievementDatabase, private kayn: KaynClass) {
+    }
+
+    public notifyNewInvitation(player: Player, inviteId: number, group: GroupInfo, inviter: Player) {
+        const room = this._getPlayerRoomFromId(player.region, player.accountId);
+        console.log("Emitting message to " + room, group, inviter);
+        this.localNS.to(room).emit("groupInvite", {
+            inviteId: inviteId,
+            groupName: group.name,
+            inviter: {
+                name: inviter.name,
+                region: inviter.region,
+                accountId: inviter.accountId
+            }
+        });
+    }
+
+    public notifyInvitationUpdate(invited: Player, group: GroupId, status: "pending" | "canceled" | "declined" | "accepted") {
+        const room = getGroupRoom(group)
+        console.log("notifying update: ", room, group, invited, status)
+        this.localNS.to(room).emit("inviteUpdate", {
+            groupId: group,
+            "player": {
+                name: invited.name,
+                region: invited.region,
+                accountId: invited.accountId
+            },
+            newStatus: status
+        })
     }
 
     public deregisterUser(player: Player, socket: socketio.Socket) {
@@ -34,11 +63,36 @@ export class NotificationService {
             }
         })
 
+        console.log("Fetching invites for ", playerId, " which are pending");
+        const invites = await this.database.GroupDB.getInvitesForPlayer(playerId, "pending");
+        console.log("Found invites: ", invites);
+        const mappedInvites: GroupInviteRequest[] = invites.map((i) => {
+            return {
+                inviteId: i.inviteId,
+                inviter: i.inviter,
+                invitee: i.invitee,
+                status: i.status,
+                groupId: i.group.id
+            }
+        })
+
+        const groups = await this.database.GroupDB.getGroupInfoForPlayer(playerId);
+        console.log("groups for player: ", groups);
+        const mappedGroups: GroupPartialInfo[] = []
+        for (const group of groups) {
+            const members = await this.database.GroupDB.getGroupMembers(group.id);               
+            mappedGroups.push({
+                id: group.id,
+                name: group.name,
+                members: members
+            })
+        }
+
         return {
             "playerName": player.name,
             "achievements": mappedAchievements,
-            "groups": [],
-            "invites": []
+            "groups": mappedGroups,
+            "invites": mappedInvites
         }
     }
 
@@ -64,7 +118,12 @@ export class NotificationService {
                 })
             } else {
                 this.spectatePlayer(player, socket);
-                return player;
+                return this.database.GroupDB.getGroupsForPlayer(player.id).then((groups) => {
+                    for (const group of groups) {
+                        this.spectateGroup(group, socket);
+                    }    
+                    return player;
+                });
             }
         }) 
     }
@@ -82,12 +141,13 @@ export class NotificationService {
         this.localNS.to(room).emit("achievementNotification", achievement);
     }
 
-    public spectateGroup(group: GroupInfo, socket: socketio.Socket) {
-        socket.join(this._getGroupRoom(group))
+    public spectateGroup(groupId: GroupId, socket: socketio.Socket) {
+        console.log("spectating group ", groupId);
+        socket.join(getGroupRoom(groupId))
     }
 
-    public quitGroup(group: GroupInfo, socket: socketio.Socket) {
-        socket.leave(this._getGroupRoom(group))
+    public quitGroup(group: GroupId, socket: socketio.Socket) {
+        socket.leave(getGroupRoom(group))
     }
     public spectatePlayer(player: Player, socket: socketio.Socket) {
         console.log("Joining room: " + this._getPlayerRoom(player));

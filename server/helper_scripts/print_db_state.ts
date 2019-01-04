@@ -1,5 +1,4 @@
 import { loadConfigFromEnvironment } from '../achievement-config/index';
-import { AchievementDB} from 'achievement-db'
 import pgPromise from 'pg-promise';
 
 const config = loadConfigFromEnvironment().db;
@@ -13,9 +12,9 @@ const db = psql({
 print()
 
 async function print() {
-    await printTable("players")
-    await printTable("processed_games")
-    await printTable("player_achievements")
+    for (const table of ["players", "processed_games", "player_achievements", "groups", "group_members", "group_invites", "group_achievements", "group_achievement_participants", "processed_group_game"]) {
+        await printTable(table);
+    }
 }
 
 async function printTable(tableName: string) {

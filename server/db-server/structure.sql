@@ -9,7 +9,7 @@ CREATE TABLE players (
 
 CREATE TABLE processed_games (
     game_id bigint,
-    player_id int REFERENCES players(id),
+    player_id int NOT NULL REFERENCES players(id),
     region varchar(5)
 );
 
@@ -27,41 +27,42 @@ CREATE TABLE groups (
     id serial PRIMARY KEY,
     name varchar(70),
     region varchar(5)
-)
+);
 
 CREATE TABLE group_members (
     id serial primary key,
-    group_id int REFERENCES groups(id),
-    player_id int REFERENCES players(id),
-    owner boolean
+    group_id int NOT NULL REFERENCES groups(id),
+    player_id int NOT NULL REFERENCES players(id),
+    owner boolean,
     member_since TIMESTAMP default now()
 );
 
 
 CREATE TYPE invite_status AS ENUM ('accepted', 'declined', 'pending', 'canceled');
 CREATE TABLE group_invites (
-    group_id int references groups(id),
-    invitee int references players(id),
-    inviter int references players(id),
+    id serial primary key,
+    group_id int NOT NULL references groups(id),
+    invitee int NOT NULL references players(id),
+    inviter int NOT NULL references players(id),
     status invite_status default 'pending'
 );
 
 
 CREATE TABLE group_achievements (
     id serial primary key,
-    group_id int REFERENCES groups(id),
+    group_id int NOT NULL REFERENCES groups(id),
     achievement_id int,
     achieved_at TIMESTAMP DEFAULT NOW()
 );
 
 CREATE TABLE group_achievement_participants (
-    group_achievement_id int references group_achievements(id),
-    member_id int references group_members(id)
+    group_achievement_id int NOT NULL references group_achievements(id),
+    member_id int NOT NULL references group_members(id)
 );
 
 CREATE TABLE processed_group_game (
     game_id bigint,
-    group_id int REFERENCES groups(id)
+    group_id int NOT NULL REFERENCES groups(id)
 );
 
 

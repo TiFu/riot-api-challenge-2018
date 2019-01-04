@@ -21,6 +21,9 @@ export class AchievementSocketIOService {
         this.registerEventListeners();
     }
 
+    public _getSocket() {
+        return this.socket;
+    }
     public reset() {
         if (this.socket) 
             this.socket.disconnect()
