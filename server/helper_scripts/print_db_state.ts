@@ -12,7 +12,7 @@ const db = psql({
 print()
 
 async function print() {
-    for (const table of ["players", "processed_games", "player_achievements", "groups", "group_members", "group_invites", "group_achievements", "group_achievement_participants", "processed_group_game"]) {
+    for (const table of ["players", "processed_games", "player_achievements", "groups", "group_members", "group_invites", "group_achievements", "group_achievement_participants", "processed_group_games"]) {
         await printTable(table);
     }
 }

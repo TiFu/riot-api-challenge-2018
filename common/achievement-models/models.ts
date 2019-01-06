@@ -31,15 +31,13 @@ export class PlayerAchievementCategory extends AchievemenCategory<PlayerAchievem
     }
 }
 
-export class groupAchievementCategory extends AchievemenCategory<GroupAchievement> {
+export class GroupAchievementCategory extends AchievemenCategory<GroupAchievement> {
     
-    public checkCategory(encryptedAccountIds: string[], obtainedAchievements: Set<AchievementId>, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): AchievementId[] {  
-        return this.getObtainableAchievements(obtainedAchievements).filter(a => a.checkAchievement(encryptedAccountIds, a, game, timeline)).map(a => a.id);
+    public checkCategory(accountIds: string[], obtainedAchievements: Set<AchievementId>, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): AchievementId[] {  
+        return this.getObtainableAchievements(obtainedAchievements).filter(a => a.checkAchievement(accountIds, game, timeline)).map(a => a.id);
     }
 
 }
-export type GroupAchievementCategory = AchievemenCategory<GroupAchievement>
-
 export type PlayerAchievementGroup = AchievementGroup<PlayerAchievement>
 export type GroupAchievementGroup = AchievementGroup<GroupAchievement>
 
@@ -76,10 +74,10 @@ export class GroupAchievement extends Achievement<GroupRule> {
     public readonly type: '@@Achievement/Group' = '@@Achievement/Group'
 
 
-    public checkAchievement(encryptedAccountIds: string[], achievement: GroupAchievement, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto) {
+    public checkAchievement(accountId: string[], game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto) {
         let success = true;
-        for (const rule of achievement.rules) {
-            success = success && rule.verify(encryptedAccountIds, game, timeline);
+        for (const rule of this.rules) {
+            success = success && rule.verify(accountId, game, timeline);
         }
         return success;
     }
@@ -94,7 +92,7 @@ export abstract class PlayerRule {
 
 export abstract class GroupRule {
     public readonly type: '@@Rule/Group' = '@@Rule/Group'
-    public abstract verify(participants: string[], game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean;
+    public abstract verify(accountIds: string[], game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean;
 }
 
 function addAllAchievements<T extends Achievement<any>>(achievement: AchievementGroup<T>, ids: T[]) {

@@ -2,7 +2,14 @@ import { RedisConfig} from 'achievement-config'
 import redis from 'redis'
 
 export type AchievementMessage = {
-    "playerAchievements": PlayerAchievementMessage[]
+    "playerAchievements": PlayerAchievementMessage[],
+    "groupAchievements": GroupAchievementMessage[]
+}
+
+export type GroupAchievementMessage = {
+    groupId: number
+    achievements: number[]
+    platform: string
 }
 export type PlayerAchievementMessage = {
     "accountId": number,

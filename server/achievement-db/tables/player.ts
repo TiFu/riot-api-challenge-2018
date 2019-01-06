@@ -40,14 +40,23 @@ export class PlayerDB {
             return handleMappingSingleRow<PlayerTableEntry, Player>(response, PlayerDB.PlayerTableMap);
         });
     }
+
+    public getPlayerByEncryptedAccountId(encryptedAccountId: string, region: string): Promise<Player | null> {
+        return this.getPlayer(encryptedAccountId, region);
+    }
     public getPlayer(encryptedAccountId: string, region: string): Promise<Player | null> {
+        console.log("Looking for player " + encryptedAccountId + ", region: " + region);
         const vals = {
             "encrypted_account_id": encryptedAccountId,
             "region": region.toLowerCase()
         }
-        return this.db.query("SELECT * from players WHERE encrypted_account_id = ${encrypted_account_id} and region = ${region} LIMIT 1", vals)
-        .then((response: PlayerTableEntry[]) => {
-            return handleMappingSingleRow<PlayerTableEntry, Player>(response, PlayerDB.PlayerTableMap);
+        return this.db.oneOrNone("SELECT * from players WHERE encrypted_account_id = ${encrypted_account_id} and region = ${region} LIMIT 1", vals)
+        .then((response: PlayerTableEntry) => {
+            if (response == null) {
+                return null;
+            }
+            console.log("Response", response)
+            return handleMappingSingleRow<PlayerTableEntry, Player>([response], PlayerDB.PlayerTableMap);
         })
     }
 

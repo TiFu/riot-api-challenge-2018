@@ -26,7 +26,7 @@ export class AchievementDatabase {
         });  
         this.GroupDB = new GroupDB(this.db);
         this.PlayerDB = new PlayerDB(this.db);
-        this.AchievementDB = new AchievementDB(this.db);
+        this.AchievementDB = new AchievementDB(this.db, psql);
     }
 
     public connect(): Promise<IConnected<any>> {

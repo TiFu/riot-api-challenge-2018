@@ -60,8 +60,9 @@ CREATE TABLE group_achievement_participants (
     member_id int NOT NULL references group_members(id)
 );
 
-CREATE TABLE processed_group_game (
+CREATE TABLE processed_group_games (
     game_id bigint,
+    region varchar(5),
     group_id int NOT NULL REFERENCES groups(id)
 );
 
