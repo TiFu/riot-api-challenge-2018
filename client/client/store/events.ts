@@ -2,20 +2,26 @@ import {slot, Slot, createEventBus, GenericChannel, combineEvents, TransportMess
 import { PlayerInfo, GameData } from './player/types';
 import { AchievementStore, AllActions } from './index';
 import { AnyAction } from 'redux';
-import { NewGameMessage } from 'achievement-sio';
+import { NewGameMessage, AchievementNotification, GroupInviteRequest, GroupInviteUpdate } from 'achievement-sio';
 
 const AchievementEvents = {
     "lcu_connection_update": slot<boolean, void>(),
     "frontend_connection_update": slot<boolean, void>(),
     "player_info_update": slot<PlayerInfo, void>(),
-    "end_of_game": slot<NewGameMessage, void>()
+    "end_of_game": slot<NewGameMessage, void>(),
+    "new_achievements": slot<AchievementNotification, void>(),
+    "new_group_invite": slot<GroupInviteRequest, void>(),
+    "group_invite_update": slot<GroupInviteUpdate, void>()
 }
 
 export type AchievementEventBus = {
     "lcu_connection_update": Slot<boolean, void>,
     "frontend_connection_update": Slot<boolean, void>,
     "player_info_update": Slot<PlayerInfo, void>,
-    "end_of_game": Slot<NewGameMessage, void>
+    "end_of_game": Slot<NewGameMessage, void>,
+    "new_achievements": Slot<AchievementNotification, void>,
+    "new_group_invite": Slot<GroupInviteRequest, void>,
+    "group_invite_update": Slot<GroupInviteUpdate, void>
 }
 
 const eventBus = createEventBus( {
@@ -39,6 +45,13 @@ export const eventBusMiddleware = (store: AchievementStore)  => (next: (action: 
         case '@@player/END_OF_GAME':
             console.log("emitting end of game in event bus middleware", action.payload);
             eventBus.end_of_game(action.payload)
+        break;
+        case '@@player/ACHIEVEMENTS_UPDATED':
+            eventBus.new_achievements(action.payload);
+        case '@@player/GROUP_INVITE_RECEIVED':
+            eventBus.new_group_invite(action.payload);
+        case '@@player/GROUP_INVITE_UPDATE':
+            eventBus.group_invite_update(action.payload);
         break;
     }
     return result;

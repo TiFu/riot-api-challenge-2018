@@ -1,4 +1,4 @@
-import { AchievementServerLocal, AchievementServerWeb, PlayerId, GroupId, AchievementNotification, HelloMessage, Achievement, PlayerData, Group, GroupInvite, GroupInviteRequest } from 'achievement-sio';
+import { AchievementServerLocal, AchievementServerWeb, PlayerId, GroupId, AchievementNotification, HelloMessage, Achievement, PlayerData, Group, GroupInviteRequest } from 'achievement-sio';
 import socketio from 'socket.io'
 import { AchievementDatabase } from 'achievement-db';
 import {Player, GroupInfo} from 'achievement-db';
@@ -8,7 +8,7 @@ import {regionMap} from '../util';
 import { rejects } from 'assert';
 import { SummonerV4SummonerDTO } from 'kayn/typings/dtos';
 import { getPlayerRoomFromId, getGroupRoom } from 'achievement-sio';
-import { GroupPartialInfo } from '../../../../common/achievement-sio/types/group';
+import { GroupPartialInfo } from 'achievement-sio';
 
 export class NotificationService {
 
@@ -21,7 +21,9 @@ export class NotificationService {
         console.log("Emitting message to " + room, group, inviter);
         this.localNS.to(room).emit("groupInvite", {
             inviteId: inviteId,
+            groupId: group.id,
             groupName: group.name,
+            status: "pending", // TODO: it's a new notification but we might want to change this in the future
             inviter: {
                 name: inviter.name,
                 region: inviter.region,
@@ -68,6 +70,7 @@ export class NotificationService {
         console.log("Found invites: ", invites);
         const mappedInvites: GroupInviteRequest[] = invites.map((i) => {
             return {
+                groupName: i.group.name,
                 inviteId: i.inviteId,
                 inviter: i.inviter,
                 invitee: i.invitee,
@@ -135,8 +138,8 @@ export class NotificationService {
         this.localNS.to(room).emit("achievementNotification", achievement);
     }
 
-    public notifyGroupAchievement(group: GroupInfo, achievement: AchievementNotification) {
-        const room = this._getGroupRoom(group)
+    public notifyGroupAchievement(groupId: number, achievement: AchievementNotification) {
+        const room = getGroupRoom(groupId)
         this.webNS.to(room).emit("achievementNotification", achievement)
         this.localNS.to(room).emit("achievementNotification", achievement);
     }

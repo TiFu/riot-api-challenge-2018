@@ -1,4 +1,4 @@
-import { AchievementLocalClient } from 'achievement-sio'
+import { AchievementLocalClient, GroupInviteRequest, GroupInviteUpdate } from 'achievement-sio'
 import { PlayerInfo, GameData } from '../store/player/types';
 import io from 'socket.io-client'
 import { AchievementEventBus } from '../store/events';
@@ -8,7 +8,7 @@ import { updateFrontendConnectedState } from '../store/lcu/actions';
 import { NewGameMessage } from 'achievement-sio';
 import { getPlayerRoomFromId, AchievementNotification } from 'achievement-sio';
 import { PlayerData } from 'achievement-sio';
-import { updateAchievements } from '../store/player/actions';
+import { updateAchievements, updatePlayerInfo, updatePlayerData, newGroupInvite, groupInviteUpdate } from '../store/player/actions';
 
 export class AchievementSocketIOService {
     private socket: AchievementLocalClient
@@ -51,16 +51,28 @@ export class AchievementSocketIOService {
         })
         this.socket.on("achievementNotification", (notification) => this.handleAchievementNotification(notification))
         this.socket.on("playerData", (playerData) => this.handlePlayerData(playerData));
+        this.socket.on("groupInvite", (invite) => this.handleGroupInvite(invite))
+        this.socket.on("inviteUpdate", (inviteUpdate) => this.handleGroupInviteUpdate(inviteUpdate));
+    }
+
+    // TODO: fetch group data on inviteUpdate for that group
+    private handleGroupInvite(invite: GroupInviteRequest) {
+        this.store.dispatch(newGroupInvite(invite))
+    }
+
+    private handleGroupInviteUpdate(update: GroupInviteUpdate) {
+        this.store.dispatch(groupInviteUpdate(update))
     }
 
     private handlePlayerData(playerData: PlayerData) {
-        this.store.dispatch(updateAchievements(playerData.achievements))
+        this.store.dispatch(updatePlayerData(playerData))
         console.log("Player Data: ", playerData);
     }
     
     private handleAchievementNotification(msg: AchievementNotification) {
         console.log("Received achievement notification!", msg)
-    }
+        this.store.dispatch(updateAchievements(msg));
+   }
 
     private deregisterEvents() {
         for (const unsub of this.unsubscribes) {

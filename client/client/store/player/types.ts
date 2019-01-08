@@ -1,5 +1,5 @@
 import {Action} from 'redux'
-import { NewGameMessage, Achievement } from 'achievement-sio';
+import { NewGameMessage, Achievement, AchievementNotification, PlayerData, GroupPartialInfo, GroupInviteRequest, GroupInviteUpdate } from 'achievement-sio';
 
 export interface PlayerAchievementEntry {
     achievementId: number,
@@ -20,19 +20,33 @@ export interface GameData {
     timeline: any
 }
 
+export interface UpdatePlayerDataAction extends Action {
+    type: '@@player/PLAYER_DATA_UPDATED'
+    payload: PlayerData
+}
 export interface UpdateAchievementsAction extends Action {
     type: '@@player/ACHIEVEMENTS_UPDATED'
-    payload: Achievement[]
+    payload: AchievementNotification
+}
+
+export interface ReceivedGroupInviteAction extends Action {
+    type: '@@player/GROUP_INVITE_RECEIVED'
+    payload: GroupInviteRequest
 }
 
 export interface EndOfGameAction extends Action {
     type: '@@player/END_OF_GAME',
     payload: NewGameMessage
 }
-
+export interface GroupInviteUpdateAction extends Action {
+    type: '@@player/GROUP_INVITE_UPDATE'
+    payload: GroupInviteUpdate
+}
 export interface PlayerState {
     playerInfo?: PlayerInfo
     playerAchievements?: PlayerAchievementEntry[]
+    groups?: GroupPartialInfo[],
+    invites?: GroupInviteRequest[]
 }
 
 export interface PlayerStateUpdatedAction extends Action {
@@ -40,4 +54,4 @@ export interface PlayerStateUpdatedAction extends Action {
     payload: PlayerInfo
 }
 
-export type PlayerActions = PlayerStateUpdatedAction | EndOfGameAction | UpdateAchievementsAction; // use union type here
+export type PlayerActions = PlayerStateUpdatedAction | EndOfGameAction | GroupInviteUpdateAction | UpdateAchievementsAction | UpdatePlayerDataAction | ReceivedGroupInviteAction; // use union type here

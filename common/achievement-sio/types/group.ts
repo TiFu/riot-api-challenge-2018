@@ -8,17 +8,10 @@ export type GroupPartialInfo = {
     name: string,
     members: PlayerPartialInfo[]
 }
-
-export type GroupInvite = {
-    inviteId: number,
-    groupId: number,
-    inviter: PlayerPartialInfo
-}
-
-export type GroupInvitationNotification = {
-    inviteId: number
-    groupName: string
-    inviter: PlayerPartialInfo
+export type GroupInviteUpdate = { 
+    groupId: number, 
+    player: PlayerPartialInfo, 
+    newStatus: "accepted" | "canceled" | "declined" | "pending" 
 }
 
 export type GroupInviteRequestMessage = {
@@ -28,9 +21,9 @@ export type GroupInviteRequestMessage = {
 
 export type GroupInviteRequest = {
     groupId: number,
+    groupName: string,
     inviteId: number,
     inviter: PlayerPartialInfo
-    invitee: PlayerPartialInfo
     status: "pending" | "canceled" | "accepted" | "declined"
 }
 

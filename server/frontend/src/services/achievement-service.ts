@@ -2,12 +2,12 @@ import {NewGameMessage, SearchPlayerMessage, PublicPlayerData} from 'achievement
 import { AchievementRedis } from 'achievement-redis';
 import { NotificationService } from './notification-service';
 import { PlayerPartialInfo } from 'achievement-sio';
-import { Game } from 'achievement-redis';
+import { Game, AchievementMessage } from 'achievement-redis';
 
 export class AchievementService {
 
     public constructor(private achievementRedis: AchievementRedis, private subscribeRedis: AchievementRedis, private notificationservice: NotificationService) {
-        this.subscribeRedis.subscribeToAchievementEvents((msg) => {
+        this.subscribeRedis.subscribeToAchievementEvents((msg: AchievementMessage) => {
             console.log("notifying users of new achievements!");
             for (const player of msg.playerAchievements) {
                 this.notificationservice.notifyAchievement(player.accountId, player.platform, {
@@ -20,6 +20,13 @@ export class AchievementService {
                         "name": player.playerName 
                     },
                     "acquirer_type": "PLAYER"
+                })
+            }
+            for (const groupAchievement of msg.groupAchievements) {
+                this.notificationservice.notifyGroupAchievement(groupAchievement.groupId, {
+                    "achievement_ids": groupAchievement.achievements,
+                    "acquirer": groupAchievement.groupId,
+                    "acquirer_type": "GROUP"
                 })
             }
         })
