@@ -3,12 +3,14 @@ import { AchievementState } from "../store";
 import { connect } from 'react-redux';
 import { updatePlayerInfo } from '../store/player/actions';
 import { PlayerInfo, PlayerState } from '../store/player/types';
-import { PlayerAchievementCategory } from 'achievement-models';
+import { PlayerAchievementCategory, GroupAchievementCategory, AchievemenCategory, Achievement, AchievementId, AchievementGroup } from 'achievement-models';
 import { Treant } from 'treant-js'
 
 interface ConfigurableTreeComponentProps {
- // nodes: PlayerAchievementCategory
- componentId: number
+  achievementCategory: AchievemenCategory<any>
+  achievements: Set<AchievementId>
+  // nodes: PlayerAchievementCategory
+  componentId: number
 }
 
 interface TreeComponentProps {
@@ -37,9 +39,19 @@ interface Chart {
 interface TreeComponentActions {
 }
 
+
 // TODO: map AchievementCategory + Achievements to tree
 class TreeComponent extends React.Component<ConfigurableTreeComponentProps & TreeComponentProps & TreeComponentActions, {}> {
-  private playerAchievementCategoriesToNodes() {
+  private borderMap: { [key: string]: string } = {
+    "level_0": "no_border.png",
+    "level_1": "bronze.png",
+    "level_2": "silver.png",
+    "level_3": "gold.png"
+  }
+
+  private playerAchievementCategoriesToNodes(group: AchievementGroup<any>): Node {
+    const achievement = group.levels[0].id
+    
     return {}
   }
 

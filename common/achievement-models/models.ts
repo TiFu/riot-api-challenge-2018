@@ -7,6 +7,10 @@ export class AchievemenCategory<T extends Achievement<any>> {
     public constructor(public readonly trophyImages: string, public readonly name: string, public readonly description: string, public readonly icon: string, protected readonly firstAchievement: AchievementGroup<T>) {
     }
 
+    public getFirstGroup(): AchievementGroup<T> {
+        return this.firstAchievement
+    }
+
     protected getObtainableAchievements(obtainedAchievements: Set<AchievementId>): T[] {
         const queue = [this.firstAchievement];
         let currentAchievementGroup = queue.pop();
