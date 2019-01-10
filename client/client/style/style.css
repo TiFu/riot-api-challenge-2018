@@ -1,0 +1,11 @@
+@import url("tree.css");
+@import url("wallpaper.css");
+
+.hidden {
+    display: none
+}
+
+.full_width_height {
+    height: 100%;
+    width: 100%;
+}

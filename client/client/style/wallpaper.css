@@ -1,0 +1,27 @@
+.background {
+    background-image: url("../assets/background.jpg");
+    background-size: cover;
+}
+
+.row-one-third {
+    height: 33.333%;
+}
+
+.wallpaper-padding {
+    padding: 15px;
+    padding-left:60px;
+    padding-right:60px;
+}
+
+.wallpaper-centerd {
+    text-align: center;
+    vertical-align: bottom;
+}
+
+.wallpaper-10 {
+    width: 10%;
+}
+
+.wallpaper-80 {
+    width: 80%;
+}

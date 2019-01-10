@@ -20,6 +20,7 @@
     "@types/ws": "^6.0.1",
     "achievement-models": "file:../../common/achievement-models",
     "achievement-sio": "file:../../common/achievement-sio",
+    "bootstrap": "^4.2.1",
     "lcu-api": "file:../lcu-api",
     "lcu-connector": "^1.0.2",
     "react": "^16.7.0",

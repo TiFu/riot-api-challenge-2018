@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { updatePlayerInfo } from '../store/player/actions';
 import { PlayerInfo, PlayerState } from '../store/player/types';
 import TreeComponent from './TreeComponent'
+import WallpaperComponent from './WallpaperComponent'
 
 interface MainComponentProps {
     lcu: boolean
@@ -25,10 +26,7 @@ class MainComponent extends React.Component<MainComponentProps & MainComponentAc
     }
 
     render() { 
-        const divStyle = {"width": "100%", height:"100%"}
-        return <div style={divStyle}>
-            <TreeComponent></TreeComponent>
-        </div>;
+        return <WallpaperComponent></WallpaperComponent>
   
     }
   

@@ -6,8 +6,13 @@ import { PlayerInfo, PlayerState } from '../store/player/types';
 import { PlayerAchievementCategory } from 'achievement-models';
 import { Treant } from 'treant-js'
 
-interface TreeComponentProps {
+interface ConfigurableTreeComponentProps {
  // nodes: PlayerAchievementCategory
+ componentId: number
+}
+
+interface TreeComponentProps {
+
 }
 
 interface Node {
@@ -32,8 +37,8 @@ interface Chart {
 interface TreeComponentActions {
 }
 
-class TreeComponent extends React.Component<TreeComponentProps & TreeComponentActions, {}> {
-
+// TODO: map AchievementCategory + Achievements to tree
+class TreeComponent extends React.Component<ConfigurableTreeComponentProps & TreeComponentProps & TreeComponentActions, {}> {
   private playerAchievementCategoriesToNodes() {
     return {}
   }
@@ -41,7 +46,7 @@ class TreeComponent extends React.Component<TreeComponentProps & TreeComponentAc
   componentDidMount() {
     const simple_chart_config: Chart = {
       chart: {
-          container: "#tree-simple",
+          container: "#tree-simple-" + this.props.componentId,
           hideRootNode: false
       },
       nodeStructure: {
@@ -65,58 +70,32 @@ class TreeComponent extends React.Component<TreeComponentProps & TreeComponentAc
       width:"100%",
       height:"100%",
     }
-    const hidden = { display: "none"}
 
-    const borderDiv = {
-    }
-
-    const border = {
-      width:"64px",
-      height: "auto"
-    } 
-  
-    const champDiv = {
-    }
-
-    const champ ={ 
-      position: "absolute" as any,
-      left: "50%",
-      top: "50%",
-      zIndex: -1,
-      transform: "translate(-50%, -54%)",
-      width: "52px",
-      height: "auto",
-      borderRadius: "50%"
-    }
-
-    const center = {
-    }
-
-return <div style={divStyle}>
-        <div id="tree-simple" style={divStyle} ></div>
-        <div style={ hidden }>
-        <span id="aatrox-0" style={center}>
-          <div style={champDiv}>
-            <img style={champ} src="./assets/champs/Aatrox_0.jpg"></img>
+return <div className="full_width_height">
+        <div id={"tree-simple-" + this.props.componentId} className="full_width_height" ></div>
+        <div className="hidden">
+        <span id="aatrox-0">
+          <div>
+            <img className="tree_champ_img" src="./assets/champs/Aatrox_0.jpg"></img>
           </div>
-          <div style={borderDiv}>
-            <img style={border} src="./assets/borders/border_gold.png"></img>
+          <div>
+            <img className="tree_border_img" src="./assets/borders/border_gold.png"></img>
           </div>
         </span>
-        <span id="aatrox-1" style={center}>
-          <div style={champDiv}>
-            <img style={champ} src="./assets/champs/Aatrox_1.jpg"></img>
+        <span id="aatrox-1" >
+          <div >
+            <img className="tree_champ_img" src="./assets/champs/Aatrox_1.jpg"></img>
           </div>
-          <div style={borderDiv}>
-            <img style={border} src="./assets/borders/border_gold.png"></img>
+          <div>
+            <img className="tree_border_img" src="./assets/borders/border_gold.png"></img>
           </div>
         </span>
-        <span id="aatrox-2" style={center}>
-          <div style={champDiv}>
-            <img style={champ} src="./assets/champs/Aatrox_2.jpg"></img>
+        <span id="aatrox-2" >
+          <div >
+            <img className="tree_champ_img" src="./assets/champs/Aatrox_2.jpg"></img>
           </div>
-          <div style={borderDiv}>
-            <img style={border} src="./assets/borders/border_gold.png"></img>
+          <div>
+            <img className="tree_border_img" src="./assets/borders/border_gold.png"></img>
           </div>
         </span>
         </div>
@@ -126,8 +105,8 @@ return <div style={divStyle}>
 }
    
   
-  function mapStateToProps(state: AchievementState): TreeComponentProps {
-  
+  function mapStateToProps(state: AchievementState, ownProps: ConfigurableTreeComponentProps): Partial<TreeComponentProps> {
+    console.log("Own Props", ownProps)
     return {
       
     };
