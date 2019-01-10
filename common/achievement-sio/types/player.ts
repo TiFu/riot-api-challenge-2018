@@ -1,5 +1,5 @@
 import {Achievement} from './achievement';
-import { GroupPartialInfo, GroupInvite, GroupInviteRequest } from './group';
+import { GroupPartialInfo, GroupInviteRequest } from './group';
 
 export type SearchPlayerMessage = {
     searchString: string

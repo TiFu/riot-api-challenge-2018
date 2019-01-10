@@ -27,6 +27,7 @@
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",
     "socket.io-client": "^2.2.0",
+    "treant-js": "^1.0.1",
     "ts-event-bus": "^2.0.0",
     "ws": "^6.1.2"
   },

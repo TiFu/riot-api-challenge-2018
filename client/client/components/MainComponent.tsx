@@ -3,6 +3,7 @@ import { AchievementState } from "../store";
 import { connect } from 'react-redux';
 import { updatePlayerInfo } from '../store/player/actions';
 import { PlayerInfo, PlayerState } from '../store/player/types';
+import TreeComponent from './TreeComponent'
 
 interface MainComponentProps {
     lcu: boolean
@@ -23,13 +24,11 @@ class MainComponent extends React.Component<MainComponentProps & MainComponentAc
         }
     }
 
-    render() {
-      return <div>
-          I am {this.props.lcu ? "" : "not"} connected to LCU!<br />
-          I am {this.props.backend ? "" : "not"} connected to the backend!<br />
-          <button onClick={this.props.dispatchNewSummoner}>Set summoner!</button><br />
-          Summoner: {this.renderPlayer()}<br />
-      </div>;
+    render() { 
+        const divStyle = {"width": "100%", height:"100%"}
+        return <div style={divStyle}>
+            <TreeComponent></TreeComponent>
+        </div>;
   
     }
   
