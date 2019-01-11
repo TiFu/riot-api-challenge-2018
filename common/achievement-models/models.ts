@@ -4,7 +4,7 @@ export type AchievementId = number
 
 export class AchievemenCategory<T extends Achievement<any>> {
     
-    public constructor(public readonly trophyImages: string, public readonly name: string, public readonly description: string, public readonly icon: string, protected readonly firstAchievement: AchievementGroup<T>) {
+    public constructor(public readonly trophyImages: { "completionState": number, "trophyImage": string}[], public readonly name: string, public readonly description: string, public readonly icon: string, protected readonly firstAchievement: AchievementGroup<T>) {
     }
 
     public getFirstGroup(): AchievementGroup<T> {

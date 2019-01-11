@@ -7,6 +7,8 @@ import TreeComponent from './TreeComponent'
 import { groupAchievementCategories } from "achievement-models";
 import { number } from "prop-types";
 import { Achievement } from 'achievement-sio';
+import TrophyComponent from './TrophComponent';
+
 interface WallpaperComponentProps {
 }
 
@@ -30,6 +32,7 @@ class WallpaperComponent extends React.Component<WallpaperComponentProps & Wallp
             skinId: 1000,
             achievedAt: (new Date()).toString()
         })
+        const completionState = 1.0
         return <div className="background full_width_height">
             <div className="full_width_height wallpaper-padding">
                 <div className="row row-one-third">
@@ -37,16 +40,16 @@ class WallpaperComponent extends React.Component<WallpaperComponentProps & Wallp
                     <div className="wallpaper-80">
                         <div className="row full_width_height">
                             <div className="col wallpaper-centerd">
-                                <TreeComponent achievements={achievements} achievementCategory={group}  componentId={3}> </TreeComponent>
+                                <TreeComponent achievements={achievements} achievementCategory={group}  componentId={"group"}> </TreeComponent>
                             </div>
                             <div className="col wallpaper-centerd">
-                                <img src="./assets/trophies/trophies.png" className="full_width_height"></img>
+                                <TrophyComponent completionState={completionState} achievementCategory={group} />
                             </div>
                             <div className="col wallpaper-centerd">
-                                <img src="./assets/trophies/trophies.png" className="full_width_height"></img>
+                                <TrophyComponent completionState={completionState} achievementCategory={group} />
                             </div>
                             <div className="col wallpaper-centerd">
-                            <TreeComponent achievements={achievements} achievementCategory={group}  componentId={4}> </TreeComponent>
+                            <TreeComponent achievements={achievements} achievementCategory={group}  componentId={"clownfiesta"}> </TreeComponent>
                             </div>
                         </div>
                     </div>
@@ -54,36 +57,36 @@ class WallpaperComponent extends React.Component<WallpaperComponentProps & Wallp
                 </div>
                 <div className="row row-one-third">
                     <div className="col wallpaper-centerd">
-                        <TreeComponent achievements={achievements} achievementCategory={group}  componentId={5}> </TreeComponent>
+                        <TreeComponent achievements={achievements} achievementCategory={group}  componentId={"top"}> </TreeComponent>
                     </div>
                     <div className="col wallpaper-centerd">
-                        <TreeComponent achievements={achievements} achievementCategory={group}  componentId={6}> </TreeComponent>
+                        <TreeComponent achievements={achievements} achievementCategory={group}  componentId={"jungle"}> </TreeComponent>
                     </div>
                     <div className="col wallpaper-centerd">
-                        <TreeComponent achievements={achievements} achievementCategory={group}  componentId={7}> </TreeComponent>
+                        <TreeComponent achievements={achievements} achievementCategory={group}  componentId={"mid"}> </TreeComponent>
                     </div>
                     <div className="col wallpaper-centerd">
-                        <TreeComponent achievements={achievements} achievementCategory={group}  componentId={8}> </TreeComponent>
+                        <TreeComponent achievements={achievements} achievementCategory={group}  componentId={"adc"}> </TreeComponent>
                     </div>
                     <div className="col wallpaper-centerd">
-                        <TreeComponent achievements={achievements} achievementCategory={group}  componentId={9}> </TreeComponent>
+                        <TreeComponent achievements={achievements} achievementCategory={group}  componentId={"support"}> </TreeComponent>
                     </div>
                 </div>
                 <div className="row row-one-third">
                     <div className="col wallpaper-centerd">
-                        <img src="./assets/trophies/trophies.png" className="full_width_height"></img>
+                        <TrophyComponent completionState={completionState} achievementCategory={group} />
                     </div>
                     <div className="col wallpaper-centerd">
-                        <img src="./assets/trophies/trophies.png" className="full_width_height"></img>
+                        <TrophyComponent completionState={completionState} achievementCategory={group} />
                     </div>
                     <div className="col wallpaper-centerd">
-                        <img src="./assets/trophies/trophies.png" className="full_width_height"></img>
+                        <TrophyComponent completionState={completionState} achievementCategory={group} />
                     </div>
                     <div className="col wallpaper-centerd">
-                        <img src="./assets/trophies/trophies.png" className="full_width_height"></img>
+                        <TrophyComponent completionState={completionState} achievementCategory={group} />
                     </div>
                     <div className="col wallpaper-centerd">
-                        <img src="./assets/trophies/trophies.png" className="full_width_height"></img>
+                        <TrophyComponent completionState={completionState} achievementCategory={group} />
                     </div>
                 </div>
             </div>

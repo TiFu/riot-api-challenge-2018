@@ -1,4 +1,4 @@
-import { PlayerAchievement, PlayerAchievementGroup, GroupAchievement, PlayerAchievementCategory, GroupAchievementCategory, AchievementId, Achievement, AchievementGroup, GroupAchievementGroup } from './models';
+import { PlayerAchievement, PlayerAchievementGroup, GroupAchievement, PlayerAchievementCategory, GroupAchievementCategory, AchievementId, Achievement, AchievementGroup, GroupAchievementGroup, AchievemenCategory } from './models';
 import { KillRule } from './rules';
 import { GroupKillRule } from './group_rules';
 
@@ -16,8 +16,8 @@ export const group1: PlayerAchievementGroup = {
 
 
 export const playerAchievementCategories: PlayerAchievementCategory[] = [
-    new PlayerAchievementCategory("", "Test", "desc", "icon", group1),
-    new PlayerAchievementCategory("", "Test2", "desc", "icon", group1)
+    new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: ""}], "Test", "desc", "icon", group1),
+    new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: ""}], "Test2", "desc", "icon", group1)
 ]
 
 const group2Level0: GroupAchievement = new GroupAchievement(2, "test unlock message", "test name", "desc", [ new GroupKillRule() ]);
@@ -35,8 +35,8 @@ const group3: GroupAchievementGroup = {
 }
 
 export const groupAchievementCategories: GroupAchievementCategory[] = [
-    new GroupAchievementCategory("", "Group Test", "Test Description", "", group2),
-    new GroupAchievementCategory("", "Group Test", "Test Description", "", group3)
+    new GroupAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Group Test", "Test Description", "", group2),
+    new GroupAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Group Test", "Test Description", "", group3)
 ]
 
 export function checkPlayerAchievementCategories(encryptedAccountId: string, obtainedAchievements: Set<AchievementId>, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto, playerAchievementCategories: PlayerAchievementCategory[]) {
@@ -55,4 +55,26 @@ export function checkGroupAchievementCategories(accountIds: string[], obtainedAc
         newlyObtainedAchievements.forEach(a => allObtainedIds.push(a));
     }
     return allObtainedIds;
+}
+
+export function getCategoryCompletionState(category: AchievemenCategory<any>, obtainedAchievements: Set<number>) {
+    const [achieved, total ]= groupCompletionState(category.getFirstGroup(), obtainedAchievements);
+    return achieved / total;
+}
+
+function groupCompletionState(group: AchievementGroup<PlayerAchievement | GroupAchievement>, obtainedAchievements: Set<number>): [number, number] {
+    let total = 0
+    let achieved = 0;
+    for (const level of group.levels) {
+        if (obtainedAchievements.has(level.id)) {
+            achieved++;
+        } 
+        total++;
+    }
+    for (const child of group.childAchievements) {
+        const [childAchieved, childTotal] = groupCompletionState(child, obtainedAchievements)
+        total += childTotal
+        achieved += childAchieved
+    }
+    return [achieved, total];
 }

@@ -13,7 +13,7 @@ interface ConfigurableTreeComponentProps {
   achievementCategory: AchievemenCategory<any>
   achievements: Map<number, SIOAchievement>
   // nodes: PlayerAchievementCategory
-  componentId: number
+  componentId: string
 }
 
 interface TreeComponentProps {
