@@ -6,7 +6,8 @@ export type GroupId = number
 export type GroupPartialInfo = {
     id: GroupId,
     name: string,
-    members: PlayerPartialInfo[]
+    members: PlayerPartialInfo[],
+    achievements: Achievement[]
 }
 export type GroupInviteUpdate = { 
     groupId: number, 

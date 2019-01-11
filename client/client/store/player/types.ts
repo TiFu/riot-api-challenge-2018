@@ -1,5 +1,5 @@
 import {Action} from 'redux'
-import { NewGameMessage, Achievement, AchievementNotification, PlayerData, GroupPartialInfo, GroupInviteRequest, GroupInviteUpdate } from 'achievement-sio';
+import { NewGameMessage, AchievementNotification, PlayerData, GroupPartialInfo, GroupInviteRequest, GroupInviteUpdate } from 'achievement-sio';
 
 export interface PlayerAchievementEntry {
     achievementId: number,
@@ -18,6 +18,13 @@ export interface PlayerInfo {
 export interface GameData {
     game: any
     timeline: any
+}
+
+export interface PlayerState {
+    playerInfo?: PlayerInfo
+    playerAchievements?: PlayerAchievementEntry[]
+    groups?: GroupPartialInfo[],
+    invites?: GroupInviteRequest[]
 }
 
 export interface UpdatePlayerDataAction extends Action {
@@ -41,12 +48,6 @@ export interface EndOfGameAction extends Action {
 export interface GroupInviteUpdateAction extends Action {
     type: '@@player/GROUP_INVITE_UPDATE'
     payload: GroupInviteUpdate
-}
-export interface PlayerState {
-    playerInfo?: PlayerInfo
-    playerAchievements?: PlayerAchievementEntry[]
-    groups?: GroupPartialInfo[],
-    invites?: GroupInviteRequest[]
 }
 
 export interface PlayerStateUpdatedAction extends Action {
