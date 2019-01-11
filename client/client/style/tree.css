@@ -15,3 +15,7 @@
     z-index: 100;
     height: auto;
 }
+
+.tree_border_img_gray {
+    filter: grayscale(100%);
+}

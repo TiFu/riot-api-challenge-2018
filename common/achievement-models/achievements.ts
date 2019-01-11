@@ -16,7 +16,8 @@ export const group1: PlayerAchievementGroup = {
 
 
 export const playerAchievementCategories: PlayerAchievementCategory[] = [
-    new PlayerAchievementCategory("", "Test", "desc", "icon", group1)
+    new PlayerAchievementCategory("", "Test", "desc", "icon", group1),
+    new PlayerAchievementCategory("", "Test2", "desc", "icon", group1)
 ]
 
 const group2Level0: GroupAchievement = new GroupAchievement(2, "test unlock message", "test name", "desc", [ new GroupKillRule() ]);
@@ -25,13 +26,14 @@ const group3Level0: GroupAchievement = new GroupAchievement(3, "test unlock mess
 const group2: GroupAchievementGroup = {
     name: "Test",
     childAchievements: [],
-    levels: [group2Level0]
+    levels: [group2Level0, group3Level0]
 }
 const group3: GroupAchievementGroup = {
     name: "Test2",
     childAchievements: [],
     levels: [group3Level0]
 }
+
 export const groupAchievementCategories: GroupAchievementCategory[] = [
     new GroupAchievementCategory("", "Group Test", "Test Description", "", group2),
     new GroupAchievementCategory("", "Group Test", "Test Description", "", group3)
@@ -54,4 +56,3 @@ export function checkGroupAchievementCategories(accountIds: string[], obtainedAc
     }
     return allObtainedIds;
 }
-

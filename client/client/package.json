@@ -5,7 +5,7 @@
   "main": "dist/electron.js",
   "scripts": {
     "start": "electron .",
-    "build": "tsc",
+    "build": "tsc --resolveJsonModule",
     "debug": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
