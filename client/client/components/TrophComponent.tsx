@@ -28,7 +28,7 @@ class TrophyComponent extends React.Component<ConfigurableTrophyComponentProps &
             trophyImage = trophyImages[i].trophyImage
         }
     }
-    return <div>
+    return <div className="full_width_height">
         <img src={"./assets/trophies/" + trophyImage} className="full_width_height"></img>
     </div>
   }
