@@ -52,6 +52,7 @@ CREATE TABLE group_achievements (
     id serial primary key,
     group_id int NOT NULL REFERENCES groups(id),
     achievement_id int,
+    champ_id int,
     achieved_at TIMESTAMP DEFAULT NOW()
 );
 

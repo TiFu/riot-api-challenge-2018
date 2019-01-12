@@ -9,7 +9,8 @@ const AchievementEvents = {
     "frontend_connection_update": slot<boolean, void>(),
     "player_info_update": slot<PlayerInfo, void>(),
     "end_of_game": slot<NewGameMessage, void>(),
-    "new_achievements": slot<AchievementNotification, void>(),
+    "new_player_achievements": slot<AchievementNotification, void>(),
+    "new_group_achievements": slot<AchievementNotification, void>(),
     "new_group_invite": slot<GroupInviteRequest, void>(),
     "group_invite_update": slot<GroupInviteUpdate, void>()
 }
@@ -19,7 +20,8 @@ export type AchievementEventBus = {
     "frontend_connection_update": Slot<boolean, void>,
     "player_info_update": Slot<PlayerInfo, void>,
     "end_of_game": Slot<NewGameMessage, void>,
-    "new_achievements": Slot<AchievementNotification, void>,
+    "new_player_achievements": Slot<AchievementNotification, void>,
+    "new_group_achievements": Slot<AchievementNotification, void>,
     "new_group_invite": Slot<GroupInviteRequest, void>,
     "group_invite_update": Slot<GroupInviteUpdate, void>
 }
@@ -46,8 +48,10 @@ export const eventBusMiddleware = (store: AchievementStore)  => (next: (action: 
             console.log("emitting end of game in event bus middleware", action.payload);
             eventBus.end_of_game(action.payload)
         break;
-        case '@@player/ACHIEVEMENTS_UPDATED':
-            eventBus.new_achievements(action.payload);
+        case '@@player/PLAYER_ACHIEVEMENTS_UPDATED':
+            eventBus.new_player_achievements(action.payload);
+        case '@@player/GROUP_ACHIEVEMENTS_UPDATED':
+            eventBus.new_group_achievements(action.payload);
         case '@@player/GROUP_INVITE_RECEIVED':
             eventBus.new_group_invite(action.payload);
         case '@@player/GROUP_INVITE_UPDATE':

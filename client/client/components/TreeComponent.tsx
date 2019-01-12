@@ -52,16 +52,16 @@ interface NodeDescription extends Node {
 }
 
 type BorderMap = {
+  "level_-1": string,
   "level_0": string,
   "level_1": string,
-  "level_2": string,
-  "level_3": string
+  "level_2": string
 }
 const borderMap: BorderMap = {
-  "level_0": "./assets/borders/no_border.png",
-  "level_1": "./assets/borders/border_bronze.png",
-  "level_2": "./assets/borders/border_silver.png",
-  "level_3": "./assets/borders/border_gold.png"
+  "level_-1": "./assets/borders/no_border.png",
+  "level_0": "./assets/borders/border_bronze.png",
+  "level_1": "./assets/borders/border_silver.png",
+  "level_2": "./assets/borders/border_gold.png"
 }
 
 // TODO: map AchievementCategory + Achievements to tree
@@ -117,17 +117,17 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
 
   private getImgForChampAndSkinId(champId: number | null, skinId: number| null) { 
     const basePath = "./assets/champs/"
-    if (champId == null || skinId == null) { // TODO: fix base placeholder
-      return basePath + "Neeko_0.jpg"; 
-    }
-    if (champId.toString() in champSkinMap) {
-      if (skinId.toString() in champSkinMap[champId.toString()]) {
+    console.log("ChampId", champId, "SkinID: ", skinId);
+    if (champId != null && champId.toString() in champSkinMap) {
+      if (skinId != null && skinId.toString() in champSkinMap[champId.toString()]) {
+        console.log("using normal skin")
         return basePath + champSkinMap[champId.toString()][skinId.toString()]
       } else {
+        console.log("Defaulting to base skin")
         return basePath + champSkinMap[champId.toString()][champId.toString() + "000"];
       }
     } else { // random default lul
-      console.log("Unknown champ:", champId.toString())
+      console.log("Unknown champ:", champId)
       return basePath + "Neeko_0.jpg";
     }
   }
@@ -141,9 +141,13 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
     if (!node.achieved) {
       gray = "tree_border_img_gray"
     }
+    let icon = "./assets/padlock.png"
+    if (node.achieved) {
+      icon = this.getImgForChampAndSkinId(node.champId, node.skinId)
+    }
     return <span id={node.cssId} key={"tree-id-" + this.props.componentId + "-" + id}>
           <div>
-            <img className="tree_champ_img" src={this.getImgForChampAndSkinId(node.champId, node.skinId)}></img>
+            <img className={"tree_champ_img " + gray} src={icon}></img>
           </div>
           <div>
             <img className={"tree_border_img " + gray} src={this.getBorderForLevel("level_" + node.level)}></img>

@@ -14,6 +14,7 @@ export class AchievementService {
                     "achievement_ids": player.achievements,
                     "championId": player.champId,
                     "skinId": player.skinId,
+                    "achievedAt": player.achievedAt,
                     "acquirer": { 
                         "accountId": player.accountId,
                         "region": player.platform,
@@ -25,6 +26,8 @@ export class AchievementService {
             for (const groupAchievement of msg.groupAchievements) {
                 this.notificationservice.notifyGroupAchievement(groupAchievement.groupId, {
                     "achievement_ids": groupAchievement.achievements,
+                    "championId": groupAchievement.champId,
+                    "achievedAt": groupAchievement.achievedAt,
                     "acquirer": groupAchievement.groupId,
                     "acquirer_type": "GROUP"
                 })

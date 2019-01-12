@@ -31,8 +31,13 @@ export interface UpdatePlayerDataAction extends Action {
     type: '@@player/PLAYER_DATA_UPDATED'
     payload: PlayerData
 }
-export interface UpdateAchievementsAction extends Action {
-    type: '@@player/ACHIEVEMENTS_UPDATED'
+export interface UpdatePlayerAchievementsAction extends Action {
+    type: '@@player/PLAYER_ACHIEVEMENTS_UPDATED'
+    payload: AchievementNotification
+}
+
+export interface UpdateGroupAchievementsAction extends Action {
+    type: '@@player/GROUP_ACHIEVEMENTS_UPDATED'
     payload: AchievementNotification
 }
 
@@ -55,4 +60,4 @@ export interface PlayerStateUpdatedAction extends Action {
     payload: PlayerInfo
 }
 
-export type PlayerActions = PlayerStateUpdatedAction | EndOfGameAction | GroupInviteUpdateAction | UpdateAchievementsAction | UpdatePlayerDataAction | ReceivedGroupInviteAction; // use union type here
+export type PlayerActions = PlayerStateUpdatedAction | EndOfGameAction | GroupInviteUpdateAction | UpdateGroupAchievementsAction | UpdatePlayerAchievementsAction | UpdatePlayerDataAction | ReceivedGroupInviteAction; // use union type here

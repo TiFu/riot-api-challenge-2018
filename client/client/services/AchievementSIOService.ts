@@ -8,7 +8,7 @@ import { updateFrontendConnectedState } from '../store/lcu/actions';
 import { NewGameMessage } from 'achievement-sio';
 import { getPlayerRoomFromId, AchievementNotification } from 'achievement-sio';
 import { PlayerData } from 'achievement-sio';
-import { updateAchievements, updatePlayerInfo, updatePlayerData, newGroupInvite, groupInviteUpdate } from '../store/player/actions';
+import { updatePlayerAchievements, updateGroupAchievements, updatePlayerInfo, updatePlayerData, newGroupInvite, groupInviteUpdate } from '../store/player/actions';
 
 export class AchievementSocketIOService {
     private socket: AchievementLocalClient
@@ -71,7 +71,11 @@ export class AchievementSocketIOService {
     
     private handleAchievementNotification(msg: AchievementNotification) {
         console.log("Received achievement notification!", msg)
-        this.store.dispatch(updateAchievements(msg));
+        if (msg.acquirer_type == "PLAYER") {
+            this.store.dispatch(updatePlayerAchievements(msg));   
+        } else {
+            this.store.dispatch(updateGroupAchievements(msg));
+        }
    }
 
     private deregisterEvents() {

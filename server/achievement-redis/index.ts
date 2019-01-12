@@ -8,11 +8,14 @@ export type AchievementMessage = {
 
 export type GroupAchievementMessage = {
     groupId: number
+    champId: number
     achievements: number[]
     platform: string
+    "achievedAt": Date
 }
 export type PlayerAchievementMessage = {
     "accountId": number,
+    "achievedAt": Date,
     "playerName": string,
     "champId": number,
     "skinId": number,
@@ -48,10 +51,6 @@ export class AchievementRedis {
         this.redisClient.on("error", function (err: any) {
             console.log("Error " + err);
         });
-    }
-
-    public subToNotifications(listener: () => void) {
-        // TODO: transfered info?
     }
 
     public publishAchievementMessage(achievementMessage: AchievementMessage): Promise<number> {

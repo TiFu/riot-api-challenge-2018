@@ -16,8 +16,9 @@ export type Achievement = {
 
 export type AchievementNotification = {
     achievement_ids: number[],
-    championId?: number,
+    championId: number,
     skinId?: number,
+    achievedAt: Date,
     acquirer: PlayerPartialInfo | GroupId,
     acquirer_type: "PLAYER" | "GROUP"
 }

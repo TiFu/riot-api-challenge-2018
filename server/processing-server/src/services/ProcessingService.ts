@@ -13,6 +13,7 @@ import { checkPlayerAchievementCategories } from 'achievement-models';
 import { playerAchievementCategories } from 'achievement-models';
 import { promises } from 'fs';
 import { checkGroupAchievementCategories } from 'achievement-models';
+import { groupAchievementCategories } from '../../../../common/achievement-models/achievements';
 
 export class ProcessingService {
     private region: { [key: string]: string} = {
@@ -103,13 +104,14 @@ export class ProcessingService {
     private async processGroup(matchData: MatchV4MatchDto, timelineData: MatchV4MatchTimelineDto, group: number, players: Player[], region: string) {
         const obtainedAchievementsArray = await this.db.AchievementDB.getGroupAchievements(group).then((a) => a.map(e => e.achievementId)) as ReadonlyArray<number>;
         const obtainedAchievementsSet = new Set<number>(obtainedAchievementsArray);
-        const successIds = checkGroupAchievementCategories(players.map(p => p.encryptedAccountId), obtainedAchievementsSet, matchData, timelineData, playerAchievementCategories)
+        const successIds = checkGroupAchievementCategories(players.map(p => p.encryptedAccountId), obtainedAchievementsSet, matchData, timelineData, groupAchievementCategories)
         console.log("Group: " +group + " obtained the following achievements: "  + successIds);
 
         const promises = [];
         const failedIds: number[] = [];
+        const bestKdaChamp = this.findBestKdaChamp(matchData, players);
         for (const achievement of successIds) {
-            promises.push(this.db.AchievementDB.addGroupAchievement(group, achievement, players.map(p => p.id)).catch((err) => {
+            promises.push(this.db.AchievementDB.addGroupAchievement(group, achievement, bestKdaChamp, players.map(p => p.id)).catch((err) => {
                 console.log("Failed ids: ", err);
                 failedIds.push(err);
             }));
@@ -120,13 +122,28 @@ export class ProcessingService {
 
         return {
             "groupId": group,
+            "champId": bestKdaChamp,
             "participants": players,
+            "achievedAt": new Date(),
             "platform": region,
             "achievements": successIds.filter(x => failedIds.indexOf(x) === -1)
         };
 
     }
 
+    private findBestKdaChamp(matchData: MatchV4MatchDto, players: Player[]) {
+        const accountIds = new Set<string>(players.map(p => p.encryptedAccountId));
+        const participantIds = new Set<number>(matchData.participantIdentities.filter(pi => accountIds.has(pi.player.accountId)).map(pi => pi.participantId));
+
+        return matchData.participants.filter(p => participantIds.has(p.participantId)).reduce((prev, p) => {
+            const kda = (p.stats.kills + p.stats.assists) / (Math.max(p.stats.deaths, 1));
+            if (prev["kda"] < kda) {
+                return { "kda": kda, "champId": p.championId }
+            } else {
+                return prev;
+            }
+        }, { "kda": -1, "champId": 0})["champId"]
+    }
     private async checkGroup(group: number, playerIds: Player[]) {
         const promises: Promise<boolean>[] = []
         playerIds.forEach(p => promises.push(this.db.GroupDB.isMember(p.id, group)));
@@ -185,6 +202,7 @@ export class ProcessingService {
             "champId": game.champId,
             "skinId": game.skinId,
             "accountId": player.accountId,
+            achievedAt: new Date(),
             "playerName": player.name,
             "platform": player.region,
             "achievements": successIds.filter(x => failedIds.indexOf(x) === -1)

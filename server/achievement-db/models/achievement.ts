@@ -8,5 +8,6 @@ export interface PlayerAchievement {
 
 export interface GroupAchievement {
     achievementId: number
+    champId: number
     achievedAt: Date
 }

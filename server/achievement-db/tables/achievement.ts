@@ -24,10 +24,11 @@ export class AchievementDB {
     }
 
     public async getGroupAchievements(groupId: number): Promise<GroupAchievement[]> {
-        const result = await this.db.query("SELECT achievement_id, achieved_at FROM player_achievements WHERE player_id = $1", [groupId])
-        return result.map((a: { "achievement_id": number, "achieved_at": Date}) => {
+        const result = await this.db.query("SELECT achievement_id, champ_id, achieved_at FROM player_achievements WHERE player_id = $1", [groupId])
+        return result.map((a: { "achievement_id": number, "champ_id": number, "achieved_at": Date}) => {
             return {
                 "achievementId": a["achievement_id"],
+                "champId": a["champ_id"],
                 "achievedAt": a["achieved_at"]
             }
         })
@@ -66,14 +67,15 @@ export class AchievementDB {
         })
     }
 
-    public async addGroupAchievement(groupId: number, achievementId: number, participantPlayerIds: number[]): Promise<void> {
+    public async addGroupAchievement(groupId: number, achievementId: number, champId: number, participantPlayerIds: number[]): Promise<void> {
         const vals = {
             "achievement_id": achievementId,
             "group_id": groupId,
+            "champ_id": champId
         }
         console.log("Using vals: ", vals);
         return this.db.task(async (conn) => {
-            const addedAchievement = await conn.query("INSERT INTO group_achievements (achievement_id, group_id) VALUES (${achievement_id}, ${group_id}) RETURNING id", vals)
+            const addedAchievement = await conn.query("INSERT INTO group_achievements (achievement_id, group_id, champ_id) VALUES (${achievement_id}, ${group_id}, ${champ_id}) RETURNING id", vals)
             console.log("ADding achievement", vals)
             const groupAchievementId = addedAchievement[0].id;
             const memberIds = await this.getMemberNumbers(participantPlayerIds, groupId);
