@@ -11,7 +11,7 @@ export type Achievement = {
     achievementId: number,
     achievedAt: string,
     championId: number,
-    skinId: number
+    skinId?: number
 }
 
 export type AchievementNotification = {

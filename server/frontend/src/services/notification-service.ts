@@ -84,10 +84,18 @@ export class NotificationService {
         const mappedGroups: GroupPartialInfo[] = []
         for (const group of groups) {
             const members = await this.database.GroupDB.getGroupMembers(group.id);               
+            const achievements = await this.database.AchievementDB.getGroupAchievements(group.id);
             mappedGroups.push({
                 id: group.id,
                 name: group.name,
-                members: members
+                members: members,
+                "achievements": achievements.map(a => {
+                    return {
+                        "achievementId": a.achievementId,
+                        "achievedAt": a.achievedAt.toString(),
+                        "championId": a.champId
+                    }
+                })
             })
         }
 
