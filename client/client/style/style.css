@@ -1,3 +1,4 @@
+@import url("sidebar.css");
 @import url("group.css");
 @import url("tree.css");
 @import url("wallpaper.css");
@@ -15,6 +16,10 @@
     width: 100%;
 }
 
+.no_padding {
+    padding: 0px;
+}
+
 .no_pad_right {
     padding-right: 0px;
 }
@@ -24,6 +29,10 @@
 }
 
 .font {
+    color: #f0e6d2;
+}
+
+a {
     color: #f0e6d2;
 }
 

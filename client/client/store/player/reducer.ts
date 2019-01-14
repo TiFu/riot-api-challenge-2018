@@ -31,7 +31,7 @@ export const initialState: PlayerState = {
             },
             "status": "pending"
         }
-    ]
+    ],
     groups: [
         {
             id: 5,

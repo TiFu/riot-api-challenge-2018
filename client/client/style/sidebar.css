@@ -1,0 +1,50 @@
+.sidebar {
+    background-color: #0d1a23;
+}
+
+.title_bar {
+    height: 10%;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.title {
+    font-size: 22pt;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.sidebar_menu {
+    width: 100%;
+    margin: 15px
+}
+
+.sidebar_menu a {
+    display: block;
+    padding: 12px;
+    text-decoration: none;
+}
+  
+.sidebar_menu a:hover {
+    background-color: #ccc;
+}
+  
+.sidebar_active_link {
+    border-left: 5px #0793aa solid !important;
+    color: white;
+}
+
+.sidebar_indented {
+    padding-left: 15px;
+}
+
+.sidebar_default_link {
+    border-left: 5px transparent solid;
+}
+
+.badge_margin {
+    margin-left: 15px;
+}
