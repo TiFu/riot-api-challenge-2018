@@ -12,6 +12,8 @@ import GroupInvitesComponent from "./GroupInvitesComponent";
 
 interface SidebarComponentProps {
     groups: GroupPartialInfo[]
+    connectedToLcu: boolean
+    connectedToBackend: boolean
 }
 
 interface SidebarComponentActions {
@@ -19,12 +21,26 @@ interface SidebarComponentActions {
 
 class SidebarComponent extends React.Component<SidebarComponentProps & SidebarComponentActions, {}> {
 
+    makeFooter() {
+        const lcuClass = this.props.connectedToLcu ? "" : "gray_image"
+        const backendClass = this.props.connectedToBackend ? "": "gray_image";
+        return <div className="row sidebar_footer">
+            <div className="col connection_icon_frame no_padding">
+                <img src="./assets/lcu.png" width="50px" className={"connection_icon " + lcuClass}/>
+            </div>
+            <div className="col connection_icon_frame no_padding">
+                <img src="./assets/logo.jpg" width="50px" className={"connection_icon " + backendClass}/>
+            </div>
+        </div>
+    }
     render() {
         return <div className="sidebar full_width_height no_padding"> 
                 <div className="row title_bar">
                     <div className="col-7 title no_padding">
-                        <span style={{"marginLeft": "10%"}}>Trophy</span><br />
-                        <span style={{"marginLeft": "10%"}}>Hunter</span>
+                        <div className="title_cell">
+                            <span style={{"marginLeft": "10%"}}>Trophy</span><br />
+                            <span style={{"marginLeft": "10%"}}>Hunter</span>
+                        </div>
                     </div>
                     <div className="col-5 no_padding">
                         <img src="./assets/logo.jpg" className="full_width_height" />
@@ -40,9 +56,7 @@ class SidebarComponent extends React.Component<SidebarComponentProps & SidebarCo
                         </Route>
                     </div>
                 </div>
-                <div className="row sidebar_footer">
-                
-                </div>
+                {this.makeFooter()}
             </div>
     }
   
@@ -51,7 +65,9 @@ class SidebarComponent extends React.Component<SidebarComponentProps & SidebarCo
 function mapStateToProps(state: AchievementState): SidebarComponentProps {
   
     return {
-        groups: state.player.groups
+        groups: state.player.groups,
+        "connectedToBackend": state.lcu.connectedToFrontend,
+        "connectedToLcu": state.lcu.connectedToLcu
     };
   
 }
@@ -71,7 +87,7 @@ class _GroupSubItems extends React.Component<GroupSubItemsProps, {}> {
     public render() {    
         const groupCategory = [ 
             <NavLink className="sidebar_default_link" key={"invitePlayer"} activeClassName="sidebar_active_link" to="/groups/id/1/invite"><div className="sidebar_indented"><span className="fas fa-envelope"></span> Invite Player</div></NavLink>, 
-            <NavLink className="sidebar_default_link" key={"invites"} activeClassName="sidebar_active_link" to="/groups/invites"><div className="sidebar_indented"><span className="fas fa-envelope-open"></span> Group Invites<span className="badge_margin badge badge-light">{this.props.inviteCount}</span></div></NavLink>, 
+            <NavLink className="sidebar_default_link" key={"invites"} activeClassName="sidebar_active_link" to="/groups/invites"><div className="sidebar_indented"><span className="fas fa-inbox"></span> Group Invites<span className="badge_margin badge badge-light">{this.props.inviteCount}</span></div></NavLink>, 
             <NavLink className="sidebar_default_link" key={"create"} activeClassName="sidebar_active_link" to="/groups/create"><div className="sidebar_indented"><span className="fas fa-plus-circle"></span> Create Group</div></NavLink>
         ]
         return <div>
