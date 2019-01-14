@@ -38,8 +38,8 @@ class SidebarComponent extends React.Component<SidebarComponentProps & SidebarCo
                 <div className="row title_bar">
                     <div className="col-7 title no_padding">
                         <div className="title_cell">
-                            <span style={{"marginLeft": "10%"}}>Trophy</span><br />
-                            <span style={{"marginLeft": "10%"}}>Hunter</span>
+                            <span style={{"marginLeft": "10%"}}>TROPHY</span><br />
+                            <span style={{"marginLeft": "10%"}}>HUNTER</span>
                         </div>
                     </div>
                     <div className="col-5 no_padding">

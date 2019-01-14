@@ -3,6 +3,21 @@
 @import url("tree.css");
 @import url("wallpaper.css");
 
+@font-face {
+    font-family: "Calisto MT";
+    src: url("../assets/fonts/CALIST.TTF");
+}
+@font-face {
+    font-family: "Calisto MT";
+    src: url("../assets/fonts/CALISTB.TTF");
+    font-weight: bold;
+}
+@font-face {
+    font-family: "Calisto MT";
+    src: url("../assets/fonts/CALISTI.TTF");
+    font-style: italic;
+}
+
 .background {
     background-image: url("../assets/background.png");
     background-size: cover;
@@ -30,6 +45,8 @@
 
 .font {
     color: #f0e6d2;
+    font-family: "Calisto MT";
+    font-size: 14pt;
 }
 
 a {
