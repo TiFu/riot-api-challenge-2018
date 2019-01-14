@@ -140,7 +140,7 @@ class WallpaperComponent extends React.Component<WallpaperComponentProps & Wallp
             achievedAt: (new Date()).toString()
         })
         const completionState = 1.0
-        return <div className="background full_width_height">
+        return <div className="wallpaper_background full_width_height">
             <div className="full_width_height wallpaper-padding">
                 <div className="row row-one-third">
                     <div className="wallpaper-10"></div>

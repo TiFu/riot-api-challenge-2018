@@ -1,6 +1,11 @@
+@import url("group.css");
 @import url("tree.css");
 @import url("wallpaper.css");
 
+.background {
+    background-image: url("../assets/background.png");
+    background-size: cover;
+}
 .hidden {
     display: none
 }
@@ -8,4 +13,24 @@
 .full_width_height {
     height: 100%;
     width: 100%;
+}
+
+.no_pad_right {
+    padding-right: 0px;
+}
+
+.no_margin_left {
+    margin-left: 0px;
+}
+
+.font {
+    color: #f0e6d2;
+}
+
+.margin {
+    margin: 10px 10px 10px 10px;
+}
+
+.no_margin {
+    margin: 0px;
 }

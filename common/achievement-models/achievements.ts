@@ -34,10 +34,17 @@ const adcCategory = new PlayerAchievementCategory([{ completionState: 0.0, troph
 // Clown
 const clownCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "icon", group1);
 
+type PlayerAchievementCategories = {
+    "top": PlayerAchievementCategory,
+    "jungle": PlayerAchievementCategory,
+    "mid": PlayerAchievementCategory,
+    "support": PlayerAchievementCategory,
+    "adc": PlayerAchievementCategory,
+    "clownfiesta": PlayerAchievementCategory
+}
 
 
-
-export const playerAchievementCategories = {
+export const playerAchievementCategories: PlayerAchievementCategories = {
     "top": topCategory,
     "jungle": jungleCategory,
     "mid": midCategory,
@@ -49,8 +56,8 @@ export const playerAchievementCategories = {
 
 
 // Group Achievement Category
-const group2Level0: GroupAchievement = new GroupAchievement(2, "test unlock message", "test name", "desc", [ new GroupKillRule() ]);
-const group3Level0: GroupAchievement = new GroupAchievement(3, "test unlock message", "test name", "desc", [ new GroupKillRule() ]);
+const group2Level0: GroupAchievement = new GroupAchievement(2, "test unlock message", "achievement2 test name", "desc", [ new GroupKillRule() ]);
+const group3Level0: GroupAchievement = new GroupAchievement(3, "test unlock message", "achievement3 test name", "desc", [ new GroupKillRule() ]);
 
 const group2: GroupAchievementGroup = {
     name: "Test",
@@ -62,10 +69,31 @@ const group3: GroupAchievementGroup = {
     childAchievements: [],
     levels: [group3Level0]
 }
-
 export const groupAchievementCategories: GroupAchievementCategory[] = [
     new GroupAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Group Test", "Test Description", "", group2)
 ]
+
+export const achievementMap = new Map<number, Achievement<any>>()
+
+for (const categoryName in playerAchievementCategories) {
+    const category = (playerAchievementCategories as any)[categoryName];
+    iterateAndFillMap(category, achievementMap);
+}
+for (const category of groupAchievementCategories) {
+    iterateAndFillMap(category, achievementMap);
+}
+
+function iterateAndFillMap(category: AchievemenCategory<any>, map: Map<number, Achievement<any>>) {
+    const groups = [category.getFirstGroup()]
+    while (groups.length > 0) {
+        const group = groups.pop() as AchievementGroup<any>;
+        if (group.levels)
+            group.levels.forEach(a => map.set(a.id, a));
+        if (group.childAchievements)
+            group.childAchievements.forEach(a => groups.push(a));
+    }
+}
+
 
 
 

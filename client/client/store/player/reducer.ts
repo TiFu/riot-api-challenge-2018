@@ -3,7 +3,75 @@ import { PlayerState, PlayerActions,PlayerStateUpdatedAction, PlayerAchievementE
 import { Achievement, PlayerData, GroupInviteRequest, AchievementNotification } from 'achievement-sio';
 
 export const initialState: PlayerState = {
-    playerInfo: null
+    playerInfo: {
+        "accountId": 23456,
+        "platformId": "euw1",
+        "playerName": "TiFu"
+    },
+    "invites": [
+        {
+            "groupId": 10,
+            "groupName": "10th Division",
+            "inviteId": 11,
+            "inviter": {
+                "accountId": 12345,
+                "name": "Leader 11",
+                "region": "euw1"
+            },
+            "status": "pending"
+        },
+        {
+            "groupId": 15,
+            "groupName": "15th Division",
+            "inviteId": 12,
+            "inviter": {
+                "accountId": 12345,
+                "name": "Leader 15",
+                "region": "euw1"
+            },
+            "status": "pending"
+        }
+    ]
+    groups: [
+        {
+            id: 5,
+            name: "Test 1",
+            members: [{
+                "accountId": 23456,
+                "name": "TiFu",
+                "region": "euw1"
+            }],
+            achievements: [
+                {
+                    achievedAt: (new Date()).toString(),
+                    achievementId: 2,
+                    championId: 1
+                }
+            ]
+        },
+        {
+            id: 6,
+            name: "Test 2",
+            members: [{
+                "accountId": 23456,
+                "name": "TiFu",
+                "region": "euw1"
+            }],
+            achievements: [
+                {
+                    achievedAt: (new Date()).toString(),
+                    achievementId: 2,
+                    championId: 1
+                },
+                {
+                    achievedAt: (new Date()).toString(),
+                    achievementId: 3,
+                    championId: 18
+                }
+
+            ]
+        }
+    ]
 }
 
 const reducer: Reducer<PlayerState> = (state: PlayerState = initialState, action) => {

@@ -1,2 +1,2 @@
 export * from './models'
-export { playerAchievementCategories, groupAchievementCategories, checkPlayerAchievementCategories, checkGroupAchievementCategories, getCategoryCompletionState } from './achievements'
+export { achievementMap,  playerAchievementCategories, groupAchievementCategories, checkPlayerAchievementCategories, checkGroupAchievementCategories, getCategoryCompletionState } from './achievements'
