@@ -30,7 +30,7 @@ class SidebarComponent extends React.Component<SidebarComponentProps & SidebarCo
                         <img src="./assets/logo.jpg" className="full_width_height" />
                     </div>
                 </div>
-                <div className="row">
+                <div className="row sidebar_menu_size">
                     <div className="sidebar_menu">
                         <NavLink className="sidebar_default_link" activeClassName="sidebar_active_link" to="/wallpaper"><span className="fas fa-trophy"></span> Wallpaper</NavLink>
                         <NavLink className="sidebar_default_link" activeClassName="sidebar_active_link" to="/groups/id/1"><span className="fas fa-users"></span> Groups</NavLink>
@@ -39,6 +39,9 @@ class SidebarComponent extends React.Component<SidebarComponentProps & SidebarCo
 
                         </Route>
                     </div>
+                </div>
+                <div className="row sidebar_footer">
+                
                 </div>
             </div>
     }
