@@ -38,12 +38,31 @@ class GroupsComponent extends React.Component<ConfigurableGroupsComponentProps &
         this.state = { currentGroupIdx: 0 };
     }
 
+    newGroupSelected(event) {
+        this.setState({ "currentGroupIdx": event.target.value})
+    }
+
+    renderGroupSelectComponent() {
+        const options = this.props.groups.map((g, idx) => <option value={idx} selected={idx == this.state.currentGroupIdx}>{g.name}</option>)
+        return <select onChange={(e) => this.newGroupSelected(e)} >
+            {options}
+        </select>
+    }
+
     render() {       
-        console.log("Groups: ", this.state.currentGroupIdx)  
         return <div className="background full_width_height">
-            <div className="full_width_height">
-                <h1>{this.props.groups[this.state.currentGroupIdx].name}</h1>
+            <div className="row group_name_row">
+                <div className="col">
+                    <div>
+                    <span className="gradient">Test</span> 
+                    </div>
+
+                    {this.renderGroupSelectComponent()}
+                </div>
+            </div>
+            <div className="row group_component_row">
                 <GroupComponent group={this.props.groups[this.state.currentGroupIdx]}></GroupComponent>
+
             </div>
         </div>
     }

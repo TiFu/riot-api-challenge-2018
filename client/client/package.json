@@ -24,6 +24,7 @@
     "achievement-models": "file:../../common/achievement-models",
     "achievement-sio": "file:../../common/achievement-sio",
     "bootstrap": "^4.2.1",
+    "hover.css": "^2.3.2",
     "lcu-api": "file:../lcu-api",
     "lcu-connector": "^1.0.2",
     "react": "^16.7.0",

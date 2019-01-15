@@ -33,16 +33,20 @@ class GroupComponent extends React.Component<ConfigurableGroupComponentProps & G
         const achievementMap = new Map<number, Achievement>();
         this.props.group.achievements.forEach(a => achievementMap.set(a.achievementId, a))
         
-        return <div className="background full_width_height">
+        return <div className="full_width_height">
             <div className="full_width_height">
                 <div className="row row_half no_margin">
-                    <div className="col">
-                        <div className="row margin" style={{height: "100%"}}>
-                        <TrophyComponent completionState={completionState} achievementCategory={groupCat}></TrophyComponent>
+                    <div className="col full_width_height">
+                        <div className="row  full_width_height">
+                            <div className="col">
+                                <TrophyComponent completionState={completionState} achievementCategory={groupCat}></TrophyComponent>
+                            </div>
+                            <div className="col">
+                                <TreeComponent achievementCategory={groupCat} achievements={achievementMap} componentId={"group_" + this.props.group.id}></TreeComponent>
+                            </div>
                         </div>
                     </div>
                     <div className="col margin">
-                        <TreeComponent achievementCategory={groupCat} achievements={achievementMap} componentId={"group_" + this.props.group.id}></TreeComponent>
                     </div>
                 </div>
                 <div className="row row_half no_margin">

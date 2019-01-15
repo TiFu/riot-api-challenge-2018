@@ -26,10 +26,10 @@ class SidebarComponent extends React.Component<SidebarComponentProps & SidebarCo
         const backendClass = this.props.connectedToBackend ? "": "gray_image";
         return <div className="row sidebar_footer">
             <div className="col connection_icon_frame no_padding">
-                <img src="./assets/lcu.png" width="50px" className={"connection_icon " + lcuClass}/>
+                <img src="./assets/lcu.png" width="40px" className={"connection_icon " + lcuClass}/>
             </div>
             <div className="col connection_icon_frame no_padding">
-                <img src="./assets/logo.jpg" width="50px" className={"connection_icon " + backendClass}/>
+                <img src="./assets/logo.jpg" width="40px" className={"connection_icon " + backendClass}/>
             </div>
         </div>
     }

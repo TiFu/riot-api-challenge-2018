@@ -2,3 +2,23 @@
     height: 50%;
     width: 100%;
 }
+
+.group_name_row {
+    height: 10%;
+    margin-left:0px;
+}
+
+.group_component_row {
+    height: 90%;
+    margin-left:0px;
+}
+
+.gradient {
+    font-size: 40pt;
+    font-weight: bold;
+    text-decoration: none;
+    background-image: linear-gradient(to right, rgba(255, 0, 0, 0), rgba(255, 0, 0, 1), rgba(255, 0, 0, 0));
+    background-repeat: no-repeat;
+	background-position: 0% 84%;
+    background-size: 100% 2px;
+}
