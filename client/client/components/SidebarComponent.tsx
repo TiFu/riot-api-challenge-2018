@@ -6,7 +6,7 @@ import { PlayerInfo, PlayerState } from '../store/player/types';
 import TreeComponent from './TreeComponent'
 import WallpaperComponent from './WallpaperComponent'
 import {Route, HashRouter as Router, NavLink, withRouter} from 'react-router-dom'
-import GroupComponent from './GroupComponent'
+import GroupComponent from './GroupsComponent'
 import { GroupPartialInfo } from "achievement-sio";
 import GroupInvitesComponent from "./GroupInvitesComponent";
 
@@ -33,6 +33,7 @@ class SidebarComponent extends React.Component<SidebarComponentProps & SidebarCo
             </div>
         </div>
     }
+
     render() {
         return <div className="sidebar full_width_height no_padding"> 
                 <div className="row title_bar">

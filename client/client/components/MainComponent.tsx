@@ -6,7 +6,7 @@ import { PlayerInfo, PlayerState } from '../store/player/types';
 import TreeComponent from './TreeComponent'
 import WallpaperComponent from './WallpaperComponent'
 import {Route, HashRouter as Router, Link, Switch, Redirect} from 'react-router-dom'
-import GroupComponent from './GroupComponent'
+import GroupsComponent from './GroupsComponent'
 import { GroupPartialInfo } from "achievement-sio";
 import GroupInvitesComponent from "./GroupInvitesComponent";
 import SidebarComponent from "./SidebarComponent";
@@ -33,7 +33,7 @@ class MainComponent extends React.Component<MainComponentProps & MainComponentAc
             </div>
             <div className="col-10 full_width_height no_padding">
                 <Route exact path="/wallpaper" component={WallpaperComponent}></Route>
-                <Route  path="/groups/id/:idx" component={GroupComponent}></Route>
+                <Route  path="/groups/id/:idx" component={GroupsComponent}></Route>
                 <Route exact path="/groups/invites" component={GroupInvitesComponent}></Route>
             </div>
         </div>

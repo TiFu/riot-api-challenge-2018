@@ -14,13 +14,10 @@ import { PlayerAchievementCategory } from 'achievement-models';
 import MemberComponent from './MemberComponent'
 import AchievementOverviewComponent from "./AchievementOverviewComponent";
 interface ConfigurableGroupComponentProps {
-    match: {
-        params: {"idx": string}
-    }
+    group: GroupPartialInfo
 }
   
 interface GroupComponentProps {
-    group: GroupPartialInfo
 }
 
 
@@ -40,13 +37,12 @@ class GroupComponent extends React.Component<ConfigurableGroupComponentProps & G
             <div className="full_width_height">
                 <div className="row row_half no_margin">
                     <div className="col">
-                        <div className="row margin" style={{height: "5%"}}><h1>{this.props.group.name}</h1></div>
-                        <div className="row margin" style={{height: "95%"}}>
+                        <div className="row margin" style={{height: "100%"}}>
                         <TrophyComponent completionState={completionState} achievementCategory={groupCat}></TrophyComponent>
                         </div>
                     </div>
                     <div className="col margin">
-                        <TreeComponent achievementCategory={groupCat} achievements={achievementMap} componentId={"group_" + this.props.match.params.idx}></TreeComponent>
+                        <TreeComponent achievementCategory={groupCat} achievements={achievementMap} componentId={"group_" + this.props.group.id}></TreeComponent>
                     </div>
                 </div>
                 <div className="row row_half no_margin">
@@ -65,9 +61,7 @@ class GroupComponent extends React.Component<ConfigurableGroupComponentProps & G
    
   
   function mapStateToProps(state: AchievementState, ownProps: ConfigurableGroupComponentProps): GroupComponentProps {
-    console.log(ownProps)
     return {
-        group: state.player.groups[Number.parseInt(ownProps.match.params["idx"])]
     };
   }
   
