@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { updatePlayerInfo } from '../store/player/actions';
 import { PlayerInfo, PlayerState, PlayerAchievementEntry } from '../store/player/types';
 import TreeComponent from './TreeComponent'
-import { groupAchievementCategories } from "achievement-models";
+import { groupAchievementCategories, getObtainableIds } from "achievement-models";
 import { number } from "prop-types";
 import { Achievement } from 'achievement-sio';
 import TrophyComponent from './TrophComponent';
@@ -12,7 +12,9 @@ import { playerAchievementCategories, getCategoryCompletionState } from 'achieve
 import { GroupPartialInfo } from 'achievement-sio';
 import { PlayerAchievementCategory } from 'achievement-models';
 import MemberComponent from './MemberComponent'
-import AchievementOverviewComponent from "./AchievementOverviewComponent";
+import AchievementOverviewComponent from "./ObtainedAchievementOverviewComponent";
+import UnobtainedAchievementOverviewComponent from './UnobtainedAchievementOverviewComponent';
+
 interface ConfigurableGroupComponentProps {
     group: GroupPartialInfo
 }
@@ -33,6 +35,8 @@ class GroupComponent extends React.Component<ConfigurableGroupComponentProps & G
         const achievementMap = new Map<number, Achievement>();
         this.props.group.achievements.forEach(a => achievementMap.set(a.achievementId, a))
         
+        const unlockedAchievements = getObtainableIds(groupAchievementCategories[0], new Set<number>(achievementMap.keys()))
+
         return <div className="full_width_height">
             <div className="full_width_height">
                 <div className="row row_half no_margin">
@@ -47,6 +51,7 @@ class GroupComponent extends React.Component<ConfigurableGroupComponentProps & G
                         </div>
                     </div>
                     <div className="col margin">
+                        <UnobtainedAchievementOverviewComponent title="Unlocked Achievements" icon="unlock" achievements={unlockedAchievements}></AchievementOverviewComponent>
                     </div>
                 </div>
                 <div className="row row_half no_margin">

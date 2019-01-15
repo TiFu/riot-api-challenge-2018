@@ -53,7 +53,7 @@ export interface AchievementGroup<T extends Achievement<any>> {
 
 export class Achievement<T extends PlayerRule | GroupRule> {
     
-    public constructor(public readonly id: AchievementId, public readonly unlockMessage: string, public readonly name: string, public readonly description: string, protected readonly rules: T[]) {
+    public constructor(public readonly id: AchievementId, public readonly icon: string, public readonly unlockMessage: string, public readonly name: string, public readonly description: string, protected readonly rules: T[]) {
 
     }
 }

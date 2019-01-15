@@ -13,6 +13,8 @@ import { achievementMap } from "achievement-models";
 
 interface ConfigurableAchievementComponentProps {
     achievements: Achievement[]
+    title?: string
+    icon?: string
 }
   
 interface AchievementComponentProps {
@@ -38,7 +40,7 @@ class AchievementComponent extends React.Component<ConfigurableAchievementCompon
             </tr>
         })
         return <div>
-                    <h1>Achievements</h1>
+                    <h1><i className={"fas fa-" + (this.props.icon || "trophy")}></i> {this.props.title || "Achievements"}</h1>
                     <table className="table">
                     <thead>
                         <tr>

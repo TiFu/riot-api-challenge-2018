@@ -34,7 +34,7 @@ class MemberComponent extends React.Component<ConfigurableMemberComponentProps &
             </tr>
         })
         return <div>
-                    <h1>Members</h1>
+                    <h1><i className="fas fa-users"></i> Members</h1>
                     <table className="table">
                     <thead>
                         <tr>

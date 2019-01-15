@@ -14,6 +14,7 @@ import { PlayerAchievementCategory } from 'achievement-models';
 import MemberComponent from './MemberComponent'
 import AchievementOverviewComponent from "./AchievementOverviewComponent";
 import GroupComponent from "./GroupComponent";
+import DropdownComponent from "./DropdownComponent";
 
 interface GroupsComponentsState {
     currentGroupIdx: number;
@@ -38,25 +39,20 @@ class GroupsComponent extends React.Component<ConfigurableGroupsComponentProps &
         this.state = { currentGroupIdx: 0 };
     }
 
-    newGroupSelected(event) {
-        this.setState({ "currentGroupIdx": event.target.value})
+    newGroupSelected(idx) {
+        console.log("Updating group index: ", idx)
+        this.setState({ "currentGroupIdx": idx})
     }
 
     renderGroupSelectComponent() {
-        const options = this.props.groups.map((g, idx) => <option value={idx} selected={idx == this.state.currentGroupIdx}>{g.name}</option>)
-        return <select onChange={(e) => this.newGroupSelected(e)} >
-            {options}
-        </select>
+        const options = this.props.groups.map((g, idx) => g.name);
+        return <div className="center_dropdown"><DropdownComponent options={options} titleStyle="highlight_text" buttonStyle="group_title" onSelectCallback={(idx) => this.newGroupSelected(idx)}></DropdownComponent></div>
     }
 
     render() {       
         return <div className="background full_width_height">
             <div className="row group_name_row">
                 <div className="col">
-                    <div>
-                    <span className="gradient">Test</span> 
-                    </div>
-
                     {this.renderGroupSelectComponent()}
                 </div>
             </div>

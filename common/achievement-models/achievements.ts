@@ -7,7 +7,7 @@ import { MatchV4MatchDto, MatchV4MatchTimelineDto } from 'kayn/typings/dtos';
 
 
 // TOP LANE
-const group1Level0: PlayerAchievement = new PlayerAchievement(1, "Test unlock message", "test", "test desc", [new KillRule()]);
+const group1Level0: PlayerAchievement = new PlayerAchievement(1, "", "Test unlock message", "test", "test desc", [new KillRule()]);
 export const group1: PlayerAchievementGroup = {
     name: "Test",
     childAchievements: [],
@@ -56,8 +56,8 @@ export const playerAchievementCategories: PlayerAchievementCategories = {
 
 
 // Group Achievement Category
-const group2Level0: GroupAchievement = new GroupAchievement(2, "test unlock message", "achievement2 test name", "desc", [ new GroupKillRule() ]);
-const group3Level0: GroupAchievement = new GroupAchievement(3, "test unlock message", "achievement3 test name", "desc", [ new GroupKillRule() ]);
+const group2Level0: GroupAchievement = new GroupAchievement(2, "", "test unlock message", "achievement2 test name", "desc", [ new GroupKillRule() ]);
+const group3Level0: GroupAchievement = new GroupAchievement(3, "", "test unlock message", "achievement3 test name", "desc", [ new GroupKillRule() ]);
 
 const group2: GroupAchievementGroup = {
     name: "Test",
@@ -119,6 +119,22 @@ export function checkGroupAchievementCategories(accountIds: string[], obtainedAc
 export function getCategoryCompletionState(category: AchievemenCategory<any>, obtainedAchievements: Set<number>) {
     const [achieved, total ]= groupCompletionState(category.getFirstGroup(), obtainedAchievements);
     return achieved / total;
+}
+
+export function getObtainableIds(category: AchievemenCategory<any>, obtainedAchievements: Set<number>) {
+    return obtainableIdsByGroup(category.getFirstGroup(), obtainedAchievements)
+}
+
+function obtainableIdsByGroup(group: AchievementGroup<PlayerAchievement | GroupAchievement>, obtainedAchievements: Set<number>): number[] {
+    const success = group.levels.some(l => obtainedAchievements.has(l.id));
+    const obtainable: number[] = []
+    if (success) {
+        for (const childGroup of group.childAchievements) {
+            obtainableIdsByGroup(childGroup, obtainedAchievements).forEach(a => obtainable.push(a));
+        }
+    }
+    group.levels.filter(l => !obtainedAchievements.has(l.id)).forEach(l => obtainable.push(l.id));
+    return obtainable;
 }
 
 function groupCompletionState(group: AchievementGroup<PlayerAchievement | GroupAchievement>, obtainedAchievements: Set<number>): [number, number] {
