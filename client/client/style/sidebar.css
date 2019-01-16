@@ -58,9 +58,12 @@
 }
   
 .sidebar_menu a:hover {
-    background-color: #ccc;
+    background-color: var(--main-hover-color);
+    color: var(--font-color);
+    border-left: 5px #0793aa solid !important;
 }
   
+
 .sidebar_active_link {
     background-color: #213c3e;
     border-left: 5px #0793aa solid !important;

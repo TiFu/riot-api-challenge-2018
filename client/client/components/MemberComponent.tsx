@@ -30,7 +30,7 @@ class MemberComponent extends React.Component<ConfigurableMemberComponentProps &
             return <tr key={m.accountId}>
             <th scope="row">{idx + 1}</th>
             <td>{m.name}</td>
-            <td>{(new Date()).toString()}</td>
+            <td>{(new Date()).toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric"})}</td>
             </tr>
         })
         return <div>

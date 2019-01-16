@@ -12,7 +12,6 @@ import { playerAchievementCategories, getCategoryCompletionState } from 'achieve
 import { GroupPartialInfo } from 'achievement-sio';
 import { PlayerAchievementCategory } from 'achievement-models';
 import MemberComponent from './MemberComponent'
-import AchievementOverviewComponent from "./AchievementOverviewComponent";
 import GroupComponent from "./GroupComponent";
 
 interface DropdownComponentsState {
@@ -25,6 +24,7 @@ interface ConfigurableDropdownComponentProps {
     onSelectCallback: (idx: number) => void;
     buttonStyle?:  string;
     titleStyle?: string;
+    optionStyle?: string;
 }
   
 interface DropdownComponentProps {
@@ -55,7 +55,7 @@ class DropdownComponent extends React.Component<ConfigurableDropdownComponentPro
         this.props.onSelectCallback(idx);
     }
     render() {       
-        const options = this.props.options.map((o, idx) => <a key={o} className="dropdown-item" onClick={() => this.onSelect(idx)}>{o}</a>        );
+        const options = this.props.options.map((o, idx) => <a key={o} className="dropdown-item hover" onClick={() => this.onSelect(idx)}><span className={this.props.optionStyle}>{o}</span></a>        );
         return <div className={"dropdown btn-group "}>
         <a className={"dropdown-toggle " + this.props.buttonStyle} onClick={() => this.toggleOpen()} role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <span className={this.props.titleStyle}>{this.props.options[this.state.selectedOptionIdx]}</span>

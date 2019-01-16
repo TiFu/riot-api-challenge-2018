@@ -8,11 +8,19 @@ import { MatchV4MatchDto, MatchV4MatchTimelineDto } from 'kayn/typings/dtos';
 
 // TOP LANE
 const group1Level0: PlayerAchievement = new PlayerAchievement(1, "", "Test unlock message", "test", "test desc", [new KillRule()]);
+const group5level0: PlayerAchievement = new PlayerAchievement(6, "", "Test unlock message", "test 6", "test desc", [new KillRule()]);
+
+export const group5: PlayerAchievementGroup = {
+    name: "Test2",
+    childAchievements: [],
+    levels: [group5level0]
+}
 export const group1: PlayerAchievementGroup = {
     name: "Test",
-    childAchievements: [],
+    childAchievements: [group5],
     levels: [group1Level0],
 }
+
 
 const topCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "icon", group1);
 
@@ -59,16 +67,17 @@ export const playerAchievementCategories: PlayerAchievementCategories = {
 const group2Level0: GroupAchievement = new GroupAchievement(2, "", "test unlock message", "achievement2 test name", "desc", [ new GroupKillRule() ]);
 const group3Level0: GroupAchievement = new GroupAchievement(3, "", "test unlock message", "achievement3 test name", "desc", [ new GroupKillRule() ]);
 
-const group2: GroupAchievementGroup = {
-    name: "Test",
-    childAchievements: [],
-    levels: [group2Level0, group3Level0]
-}
 const group3: GroupAchievementGroup = {
     name: "Test2",
     childAchievements: [],
     levels: [group3Level0]
 }
+const group2: GroupAchievementGroup = {
+    name: "Test",
+    childAchievements: [group3],
+    levels: [group2Level0]
+}
+
 export const groupAchievementCategories: GroupAchievementCategory[] = [
     new GroupAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Group Test", "Test Description", "", group2)
 ]

@@ -49,8 +49,8 @@ class SidebarComponent extends React.Component<SidebarComponentProps & SidebarCo
                 </div>
                 <div className="row sidebar_menu_size">
                     <div className="sidebar_menu">
-                        <NavLink className="sidebar_default_link" activeClassName="sidebar_active_link" to="/wallpaper"><span className="fas fa-trophy"></span> Wallpaper</NavLink>
-                        <NavLink className="sidebar_default_link" activeClassName="sidebar_active_link" to="/groups/id/1"><span className="fas fa-users"></span> Groups</NavLink>
+                        <NavLink className="sidebar_default_link" activeClassName="sidebar_active_link" to="/wallpaper"><span className="fas fa-trophy"></span> <span className="sidebar_desc">Wallpaper</span></NavLink>
+                        <NavLink className="sidebar_default_link" activeClassName="sidebar_active_link" to="/groups/id/1"><span className="fas fa-users"></span> <span className="sidebar_desc">Groups</span></NavLink>
 
                         <Route path="/groups" component={GroupSubItems}>
 
@@ -87,9 +87,9 @@ class _GroupSubItems extends React.Component<GroupSubItemsProps, {}> {
 
     public render() {    
         const groupCategory = [ 
-            <NavLink className="sidebar_default_link" key={"invitePlayer"} activeClassName="sidebar_active_link" to="/groups/id/1/invite"><div className="sidebar_indented"><span className="fas fa-envelope"></span> Invite Player</div></NavLink>, 
-            <NavLink className="sidebar_default_link" key={"invites"} activeClassName="sidebar_active_link" to="/groups/invites"><div className="sidebar_indented"><span className="fas fa-inbox"></span> Group Invites<span className="badge_margin badge badge-light">{this.props.inviteCount}</span></div></NavLink>, 
-            <NavLink className="sidebar_default_link" key={"create"} activeClassName="sidebar_active_link" to="/groups/create"><div className="sidebar_indented"><span className="fas fa-plus-circle"></span> Create Group</div></NavLink>
+            <NavLink className="sidebar_default_link" key={"invitePlayer"} activeClassName="sidebar_active_link" to="/groups/id/1/invite"><div className="sidebar_indented"><span className="fas fa-envelope"></span> <span className="sidebar_desc">Invite Player</span></div></NavLink>, 
+            <NavLink className="sidebar_default_link" key={"invites"} activeClassName="sidebar_active_link" to="/groups/invites"><div className="sidebar_indented"><span className="fas fa-inbox"></span> <span className="sidebar_desc">Group Invites</span><span className="badge_margin badge badge-light">{this.props.inviteCount}</span></div></NavLink>, 
+            <NavLink className="sidebar_default_link" key={"create"} activeClassName="sidebar_active_link" to="/groups/create"><div className="sidebar_indented"><span className="fas fa-plus-circle"></span > <span className="sidebar_desc">Create Group</span></div></NavLink>
         ]
         return <div>
             {groupCategory}

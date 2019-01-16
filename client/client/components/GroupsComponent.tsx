@@ -12,7 +12,6 @@ import { playerAchievementCategories, getCategoryCompletionState } from 'achieve
 import { GroupPartialInfo } from 'achievement-sio';
 import { PlayerAchievementCategory } from 'achievement-models';
 import MemberComponent from './MemberComponent'
-import AchievementOverviewComponent from "./AchievementOverviewComponent";
 import GroupComponent from "./GroupComponent";
 import DropdownComponent from "./DropdownComponent";
 
@@ -46,7 +45,7 @@ class GroupsComponent extends React.Component<ConfigurableGroupsComponentProps &
 
     renderGroupSelectComponent() {
         const options = this.props.groups.map((g, idx) => g.name);
-        return <div className="center_dropdown"><DropdownComponent options={options} titleStyle="highlight_text" buttonStyle="group_title" onSelectCallback={(idx) => this.newGroupSelected(idx)}></DropdownComponent></div>
+        return <div className="center_dropdown"><DropdownComponent options={options} optionStyle="dropdown_title" titleStyle="highlight_text" buttonStyle="group_title" onSelectCallback={(idx) => this.newGroupSelected(idx)}></DropdownComponent></div>
     }
 
     render() {       

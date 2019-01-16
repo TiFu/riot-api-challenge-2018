@@ -18,6 +18,18 @@
     font-style: italic;
 }
 
+:root {
+    --main-bg-color: #0d1a23;
+    --transparent-main-highlight-color: #213c3eF0;
+    --main-highlight-color: #213c1f;
+    --main-hover-color: #2B5354;
+    --font-color: #f0e6d2;
+}
+
+.hover:hover {
+    background-color: var(--main-hover-color);
+}
+
 .background {
     background-image: url("../assets/background.png");
     background-size: cover;

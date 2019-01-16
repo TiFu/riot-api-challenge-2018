@@ -66,8 +66,16 @@ const borderMap: BorderMap = {
 
 // TODO: map AchievementCategory + Achievements to tree
 class TreeComponent extends React.Component<ConfigurableTreeComponentProps & TreeComponentProps & TreeComponentActions, {}> {
+  private treant: any;
 
-  private achievementCategoriesToNodes(group: AchievementGroup<any>, obtainedAchievements: Map<number, SIOAchievement>, nodeId: string, counter: number): NodeDescription {
+  public constructor(props) {
+    super(props);
+    window.addEventListener("resize", () => {
+      this.drawTree()
+    })
+  }
+
+  private achievementCategoriesToNodes(group: AchievementGroup<any>, obtainedAchievements: Map<number, SIOAchievement>, nodeId: string, counter: number, recurse: boolean = true): NodeDescription {
     let level = -1
     let achieved = false;
     let champId = null;
@@ -87,7 +95,11 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
         achievedAt = achievement.achievedAt
       }
     }
-    const children = group.childAchievements.map((a, i) => this.achievementCategoriesToNodes(a, obtainedAchievements, nodeId + "-" + counter, i))
+    let children = []
+    if (recurse) {
+      console.log("Recursing for " , group)
+      children = group.childAchievements.map((a, i) => this.achievementCategoriesToNodes(a, obtainedAchievements, nodeId + "-" + counter, i, achieved))
+    }
     const cssId = "tree-node-" + this.props.componentId + nodeId + "-" + counter;
     return {
       innerHTML: "#" + cssId,
@@ -102,8 +114,18 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
     }
   }
 
+  componentDidUpdate() {
+    this.drawTree()
+  }
+
   componentDidMount() {
+    this.drawTree()
+  }
+
+  private drawTree() {
+    console.log("REMOUNTED TREE COMPONENT")
     const nodeStructure = this.achievementCategoriesToNodes(this.props.achievementCategory.getFirstGroup(), this.props.achievements, "", 0);
+    
     const simple_chart_config: Chart = {
       chart: {
           container: "#tree-simple-" + this.props.componentId,
@@ -112,7 +134,10 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
       nodeStructure: nodeStructure
     };
     console.log("drawing tree")
-    const treant = new Treant(simple_chart_config)
+    if (this.treant) {
+      this.treant.destroy();
+    }
+    this.treant = new Treant(simple_chart_config)
   }
 
   private getImgForChampAndSkinId(champId: number | null, skinId: number| null) { 
@@ -174,6 +199,7 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
   }
 
   render() {
+    console.log("UPDATED TREE COMPONENT!")
     const nodes = this.achievementCategoriesToNodes(this.props.achievementCategory.getFirstGroup(), this.props.achievements, "", 0);
     const nodeDiv = this.getTreeNodes(nodes);
 

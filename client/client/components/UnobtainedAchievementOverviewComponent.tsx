@@ -41,8 +41,7 @@ class AchievementComponent extends React.Component<ConfigurableAchievementCompon
                     <table className="table">
                     <thead>
                         <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Achievement</th>
+                        <th scope="col" >Achievement</th>
                         <th scope="col">Description</th>
                         </tr>
                     </thead>

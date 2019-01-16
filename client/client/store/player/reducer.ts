@@ -45,7 +45,12 @@ export const initialState: PlayerState = {
                 {
                     achievedAt: (new Date()).toString(),
                     achievementId: 2,
-                    championId: 1
+                    championId: 25
+                },
+                {
+                    achievedAt: (new Date()).toString(),
+                    achievementId: 3,
+                    championId: 18
                 }
             ]
         },
@@ -62,13 +67,7 @@ export const initialState: PlayerState = {
                     achievedAt: (new Date()).toString(),
                     achievementId: 2,
                     championId: 1
-                },
-                {
-                    achievedAt: (new Date()).toString(),
-                    achievementId: 3,
-                    championId: 18
                 }
-
             ]
         }
     ]

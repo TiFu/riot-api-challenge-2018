@@ -27,11 +27,23 @@
 }
 
 .dropdown_background {
-    background-color: #213c3eF0;
+    background-color: var(--transparent-main-highlight-color);
     color: #f0e6d2;
 }
 
 
 .center_dropdown {
     text-align: center;
+}
+
+.hover > .dropdown_title {
+    font-size: 18pt;
+}
+
+.hover:hover > .dropdown_title {
+    background-color: transparent;
+    background-image: linear-gradient(to right,rgba(26, 28, 27, 0) 5%, rgba(189, 185, 173, 1), rgba(26, 28, 27, 0) 95%);
+    background-repeat: no-repeat;
+	background-position: 0% 99%;
+    background-size: 100% 2px;     
 }
