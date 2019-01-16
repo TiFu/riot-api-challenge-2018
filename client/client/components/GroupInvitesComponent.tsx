@@ -132,8 +132,12 @@ class GroupInviteComponent extends React.Component<ConfigurableGroupInviteCompon
                     <td>{i.groupName}</td>
                     <td>{i.inviter.name}</td>
                     <td className="align_buttons">
-                        <button onClick={() => { console.log("Button clicked"); this.props.acceptInvitation(i.inviteId, i.groupId, (err, data) => this.updateStateResultAccept(i, err, data))}} type="button" className="btn btn-success"><span className="fas fa-check"></span></button>
-                        <button onClick={() => { console.log("Button clicked"); this.props.declineInvitation(i.inviteId, i.groupId, (err, data) => this.updateStateResultDecline(i, err, data))}} type="button" className="btn btn-danger"><span className="fas fa-times"></span></button>
+                            <div className="btn-group mr-2" role="group" aria-label="First group">
+                            <button onClick={() => { console.log("Button clicked"); this.props.acceptInvitation(i.inviteId, i.groupId, (err, data) => this.updateStateResultAccept(i, err, data))}} type="button" className="btn btn-success"><span className="fas fa-check"></span></button>
+                            </div>
+                            <div className="btn-group mr-2" role="group" aria-label="First group">
+                            <button onClick={() => { console.log("Button clicked"); this.props.declineInvitation(i.inviteId, i.groupId, (err, data) => this.updateStateResultDecline(i, err, data))}} type="button" className="btn btn-danger"><span className="fas fa-times"></span></button>
+                            </div>
                     </td>
                 </tr>
             })

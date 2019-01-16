@@ -36,7 +36,7 @@ export const initialState: PlayerState = {
         }
     ],
     groups: [
-     /*   {
+        {
             id: 5,
             name: "Test 1",
             members: [{
@@ -74,7 +74,7 @@ export const initialState: PlayerState = {
                     championId: 1
                 }
             ]
-        }*/
+        }
     ]
 }
 
