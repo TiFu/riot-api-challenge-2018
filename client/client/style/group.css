@@ -18,6 +18,7 @@
     font-weight: bold;
     text-decoration: none;
 }
+
 .highlight_text {
     background-image: linear-gradient(to right,rgba(26, 28, 27, 0) 5%, rgba(189, 185, 173, 1), rgba(26, 28, 27, 0) 95%);
     background-repeat: no-repeat;
@@ -26,7 +27,7 @@
 }
 
 .dropdown_background {
-    background-color: #213c3e;
+    background-color: #213c3eF0;
     color: #f0e6d2;
 }
 
