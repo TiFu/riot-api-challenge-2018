@@ -1,6 +1,7 @@
 import { Reducer } from 'redux'
-import { PlayerState, PlayerActions,PlayerStateUpdatedAction, PlayerAchievementEntry } from './types';
-import { Achievement, PlayerData, GroupInviteRequest, AchievementNotification } from 'achievement-sio';
+import { PlayerState, PlayerActions, PlayerStateUpdatedAction, PlayerAchievementEntry, GroupInviteChangeResult } from './types';
+import { Achievement, PlayerData, GroupInviteRequest, AchievementNotification, Group } from 'achievement-sio';
+import { GroupPartialInfo } from 'achievement-sio';
 
 export const initialState: PlayerState = {
     playerInfo: {
@@ -18,7 +19,8 @@ export const initialState: PlayerState = {
                 "name": "Leader 11",
                 "region": "euw1"
             },
-            "status": "pending"
+            "status": "pending",
+            "date": new Date()
         },
         {
             "groupId": 15,
@@ -29,17 +31,19 @@ export const initialState: PlayerState = {
                 "name": "Leader 15",
                 "region": "euw1"
             },
-            "status": "pending"
+            "status": "pending",
+            "date": new Date()
         }
     ],
     groups: [
-        {
+     /*   {
             id: 5,
             name: "Test 1",
             members: [{
                 "accountId": 23456,
                 "name": "TiFu",
-                "region": "euw1"
+                "region": "euw1",
+                "memberSince": (new Date()).toString()
             }],
             achievements: [
                 {
@@ -60,7 +64,8 @@ export const initialState: PlayerState = {
             members: [{
                 "accountId": 23456,
                 "name": "TiFu",
-                "region": "euw1"
+                "region": "euw1",
+                "memberSince": (new Date()).toString()
             }],
             achievements: [
                 {
@@ -69,7 +74,7 @@ export const initialState: PlayerState = {
                     championId: 1
                 }
             ]
-        }
+        }*/
     ]
 }
 
@@ -89,10 +94,44 @@ const reducer: Reducer<PlayerState> = (state: PlayerState = initialState, action
             return handleGroupInviteReceived(state, action.payload);
         case '@@player/GROUP_INVITE_UPDATE':
             return handleGroupInviteUpdate(state, action.payload);
+        case '@@player/GROUP_INVITE_CHANGE':
+            console.log("TRIGGERDE GROUP INVITE CHANGE")
+            return state; // ignore
+        case '@@player/GROUP_INVITE_CHANGE_RESULT':
+            return handleGroupInviteChangeResult(state, action.payload);
+        case '@@player/NEW_GROUP':
+            return handleNewGroup(state, action.payload);
         default:
             return state;
     }
   };
+
+function handleNewGroup(state: PlayerState, group: Group) {
+    const groupExists = state.groups.some(g => g.id == group.id)
+    const groupInfo: GroupPartialInfo = {
+        "achievements": group.achievements,
+        "id": group.id,
+        "members": group.players,
+        "name": group.name
+    }
+
+    if (groupExists) {
+        const newGroups = state.groups.slice().map(g => g.id == group.id ? groupInfo : g);
+        return Object.assign({}, state, { "groups": newGroups } as Partial<PlayerState>);
+    } else {
+        const newGroups = state.groups.slice();
+        newGroups.push(groupInfo);
+        return Object.assign({}, state, { "groups": newGroups} as Partial<PlayerState>)
+    }
+}
+
+function handleGroupInviteChangeResult(state: PlayerState, data: GroupInviteChangeResult) {
+    if (data.success) {
+        const newInvites = state.invites.slice().filter(f => f.inviteId != data.inviteId);
+        return Object.assign({}, state, { "invites": newInvites} as Partial<PlayerState>);
+    }
+    return state;
+}
 
 function handleGroupInviteUpdate(state: PlayerState, data: GroupInviteRequest) {
     const invite = state.invites.find((e) => e.inviteId == data.inviteId)
@@ -100,7 +139,6 @@ function handleGroupInviteUpdate(state: PlayerState, data: GroupInviteRequest) {
         const newInvites = state.invites.slice().filter(f => f.inviteId != data.inviteId);
         return Object.assign({}, state, { "invites": newInvites} as Partial<PlayerState>);
     }
-    data.inviteId
     return state;
 }
 

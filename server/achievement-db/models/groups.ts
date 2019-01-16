@@ -9,7 +9,8 @@ export interface GroupInvitation {
     }
     inviter: PlayerInfo
     invitee: PlayerInfo
-    status: "canceled" | "pending" | "accepted" | "declined"
+    status: "canceled" | "pending" | "accepted" | "declined",
+    inviteDate: Date
 }
 
 export interface GroupInfo {

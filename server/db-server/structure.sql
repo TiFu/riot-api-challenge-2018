@@ -44,7 +44,8 @@ CREATE TABLE group_invites (
     group_id int NOT NULL references groups(id),
     invitee int NOT NULL references players(id),
     inviter int NOT NULL references players(id),
-    status invite_status default 'pending'
+    status invite_status default 'pending',
+    invite_date TIMESTAMP default now()
 );
 
 

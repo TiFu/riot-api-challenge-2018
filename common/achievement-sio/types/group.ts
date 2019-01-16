@@ -6,9 +6,14 @@ export type GroupId = number
 export type GroupPartialInfo = {
     id: GroupId,
     name: string,
-    members: PlayerPartialInfo[],
+    members: GroupPlayerPartialInfo[],
     achievements: Achievement[]
 }
+
+export interface GroupPlayerPartialInfo extends PlayerPartialInfo {
+    memberSince: string
+}
+
 export type GroupInviteUpdate = { 
     groupId: number, 
     player: PlayerPartialInfo, 
@@ -25,7 +30,8 @@ export type GroupInviteRequest = {
     groupName: string,
     inviteId: number,
     inviter: PlayerPartialInfo
-    status: "pending" | "canceled" | "accepted" | "declined"
+    status: "pending" | "canceled" | "accepted" | "declined",
+    date: Date
 }
 
 export type GroupInviteResponse = {
@@ -46,7 +52,7 @@ export type DetailedGroupInvite = {
 export type Group = {
     id: number
     name: string
-    players: PlayerPartialInfo[]
+    players: GroupPlayerPartialInfo[]
     achievements: Achievement[]
     invites: DetailedGroupInvite[]
 }

@@ -5,13 +5,13 @@ import { updatePlayerInfo } from '../store/player/actions';
 import { PlayerInfo, PlayerState, PlayerAchievementEntry } from '../store/player/types';
 import TreeComponent from './TreeComponent'
 import { number } from "prop-types";
-import { Achievement, PlayerPartialInfo } from 'achievement-sio';
+import { Achievement, PlayerPartialInfo, GroupPlayerPartialInfo } from 'achievement-sio';
 import TrophyComponent from './TrophComponent';
 import { playerAchievementCategories, getCategoryCompletionState } from 'achievement-models';
 import { PlayerAchievementCategory } from 'achievement-models';
 
 interface ConfigurableMemberComponentProps {
-    members: PlayerPartialInfo[]
+    members: GroupPlayerPartialInfo[]
 }
   
 interface MemberComponentProps {
@@ -30,7 +30,7 @@ class MemberComponent extends React.Component<ConfigurableMemberComponentProps &
             return <tr key={m.accountId}>
             <th scope="row">{idx + 1}</th>
             <td>{m.name}</td>
-            <td>{(new Date()).toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric"})}</td>
+            <td>{(new Date(Date.parse(m.memberSince))).toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric"})}</td>
             </tr>
         })
         return <div>

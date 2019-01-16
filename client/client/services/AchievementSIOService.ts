@@ -1,5 +1,5 @@
 import { AchievementLocalClient, GroupInviteRequest, GroupInviteUpdate } from 'achievement-sio'
-import { PlayerInfo, GameData } from '../store/player/types';
+import { PlayerInfo, GameData, GroupInviteChangeResult, ChangeInvitation } from '../store/player/types';
 import io from 'socket.io-client'
 import { AchievementEventBus } from '../store/events';
 import { AchievementState } from '../store/index';
@@ -8,7 +8,7 @@ import { updateFrontendConnectedState } from '../store/lcu/actions';
 import { NewGameMessage } from 'achievement-sio';
 import { getPlayerRoomFromId, AchievementNotification } from 'achievement-sio';
 import { PlayerData } from 'achievement-sio';
-import { updatePlayerAchievements, updateGroupAchievements, updatePlayerInfo, updatePlayerData, newGroupInvite, groupInviteUpdate } from '../store/player/actions';
+import { updatePlayerAchievements, updateGroupAchievements, updatePlayerInfo, updatePlayerData, newGroupInvite, groupInviteUpdate, groupInviteChangeResult, newGroupEvent } from '../store/player/actions';
 
 export class AchievementSocketIOService {
     private socket: AchievementLocalClient
@@ -48,6 +48,9 @@ export class AchievementSocketIOService {
             } else {
                 console.log(err)
             }
+        })
+        this.socket.on("error", (info) =>{ 
+            console.log(info);
         })
         this.socket.on("achievementNotification", (notification) => this.handleAchievementNotification(notification))
         this.socket.on("playerData", (playerData) => this.handlePlayerData(playerData));
@@ -99,6 +102,48 @@ export class AchievementSocketIOService {
             console.log("Handling end of game in achievementSioService");
             this.handleEndOfGame(gameId);
         }));
+
+        this.unsubscribes.add(this.eventBus.group_invite_change.on((change: ChangeInvitation) => {
+            console.log("Updating invitation state for invite ", change);
+            this.handleInviteChange(change);
+        }))
+    }
+
+    private handleInviteChange(change: ChangeInvitation) {
+        console.log("HANDLING GROUP INVITE CHANGE");
+        if (!this.socket.connected) {
+            const result = {
+                success: false,
+                msg: "It seems like you are not connected to our backend services. Please check your internet connection and the icon in the bottom left.",
+                "inviteId": change.inviteId,
+                "newStatus": change.newStatus
+            }
+            this.store.dispatch(groupInviteChangeResult(result))
+            change.cb(result.msg, false);
+            return;
+        }
+        this.socket.emit("groupInviteRepsonse", {
+            inviteId: change.inviteId,
+            accept: change.newStatus == "accepted"
+        }, (err, data) => {
+            let result: GroupInviteChangeResult = {
+                success: data,
+                msg: err,
+                inviteId: change.inviteId,
+                newStatus: change.newStatus
+            }
+            change.cb(err, data);
+            this.store.dispatch(groupInviteChangeResult(result))
+            if (data && change.newStatus == "accepted") {
+                this.fetchGroup(change.groupId)
+            }
+        }) 
+    }
+
+    private fetchGroup(groupId: number) {
+        this.socket.emit("fetchGroup", groupId, (err, data) => {
+            this.store.dispatch(newGroupEvent(data))
+        })
     }
 
     private sendStoredEndOfGames() {

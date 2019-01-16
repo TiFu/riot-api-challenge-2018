@@ -49,6 +49,10 @@ class GroupsComponent extends React.Component<ConfigurableGroupsComponentProps &
     }
 
     render() {       
+        let groupComponent = null;
+        if (this.props.groups.length > this.state.currentGroupIdx) {
+            groupComponent = <GroupComponent group={this.props.groups[this.state.currentGroupIdx]}></GroupComponent>
+        }
         return <div className="background full_width_height">
             <div className="row group_name_row">
                 <div className="col">
@@ -56,8 +60,7 @@ class GroupsComponent extends React.Component<ConfigurableGroupsComponentProps &
                 </div>
             </div>
             <div className="row group_component_row">
-                <GroupComponent group={this.props.groups[this.state.currentGroupIdx]}></GroupComponent>
-
+                {groupComponent}
             </div>
         </div>
     }

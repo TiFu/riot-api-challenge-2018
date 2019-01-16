@@ -1,0 +1,11 @@
+.hover-table-row:hover {
+    background-color: var(--transparent-main-highlight-color)
+}
+
+.borderless th {
+    border: none;
+}
+
+.align_buttons {
+    text-align: right;
+}

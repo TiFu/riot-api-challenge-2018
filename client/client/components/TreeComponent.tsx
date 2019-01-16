@@ -96,7 +96,7 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
       }
     }
     let children = []
-    if (recurse) {
+    if (achieved) {
       console.log("Recursing for " , group)
       children = group.childAchievements.map((a, i) => this.achievementCategoriesToNodes(a, obtainedAchievements, nodeId + "-" + counter, i, achieved))
     }

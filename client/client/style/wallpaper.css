@@ -25,3 +25,18 @@
 .wallpaper-80 {
     width: 80%;
 }
+
+.wallpaper-100 {
+    height: 100%;
+}
+
+.wallpaper-center-text {
+    height: 100%;
+    text-align: center;
+    display: table;
+}
+
+.wallpaper-center-text > span {
+    vertical-align:middle;
+    display: table-cell;
+}

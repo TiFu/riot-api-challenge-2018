@@ -1,5 +1,6 @@
 import {Action} from 'redux'
 import { NewGameMessage, AchievementNotification, PlayerData, GroupPartialInfo, GroupInviteRequest, GroupInviteUpdate } from 'achievement-sio';
+import { Group } from 'achievement-sio';
 
 export interface PlayerAchievementEntry {
     achievementId: number,
@@ -25,6 +26,20 @@ export interface PlayerState {
     playerAchievements?: PlayerAchievementEntry[]
     groups?: GroupPartialInfo[],
     invites?: GroupInviteRequest[]
+}
+
+export interface GroupInviteChangeResult {
+    inviteId: number,
+    newStatus: 'accepted' | 'declined'
+    success: boolean,
+    msg: string
+}
+
+export interface ChangeInvitation {
+    groupId: number
+    inviteId: number
+    newStatus: 'declined' | 'accepted'
+    cb: (err: string, success: boolean) => void
 }
 
 export interface UpdatePlayerDataAction extends Action {
@@ -55,9 +70,24 @@ export interface GroupInviteUpdateAction extends Action {
     payload: GroupInviteUpdate
 }
 
+export interface GroupInviteChangeResultAction extends Action {
+    type: '@@player/GROUP_INVITE_CHANGE_RESULT'
+    payload: GroupInviteChangeResult
+}
+
+export interface ChangeInvitationStateAction extends Action {
+    type: '@@player/GROUP_INVITE_CHANGE'
+    payload: ChangeInvitation
+}
+
+export interface NewGroupAction extends Action {
+    type: '@@player/NEW_GROUP'
+    payload: Group
+}
+
 export interface PlayerStateUpdatedAction extends Action {
     type: '@@player/PLAYER_STATE_UPDATED'
     payload: PlayerInfo
 }
 
-export type PlayerActions = PlayerStateUpdatedAction | EndOfGameAction | GroupInviteUpdateAction | UpdateGroupAchievementsAction | UpdatePlayerAchievementsAction | UpdatePlayerDataAction | ReceivedGroupInviteAction; // use union type here
+export type PlayerActions = PlayerStateUpdatedAction | NewGroupAction | GroupInviteChangeResultAction | EndOfGameAction | GroupInviteUpdateAction | ChangeInvitationStateAction | UpdateGroupAchievementsAction | UpdatePlayerAchievementsAction | UpdatePlayerDataAction | ReceivedGroupInviteAction; // use union type here

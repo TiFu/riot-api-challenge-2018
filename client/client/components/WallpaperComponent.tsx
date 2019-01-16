@@ -70,8 +70,20 @@ class WallpaperComponent extends React.Component<WallpaperComponentProps & Wallp
         const groupState = this.getGroupWithHighestCompletionState()
         const group = groupState["group"];
         let groupAchievements = new Map<number, Achievement>();
+        let groupTree = <span className="wallpaper-placeholder-span">Join a group with at least 5 members to unlock the first group achievement!</span>;
+        let groupTrophy = null;
+        let groupWall = [<div className="col-6 wallpaper-center-text" key={"group_placeholder"}>{groupTree}</div>]
         if (group != null) {
             groupAchievements = this.getMapFromAchievements(group.achievements);
+            groupTree = <TreeComponent achievements={groupAchievements} achievementCategory={groupAchievementCategories[0]}  componentId={"group"}> </TreeComponent>            
+            groupTrophy = <TrophyComponent completionState={groupState.completionState} achievementCategory={groupAchievementCategories[0]} />
+            groupWall = [<div className="col-3 wallpaper-centerd" key={"group_tree"}>
+                {groupTree}
+            </div>,
+            <div className="col-3 wallpaper-centerd" key={"group_trophy"}>
+                {groupTrophy}
+            </div>]
+
         }
 
         const [clownfiesta, clownfiestaCompletionState]  = this.getDataFromPlayerAchievement(playerAchievementCategories["clownfiesta"])
@@ -79,16 +91,11 @@ class WallpaperComponent extends React.Component<WallpaperComponentProps & Wallp
 
         return <div className="wallpaper-80">
             <div className="row full_width_height">
-                <div className="col wallpaper-centerd">
-                    <TreeComponent achievements={groupAchievements} achievementCategory={groupAchievementCategories[0]}  componentId={"group"}> </TreeComponent>
-                </div>
-                <div className="col wallpaper-centerd">
-                    <TrophyComponent completionState={groupState.completionState} achievementCategory={groupAchievementCategories[0]} />
-                </div>
-                <div className="col wallpaper-centerd">
+                {groupWall}
+                <div className="col-3 wallpaper-centerd">
                     <TrophyComponent completionState={clownfiestaCompletionState} achievementCategory={clownfiesta} />
                 </div>
-                <div className="col wallpaper-centerd">
+                <div className="col-3 wallpaper-centerd">
                 <TreeComponent achievements={playerAchievements} achievementCategory={clownfiesta}  componentId={"clownfiesta"}> </TreeComponent>
                 </div>
             </div>
@@ -126,19 +133,6 @@ class WallpaperComponent extends React.Component<WallpaperComponentProps & Wallp
     render() { 
         const playerAchievements = this.getMapFromPlayerAchievements(this.props.playerAchievements)
 
-        // TOOD: remove
-        playerAchievements.set(1, {
-            achievementId: 1,
-            championId: 18,
-            skinId: 18003,
-            achievedAt: (new Date()).toString()
-        })
-        playerAchievements.set(3, {
-            achievementId: 3,
-            championId: 1,
-            skinId: null,
-            achievedAt: (new Date()).toString()
-        })
         const completionState = 1.0
         return <div className="wallpaper_background full_width_height">
             <div className="full_width_height wallpaper-padding">

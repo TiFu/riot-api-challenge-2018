@@ -2,7 +2,8 @@ import { AchievementDatabase, Player } from 'achievement-db';
 import { GroupId, Group } from 'achievement-sio';
 import { NotificationService } from './notification-service';
 import { GroupInviteRequest } from 'achievement-sio';
-import { DetailedGroupInvite } from '../../../../common/achievement-sio/types/group';
+import { DetailedGroupInvite } from 'achievement-sio';
+import { GroupPlayerPartialInfo } from 'achievement-sio';
 export class GroupService {
     
     public constructor(private db: AchievementDatabase, private notificationService: NotificationService) {
@@ -13,6 +14,14 @@ export class GroupService {
         const group = await this.db.GroupDB.getGroupInfo(groupId);
         console.log("fecthing  members")
         const members = await this.db.GroupDB.getGroupMembers(groupId);
+        const mappedMembers = members.map(m => {
+            return {
+                "accountId": m.accountId,
+                "name": m.name,
+                "region": m.region,
+                "memberSince": m.memberSince.toString()
+            } as GroupPlayerPartialInfo;
+        })     
         console.log("fetching invitations")
         const invitations = await this.db.GroupDB.getInvitesForGroup(groupId, "pending");
 //        const achievements = await this.db.AchievementDB.getGroupAchievements(groupId);
@@ -28,7 +37,7 @@ export class GroupService {
         return {
             id: group.id,
             name: group.name,
-            players: members,
+            players: mappedMembers,
             invites: mappedInvites,
             achievements: []// achievements
         };

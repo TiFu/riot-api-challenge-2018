@@ -12,7 +12,11 @@ const AchievementEvents = {
     "new_player_achievements": slot<AchievementNotification, void>(),
     "new_group_achievements": slot<AchievementNotification, void>(),
     "new_group_invite": slot<GroupInviteRequest, void>(),
-    "group_invite_update": slot<GroupInviteUpdate, void>()
+    "group_invite_update": slot<GroupInviteUpdate, void>(),
+    "group_invite_change": slot<{
+        inviteId: number,
+        newStatus: 'declined' | 'accepted'
+    }, void>()
 }
 
 export type AchievementEventBus = {
@@ -24,6 +28,10 @@ export type AchievementEventBus = {
     "new_group_achievements": Slot<AchievementNotification, void>,
     "new_group_invite": Slot<GroupInviteRequest, void>,
     "group_invite_update": Slot<GroupInviteUpdate, void>
+    "group_invite_change": Slot<{
+        inviteId: number,
+        newStatus: 'declined' | 'accepted'
+    }, void>
 }
 
 const eventBus = createEventBus( {
@@ -50,12 +58,19 @@ export const eventBusMiddleware = (store: AchievementStore)  => (next: (action: 
         break;
         case '@@player/PLAYER_ACHIEVEMENTS_UPDATED':
             eventBus.new_player_achievements(action.payload);
+        break;
         case '@@player/GROUP_ACHIEVEMENTS_UPDATED':
             eventBus.new_group_achievements(action.payload);
+        break;
         case '@@player/GROUP_INVITE_RECEIVED':
             eventBus.new_group_invite(action.payload);
+        break;
         case '@@player/GROUP_INVITE_UPDATE':
             eventBus.group_invite_update(action.payload);
+        break;
+        case '@@player/GROUP_INVITE_CHANGE': 
+            console.log("TRIGGERDE GROUP INVITE CHANGE")
+            eventBus.group_invite_change(action.payload)
         break;
     }
     return result;

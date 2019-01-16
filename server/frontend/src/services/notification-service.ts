@@ -9,6 +9,7 @@ import { rejects } from 'assert';
 import { SummonerV4SummonerDTO } from 'kayn/typings/dtos';
 import { getPlayerRoomFromId, getGroupRoom } from 'achievement-sio';
 import { GroupPartialInfo } from 'achievement-sio';
+import { GroupPlayerPartialInfo } from 'achievement-sio';
 
 export class NotificationService {
 
@@ -28,7 +29,8 @@ export class NotificationService {
                 name: inviter.name,
                 region: inviter.region,
                 accountId: inviter.accountId
-            }
+            },
+            date: new Date()
         });
     }
 
@@ -75,7 +77,8 @@ export class NotificationService {
                 inviter: i.inviter,
                 invitee: i.invitee,
                 status: i.status,
-                groupId: i.group.id
+                groupId: i.group.id,
+                date: i.inviteDate
             }
         })
 
@@ -83,12 +86,20 @@ export class NotificationService {
         console.log("groups for player: ", groups);
         const mappedGroups: GroupPartialInfo[] = []
         for (const group of groups) {
-            const members = await this.database.GroupDB.getGroupMembers(group.id);               
+            const members = await this.database.GroupDB.getGroupMembers(group.id);  
+            const mappedMembers = members.map(m => {
+                return {
+                    "accountId": m.accountId,
+                    "name": m.name,
+                    "region": m.region,
+                    "memberSince": m.memberSince.toString()
+                } as GroupPlayerPartialInfo;
+            })             
             const achievements = await this.database.AchievementDB.getGroupAchievements(group.id);
             mappedGroups.push({
                 id: group.id,
                 name: group.name,
-                members: members,
+                members: mappedMembers,
                 "achievements": achievements.map(a => {
                     return {
                         "achievementId": a.achievementId,

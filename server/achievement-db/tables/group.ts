@@ -65,7 +65,7 @@ export class  GroupDB {
     }
  
     public async getInvitesForGroup(groupId: number, status: 'pending' | 'accepted' | 'declined' | 'canceled'): Promise<GroupInvitation[]> {
-        const done = await this.db.query("SELECT gi.id as invite_id, gi.status as status, p1.account_id as inviter_id, p1.region as inviter_region, p1.player_name as inviter_name, p2.account_id as invitee_id, p2.region as invitee_region, p2.player_name as invitee_name FROM groups g, group_invites gi, players p1, players p2 WHERE p2.id = gi.invitee and gi.group_id = g.id and p1.id = gi.inviter and gi.status = $2 and gi.group_id = $1", [groupId, status]);
+        const done = await this.db.query("SELECT gi.invite_date as invite_date, gi.id as invite_id, gi.status as status, p1.account_id as inviter_id, p1.region as inviter_region, p1.player_name as inviter_name, p2.account_id as invitee_id, p2.region as invitee_region, p2.player_name as invitee_name FROM groups g, group_invites gi, players p1, players p2 WHERE p2.id = gi.invitee and gi.group_id = g.id and p1.id = gi.inviter and gi.status = $2 and gi.group_id = $1", [groupId, status]);
         return done.map((d: any) => {
             return {
                 status: d["status"],
@@ -77,7 +77,8 @@ export class  GroupDB {
                 invitee: {
                     accountId: d["invitee_id"],
                     name: d["invitee_name"]
-                }
+                },
+                inviteDate: new Date(Date.parse(d["invite_date"]))
             } as GroupInvitation
         });
 
@@ -112,7 +113,7 @@ export class  GroupDB {
     }
     
     public async getInvitesForPlayer(playerId: number, status: 'pending' | 'accepted' | 'declined' | 'canceled'): Promise<GroupInvitation[]> {
-        const done = await this.db.query("SELECT  gi.id as invite_id, gi.status as status, p1.account_id as inviter_id, p1.region as inviter_region, p1.player_name as inviter_name, p2.account_id as invitee_id, p2.region as invitee_region, p2.player_name as invitee_name FROM groups g, group_invites gi, players p1, players p2 WHERE p2.id = gi.invitee and gi.group_id = g.id and p1.id = gi.inviter and gi.status = $2 and gi.invitee = $1", [playerId, status]);
+        const done = await this.db.query("SELECT  gi.invite_date as invite_date, g.id as group_id, g.name as group_name, gi.id as invite_id, gi.status as status, p1.account_id as inviter_id, p1.region as inviter_region, p1.player_name as inviter_name, p2.account_id as invitee_id, p2.region as invitee_region, p2.player_name as invitee_name FROM groups g, group_invites gi, players p1, players p2 WHERE p2.id = gi.invitee and gi.group_id = g.id and p1.id = gi.inviter and gi.status = $2 and gi.invitee = $1", [playerId, status]);
         return done.map((d: any) => {
             return {
                 inviteId: d["invite_id"],
@@ -130,7 +131,8 @@ export class  GroupDB {
                     accountId: d["invitee_id"],
                     name: d["invitee_name"],
                     region: d["invitee_region"]
-                }
+                },
+                inviteDate: new Date(Date.parse(d["invite_date"]))
             } as GroupInvitation
         });
     }

@@ -20,7 +20,12 @@ Promise.all(promises).then((players) => {
             promises.push(db.GroupDB.addPlayerToGroup((players[i] as any).id, groupId, false))
         }
         return Promise.all(promises);
+    }).then(() => {
+        return db.GroupDB.createGroup((players as any)[1].id, "Test Group 2")
+    }).then((groupId) => {
+        return db.GroupDB.addInvitation((players as any)[0].id, (players as any)[1].id, groupId);
     })
+
 }).catch((err) => {
     console.log(err)
 }).then(() => {
