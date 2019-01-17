@@ -1,5 +1,5 @@
 import { AchievementLocalClient, GroupInviteRequest, GroupInviteUpdate } from 'achievement-sio'
-import { PlayerInfo, GameData, GroupInviteChangeResult, ChangeInvitation } from '../store/player/types';
+import { PlayerInfo, GameData, GroupInviteChangeResult, ChangeInvitation, CreateGroupRequest } from '../store/player/types';
 import io from 'socket.io-client'
 import { AchievementEventBus } from '../store/events';
 import { AchievementState } from '../store/index';
@@ -106,6 +106,21 @@ export class AchievementSocketIOService {
         this.unsubscribes.add(this.eventBus.group_invite_change.on((change: ChangeInvitation) => {
             console.log("Updating invitation state for invite ", change);
             this.handleInviteChange(change);
+        }))
+
+        this.unsubscribes.add(this.eventBus.create_group.on((request: CreateGroupRequest) => {
+            if (!this.socket.connected) {
+                request.cb("It seems like you are not connected to our backend services. Please check your internet connection and the icon in the bottom left.", null);
+                return
+            }
+            this.socket.emit("createGroup", { name: request.name}, (err, data) => {
+                if (err) {
+                    request.cb(err, null);
+                } else {
+                    this.store.dispatch(newGroupEvent(data))
+                    request.cb(null, data);
+                }
+            })
         }))
     }
 

@@ -10,6 +10,8 @@ import GroupsComponent from './GroupsComponent'
 import { GroupPartialInfo } from "achievement-sio";
 import GroupInvitesComponent from "./GroupInvitesComponent";
 import SidebarComponent from "./SidebarComponent";
+import CreateGroupComponent from './CreateGroupComponent'
+import Modal from 'react-bootstrap4-modal';
 
 interface MainComponentProps {
     groups: GroupPartialInfo[]
@@ -18,7 +20,28 @@ interface MainComponentProps {
 interface MainComponentActions {
 }
 
-class MainComponent extends React.Component<MainComponentProps & MainComponentActions, {}> {
+interface MainComponentState {
+    showCreateGroupModal: boolean;
+}
+
+class MainComponent extends React.Component<MainComponentProps & MainComponentActions, MainComponentState> {
+
+    public constructor(props) {
+        super(props);
+        this.state = { showCreateGroupModal: false };
+    }
+    private showCreateGroupClickedModal() {
+        console.log("Showing modal!");
+        this.setState({ showCreateGroupModal: true});
+    }
+
+    private handleClose() {
+        this.setState({showCreateGroupModal: false})
+    }
+    private renderCreateGroupModal() {
+        console.log("Showing modal: " + this.state.showCreateGroupModal)
+        return <CreateGroupComponent show={this.state.showCreateGroupModal} onHideCallback={() => this.handleClose()}></CreateGroupComponent>
+    }
 
     render() {
         const groupCategory = [ <li key={"invites"}><Link to="/groups/invites">Group Invites</Link></li>, <li key={"create"}><Link to="/groupCreate">Create Group</Link></li> ]
@@ -29,12 +52,13 @@ class MainComponent extends React.Component<MainComponentProps & MainComponentAc
         return <Router > 
             <div className="row full_width_height no_margin_left">
             <div className="col-2 no_padding">
-               <SidebarComponent></SidebarComponent>
+               <SidebarComponent onCreateGroupClicked={() => this.showCreateGroupClickedModal()}></SidebarComponent>
             </div>
             <div className="col-10 full_width_height no_padding">
                 <Route exact path="/wallpaper" component={WallpaperComponent}></Route>
                 <Route  path="/groups/id/:idx" component={GroupsComponent}></Route>
                 <Route exact path="/groups/invites" component={GroupInvitesComponent}></Route>
+                {this.renderCreateGroupModal()}
             </div>
         </div>
       </Router>  

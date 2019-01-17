@@ -15,12 +15,12 @@ import MemberComponent from './MemberComponent'
 import GroupComponent from "./GroupComponent";
 
 interface DropdownComponentsState {
-    selectedOptionIdx: number
     isOpen: boolean;
 }
 
 interface ConfigurableDropdownComponentProps {
     options: string[]
+    selected: number
     onSelectCallback: (idx: number) => void;
     buttonStyle?:  string;
     titleStyle?: string;
@@ -39,11 +39,7 @@ class DropdownComponent extends React.Component<ConfigurableDropdownComponentPro
 
     public constructor(props) {
         super(props);
-        this.state = { selectedOptionIdx: 0, isOpen: false };
-    }
-
-    newDropdownelected(event) {
-        this.setState({ "selectedOptionIdx": event.target.value})
+        this.state = { isOpen: false };
     }
 
     private toggleOpen() {
@@ -51,14 +47,14 @@ class DropdownComponent extends React.Component<ConfigurableDropdownComponentPro
     }
 
     private onSelect(idx: number) {
-        this.setState({ "isOpen": false, "selectedOptionIdx": idx})
+        this.setState({ "isOpen": false})
         this.props.onSelectCallback(idx);
     }
     render() {       
         const options = this.props.options.map((o, idx) => <a key={o} className="dropdown-item hover" onClick={() => this.onSelect(idx)}><span className={this.props.optionStyle}>{o}</span></a>        );
         return <div className={"dropdown btn-group "}>
         <a className={"dropdown-toggle " + this.props.buttonStyle} onClick={() => this.toggleOpen()} role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <span className={this.props.titleStyle}>{this.props.options[this.state.selectedOptionIdx]}</span>
+          <span className={this.props.titleStyle}>{this.props.options[this.props.selected]}</span>
         </a>
         <div className={"dropdown_background dropdown-menu" + (this.state.isOpen ? " show" : "")} aria-labelledby="dropdownMenuLink">
             {options}

@@ -35,6 +35,11 @@ export interface GroupInviteChangeResult {
     msg: string
 }
 
+export interface CreateGroupRequest {
+    name: string
+    cb: (err: string, result: Group) => void;
+}
+
 export interface ChangeInvitation {
     groupId: number
     inviteId: number
@@ -90,4 +95,9 @@ export interface PlayerStateUpdatedAction extends Action {
     payload: PlayerInfo
 }
 
-export type PlayerActions = PlayerStateUpdatedAction | NewGroupAction | GroupInviteChangeResultAction | EndOfGameAction | GroupInviteUpdateAction | ChangeInvitationStateAction | UpdateGroupAchievementsAction | UpdatePlayerAchievementsAction | UpdatePlayerDataAction | ReceivedGroupInviteAction; // use union type here
+export interface CreateGroupAction extends Action {
+    type: '@@player/CREATE_GROUP_ACTION'
+    payload: CreateGroupRequest
+}
+
+export type PlayerActions = PlayerStateUpdatedAction | CreateGroupAction | NewGroupAction | GroupInviteChangeResultAction | EndOfGameAction | GroupInviteUpdateAction | ChangeInvitationStateAction | UpdateGroupAchievementsAction | UpdatePlayerAchievementsAction | UpdatePlayerDataAction | ReceivedGroupInviteAction; // use union type here

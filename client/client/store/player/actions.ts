@@ -1,4 +1,4 @@
-import { PlayerStateUpdatedAction, PlayerInfo, EndOfGameAction, UpdatePlayerAchievementsAction, UpdateGroupAchievementsAction, UpdatePlayerDataAction, ReceivedGroupInviteAction, GroupInviteUpdateAction, ChangeInvitationStateAction, GroupInviteChangeResult, GroupInviteChangeResultAction, NewGroupAction, ChangeInvitation } from './types';
+import { PlayerStateUpdatedAction, PlayerInfo, EndOfGameAction, UpdatePlayerAchievementsAction, UpdateGroupAchievementsAction, UpdatePlayerDataAction, ReceivedGroupInviteAction, GroupInviteUpdateAction, ChangeInvitationStateAction, GroupInviteChangeResult, GroupInviteChangeResultAction, NewGroupAction, ChangeInvitation, CreateGroupAction } from './types';
 import { ActionCreator } from 'redux';
 import { GameData } from './types'
 import { Achievement, AchievementNotification, PlayerData, GroupInviteRequest, GroupInviteUpdate, Group } from 'achievement-sio';
@@ -90,4 +90,14 @@ export const updatePlayerData = (data: PlayerData) => {
         type: '@@player/PLAYER_DATA_UPDATED',
         payload: data
     } as UpdatePlayerDataAction
+}
+
+export const createGroupAction = (name: string, cb: (err: string, response: Group) => void) => {
+    return {
+        type: '@@player/CREATE_GROUP_ACTION',
+        payload: {
+            name: name,
+            cb: cb
+        }
+    } as CreateGroupAction
 }

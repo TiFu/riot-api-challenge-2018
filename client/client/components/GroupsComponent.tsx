@@ -14,9 +14,9 @@ import { PlayerAchievementCategory } from 'achievement-models';
 import MemberComponent from './MemberComponent'
 import GroupComponent from "./GroupComponent";
 import DropdownComponent from "./DropdownComponent";
+import { withRouter } from "react-router";
 
 interface GroupsComponentsState {
-    currentGroupIdx: number;
 }
 
 interface ConfigurableGroupsComponentProps {
@@ -35,23 +35,28 @@ class GroupsComponent extends React.Component<ConfigurableGroupsComponentProps &
 
     public constructor(props) {
         super(props);
-        this.state = { currentGroupIdx: 0 };
     }
 
     newGroupSelected(idx) {
-        console.log("Updating group index: ", idx)
-        this.setState({ "currentGroupIdx": idx})
+        console.log("Updating group index: ", idx);
+        (this.props as any).history.push("/groups/id/" + idx);
     }
 
     renderGroupSelectComponent() {
         const options = this.props.groups.map((g, idx) => g.name);
-        return <div className="center_dropdown"><DropdownComponent options={options} optionStyle="dropdown_title" titleStyle="highlight_text" buttonStyle="group_title" onSelectCallback={(idx) => this.newGroupSelected(idx)}></DropdownComponent></div>
+        return <div className="center_dropdown"><DropdownComponent selected={(this.props as any).match.params.idx} options={options} optionStyle="dropdown_title" titleStyle="highlight_text" buttonStyle="group_title" onSelectCallback={(idx) => this.newGroupSelected(idx)}></DropdownComponent></div>
     }
 
     render() {       
         let groupComponent = null;
-        if (this.props.groups.length > this.state.currentGroupIdx) {
-            groupComponent = <GroupComponent group={this.props.groups[this.state.currentGroupIdx]}></GroupComponent>
+        let groupIdx = (this.props as any).match.params.idx 
+        if (this.props.groups.length <= (this.props as any).match.params.idx  && this.props.groups.length > 1) {
+            groupIdx = 0
+        }
+        console.log("Current Idx: " + (this.props as any).match.params.idx )
+        console.log("New idx: ", groupIdx)
+        if (this.props.groups.length > (this.props as any).match.params.idx ) {
+            groupComponent = <GroupComponent group={this.props.groups[groupIdx]}></GroupComponent>
         }
         return <div className="background full_width_height">
             <div className="row group_name_row">
@@ -78,4 +83,4 @@ class GroupsComponent extends React.Component<ConfigurableGroupsComponentProps &
   function mapDispatchToProps(dispatch): GroupsComponentActions {
       return {}
   }
-  export default connect(mapStateToProps, mapDispatchToProps)(GroupsComponent)
+  export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GroupsComponent) as any);

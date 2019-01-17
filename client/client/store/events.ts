@@ -1,5 +1,5 @@
 import {slot, Slot, createEventBus, GenericChannel, combineEvents, TransportMessage} from 'ts-event-bus'
-import { PlayerInfo, GameData } from './player/types';
+import { PlayerInfo, GameData, CreateGroupRequest } from './player/types';
 import { AchievementStore, AllActions } from './index';
 import { AnyAction } from 'redux';
 import { NewGameMessage, AchievementNotification, GroupInviteRequest, GroupInviteUpdate } from 'achievement-sio';
@@ -16,7 +16,8 @@ const AchievementEvents = {
     "group_invite_change": slot<{
         inviteId: number,
         newStatus: 'declined' | 'accepted'
-    }, void>()
+    }, void>(),
+    "create_group": slot<CreateGroupRequest, void>()
 }
 
 export type AchievementEventBus = {
@@ -31,7 +32,8 @@ export type AchievementEventBus = {
     "group_invite_change": Slot<{
         inviteId: number,
         newStatus: 'declined' | 'accepted'
-    }, void>
+    }, void>,
+    "create_group": Slot<CreateGroupRequest, void>
 }
 
 const eventBus = createEventBus( {
@@ -71,6 +73,9 @@ export const eventBusMiddleware = (store: AchievementStore)  => (next: (action: 
         case '@@player/GROUP_INVITE_CHANGE': 
             console.log("TRIGGERDE GROUP INVITE CHANGE")
             eventBus.group_invite_change(action.payload)
+        break;
+        case '@@player/CREATE_GROUP_ACTION':
+            eventBus.create_group(action.payload);
         break;
     }
     return result;
