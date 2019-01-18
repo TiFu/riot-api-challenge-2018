@@ -1,7 +1,7 @@
-import { PlayerStateUpdatedAction, PlayerInfo, EndOfGameAction, UpdatePlayerAchievementsAction, UpdateGroupAchievementsAction, UpdatePlayerDataAction, ReceivedGroupInviteAction, GroupInviteUpdateAction, ChangeInvitationStateAction, GroupInviteChangeResult, GroupInviteChangeResultAction, NewGroupAction, ChangeInvitation, CreateGroupAction } from './types';
+import { PlayerStateUpdatedAction, PlayerInfo, EndOfGameAction, UpdatePlayerAchievementsAction, UpdateGroupAchievementsAction, UpdatePlayerDataAction, ReceivedGroupInviteAction, GroupInviteUpdateAction, ChangeInvitationStateAction, GroupInviteChangeResult, GroupInviteChangeResultAction, NewGroupAction, ChangeInvitation, CreateGroupAction, SearchPlayerAction } from './types';
 import { ActionCreator } from 'redux';
 import { GameData } from './types'
-import { Achievement, AchievementNotification, PlayerData, GroupInviteRequest, GroupInviteUpdate, Group } from 'achievement-sio';
+import { Achievement, AchievementNotification, PlayerData, GroupInviteRequest, GroupInviteUpdate, Group, PlayerPartialInfo } from 'achievement-sio';
 export const updatePlayerInfo = (playerInfo?: PlayerInfo) => {
     return {
         type: '@@player/PLAYER_STATE_UPDATED',
@@ -100,4 +100,15 @@ export const createGroupAction = (name: string, cb: (err: string, response: Grou
             cb: cb
         }
     } as CreateGroupAction
+}
+
+export const searchPlayerAction(searchString: string, region: string, cb: (err: string, result: PlayerPartialInfo[]) => void) {
+    return {
+        type: '@@player/SEARCH_PLAYER',
+        payload: {
+            searchString: searchString,
+            region: region,
+            cb: cb
+        }
+    } as SearchPlayerAction
 }

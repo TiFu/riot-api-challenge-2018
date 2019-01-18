@@ -73,4 +73,10 @@ export class PlayerDB {
         });
     }
 
+    public searchPlayer(searchString: string, region: string): Promise<Player[]> {
+        return this.db.query("SELECT (account_id, encrypted_account_id, region, player_name) FROM players WHERE region = $1 and player_name LIKE '%$2#' LIMIT 10", [region, searchString])
+        .then((res) => {
+            return res.map((response: any) => handleMappingSingleRow<PlayerTableEntry, Player>([response], PlayerDB.PlayerTableMap));
+        })
+    }
 }

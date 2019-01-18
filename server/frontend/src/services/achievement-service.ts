@@ -50,14 +50,4 @@ export class AchievementService {
             console.error("Failed to add game to processing queue: ", err)
         });
     }
-
-    public searchPlayer(msg: SearchPlayerMessage): Promise<PlayerPartialInfo[]> {
-        // TODO: implement (possibly in notification-service , renamed to player service))
-        return Promise.resolve([{
-            accountId: 4,
-            name: "Test",
-            region: "euw1"
-        }]);
-    }
-
 }

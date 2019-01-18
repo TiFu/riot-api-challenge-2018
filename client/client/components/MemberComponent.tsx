@@ -9,6 +9,11 @@ import { Achievement, PlayerPartialInfo, GroupPlayerPartialInfo } from 'achievem
 import TrophyComponent from './TrophComponent';
 import { playerAchievementCategories, getCategoryCompletionState } from 'achievement-models';
 import { PlayerAchievementCategory } from 'achievement-models';
+import Modal from 'react-bootstrap4-modal'
+
+interface MemberComponentState {
+    showModal: boolean;
+}
 
 interface ConfigurableMemberComponentProps {
     members: GroupPlayerPartialInfo[]
@@ -23,7 +28,37 @@ interface MemberComponentProps {
 interface MemberComponentActions {
 }
 
-class MemberComponent extends React.Component<ConfigurableMemberComponentProps & MemberComponentProps & MemberComponentActions, {}> {
+class MemberComponent extends React.Component<ConfigurableMemberComponentProps & MemberComponentProps & MemberComponentActions, MemberComponentState> {
+
+    constructor(props) {
+        super(props)
+        this.state = { showModal: false }
+    }
+
+    private handleClose() {
+        this.setState({showModal: false})
+    }
+
+    private handleInvitePlayer() {
+        
+    }
+    private renderModal() {
+        return <Modal visible={this.state.showModal} onClickBackdrop={() => this.handleClose()}>
+        <div className="modal-header">
+          <h5 className="modal-title highlight_text modal_title">Invite Player</h5>
+        </div>
+        <div className="modal-body">
+        </div>
+        <div className="modal-footer">
+          <button type="button" className="btn btn-danger" onClick={() => this.handleClose()}>
+            Cancel
+          </button>
+          <button type="button" className="btn btn-success" onClick={() => this.handleInvitePlayer()}>
+            Invite
+          </button>
+        </div>
+      </Modal>
+    }
 
     render() { 
         const members = this.props.members.map((m, idx) => {
@@ -36,7 +71,7 @@ class MemberComponent extends React.Component<ConfigurableMemberComponentProps &
         return <div>
                     <div className="row">
                         <div className="col"><h1><i className="fas fa-users"></i> Members</h1></div>
-                        <div className="col" style={{textAlign: "right"}}> <button type="button" onClick={() => console.log("button clicked")} className="btn btn-primary" data-dismiss="alert" aria-label="Close"><i class="fas fa-plus-circle"></i> Invite Player</button></div>
+                        <div className="col" style={{textAlign: "right"}}> <button type="button" onClick={() => this.setState({showModal:true})} className="btn btn-primary" data-dismiss="alert" aria-label="Close"><i class="fas fa-plus-circle"></i> Invite Player</button></div>
                     </div>
                     <table className="table">
                     <thead>
@@ -49,7 +84,8 @@ class MemberComponent extends React.Component<ConfigurableMemberComponentProps &
                     <tbody>
                         {members}
                     </tbody>
-                    </table>                    
+                    </table>   
+                    {this.renderModal()}                 
             </div>
     }
   

@@ -1,5 +1,5 @@
 import { AchievementLocalClient, GroupInviteRequest, GroupInviteUpdate } from 'achievement-sio'
-import { PlayerInfo, GameData, GroupInviteChangeResult, ChangeInvitation, CreateGroupRequest } from '../store/player/types';
+import { PlayerInfo, GameData, GroupInviteChangeResult, ChangeInvitation, CreateGroupRequest, SearchPlayer } from '../store/player/types';
 import io from 'socket.io-client'
 import { AchievementEventBus } from '../store/events';
 import { AchievementState } from '../store/index';
@@ -108,22 +108,41 @@ export class AchievementSocketIOService {
             this.handleInviteChange(change);
         }))
 
-        this.unsubscribes.add(this.eventBus.create_group.on((request: CreateGroupRequest) => {
-            if (!this.socket.connected) {
-                request.cb("It seems like you are not connected to our backend services. Please check your internet connection and the icon in the bottom left.", null);
-                return
-            }
-            this.socket.emit("createGroup", { name: request.name}, (err, data) => {
-                if (err) {
-                    request.cb(err, null);
-                } else {
-                    this.store.dispatch(newGroupEvent(data))
-                    request.cb(null, data);
-                }
-            })
-        }))
+        this.unsubscribes.add(this.eventBus.create_group.on(this.handleCreateGroup.bind(this)))
+        this.unsubscribes.add(this.eventBus.search_player.on(this.handleSearchPlayer.bind(this)))
     }
 
+    private handleSearchPlayer(request: SearchPlayer) {
+        if (!this.socket.connected) {
+            request.cb("It seems like you are not connected to our backend services. Please check your internet connection and the icon in the bottom left.", null);
+            return
+        }
+
+        this.socket.emit("searchPlayer", {
+            "searchString": request.searchString,
+        }, (err, data) => {
+            if (err) {
+                request.cb(err, null);
+            } else {
+                request.cb(null, data);
+            }
+        })
+    }
+
+    private handleCreateGroup(request: CreateGroupRequest) {
+        if (!this.socket.connected) {
+            request.cb("It seems like you are not connected to our backend services. Please check your internet connection and the icon in the bottom left.", null);
+            return
+        }
+        this.socket.emit("createGroup", { name: request.name}, (err, data) => {
+            if (err) {
+                request.cb(err, null);
+            } else {
+                this.store.dispatch(newGroupEvent(data))
+                request.cb(null, data);
+            }
+        })
+    }
     private handleInviteChange(change: ChangeInvitation) {
         console.log("HANDLING GROUP INVITE CHANGE");
         if (!this.socket.connected) {

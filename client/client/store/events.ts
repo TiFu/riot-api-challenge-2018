@@ -1,5 +1,5 @@
 import {slot, Slot, createEventBus, GenericChannel, combineEvents, TransportMessage} from 'ts-event-bus'
-import { PlayerInfo, GameData, CreateGroupRequest } from './player/types';
+import { PlayerInfo, GameData, CreateGroupRequest, SearchPlayer } from './player/types';
 import { AchievementStore, AllActions } from './index';
 import { AnyAction } from 'redux';
 import { NewGameMessage, AchievementNotification, GroupInviteRequest, GroupInviteUpdate } from 'achievement-sio';
@@ -17,7 +17,8 @@ const AchievementEvents = {
         inviteId: number,
         newStatus: 'declined' | 'accepted'
     }, void>(),
-    "create_group": slot<CreateGroupRequest, void>()
+    "create_group": slot<CreateGroupRequest, void>(),
+    "search_player": slot<SearchPlayer, void>()
 }
 
 export type AchievementEventBus = {
@@ -34,6 +35,7 @@ export type AchievementEventBus = {
         newStatus: 'declined' | 'accepted'
     }, void>,
     "create_group": Slot<CreateGroupRequest, void>
+    "search_player": Slot<SearchPlayer, void>
 }
 
 const eventBus = createEventBus( {
@@ -76,6 +78,9 @@ export const eventBusMiddleware = (store: AchievementStore)  => (next: (action: 
         break;
         case '@@player/CREATE_GROUP_ACTION':
             eventBus.create_group(action.payload);
+        break;
+        case '@@player/SEARCH_PLAYER':
+            eventBus.search_player(action.payload)
         break;
     }
     return result;

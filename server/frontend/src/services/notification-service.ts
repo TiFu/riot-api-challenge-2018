@@ -1,4 +1,4 @@
-import { AchievementServerLocal, AchievementServerWeb, PlayerId, GroupId, AchievementNotification, HelloMessage, Achievement, PlayerData, Group, GroupInviteRequest } from 'achievement-sio';
+import { AchievementServerLocal, AchievementServerWeb, PlayerId, GroupId, AchievementNotification, HelloMessage, Achievement, PlayerData, Group, GroupInviteRequest, SearchPlayerMessage, PlayerPartialInfo } from 'achievement-sio';
 import socketio from 'socket.io'
 import { AchievementDatabase } from 'achievement-db';
 import {Player, GroupInfo} from 'achievement-db';
@@ -148,6 +148,19 @@ export class NotificationService {
                 });
             }
         }) 
+    }
+
+    public searchPlayer(msg: SearchPlayerMessage, region: string): Promise<PlayerPartialInfo[]> {
+        // TODO: implement (possibly in notification-service , renamed to player service))
+        return this.database.PlayerDB.searchPlayer(msg.searchString, region).then((result) => {
+            return result.map(r => {
+                return {
+                    accountId: r.accountId,
+                    region: r.region,
+                    name: r.name
+                }
+            })
+        })
     }
 
     public notifyAchievement(accountId: number, region: string, achievement: AchievementNotification) {
