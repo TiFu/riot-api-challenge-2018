@@ -2,6 +2,7 @@ import {Achievement} from './achievement';
 import { GroupPartialInfo, GroupInviteRequest } from './group';
 
 export type SearchPlayerMessage = {
+    region: string
     searchString: string
 }
 export type OpenPlayerMessage = PlayerId

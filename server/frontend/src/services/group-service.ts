@@ -100,6 +100,10 @@ export class GroupService {
             if (group.region != player.region) {
                 throw new GroupServiceException("The player and the group have to be in the same region!");
             }
+            const isMember = await this.db.GroupDB.isMember(player.id, groupId);
+            if (isMember) {
+                throw new GroupServiceException("This player is already a member of this group!");
+            }
             const request = await this.db.GroupDB.addInvitation(player.id, inviterId, groupId);
             const inviter = await this.db.PlayerDB.getPlayerById(inviterId) as Player;
             const notifications = this.notificationService.notifyNewInvitation(player, request, group, inviter);

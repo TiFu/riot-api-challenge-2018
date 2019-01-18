@@ -20,6 +20,7 @@ interface ConfigurableGroupComponentProps {
 }
   
 interface GroupComponentProps {
+    region: string
 }
 
 
@@ -59,7 +60,7 @@ class GroupComponent extends React.Component<ConfigurableGroupComponentProps & G
                         <AchievementOverviewComponent achievements={this.props.group.achievements}/>
                     </div>
                     <div className="col margin">
-                        <MemberComponent members={this.props.group.members}/>
+                        <MemberComponent region={this.props.region} groupId={this.props.group.id} members={this.props.group.members}/>
                     </div>
                 </div>
             </div>
@@ -71,6 +72,7 @@ class GroupComponent extends React.Component<ConfigurableGroupComponentProps & G
   
   function mapStateToProps(state: AchievementState, ownProps: ConfigurableGroupComponentProps): GroupComponentProps {
     return {
+        region: state.player.playerInfo.platformId
     };
   }
   

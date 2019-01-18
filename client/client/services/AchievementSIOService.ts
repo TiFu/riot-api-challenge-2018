@@ -1,5 +1,5 @@
 import { AchievementLocalClient, GroupInviteRequest, GroupInviteUpdate } from 'achievement-sio'
-import { PlayerInfo, GameData, GroupInviteChangeResult, ChangeInvitation, CreateGroupRequest, SearchPlayer } from '../store/player/types';
+import { PlayerInfo, GameData, GroupInviteChangeResult, ChangeInvitation, CreateGroupRequest, SearchPlayer, InvitePlayerActionMessage } from '../store/player/types';
 import io from 'socket.io-client'
 import { AchievementEventBus } from '../store/events';
 import { AchievementState } from '../store/index';
@@ -110,6 +110,21 @@ export class AchievementSocketIOService {
 
         this.unsubscribes.add(this.eventBus.create_group.on(this.handleCreateGroup.bind(this)))
         this.unsubscribes.add(this.eventBus.search_player.on(this.handleSearchPlayer.bind(this)))
+        this.unsubscribes.add(this.eventBus.invite_player.on(this.handleInvitePlayer.bind(this)))
+    }
+
+    private handleInvitePlayer(msg: InvitePlayerActionMessage) {
+        if (!this.socket.connected) {
+            msg.cb("It seems like you are not connected to our backend services. Please check your internet connection and the icon in the bottom left.", null);
+            return
+        }    
+        this.socket.emit("groupInviteRequest", msg.msg, (err, success) => {
+            if (err) {
+                msg.cb(err, null);
+            } else {
+                msg.cb(null, success);
+            }
+        })
     }
 
     private handleSearchPlayer(request: SearchPlayer) {
@@ -120,6 +135,7 @@ export class AchievementSocketIOService {
 
         this.socket.emit("searchPlayer", {
             "searchString": request.searchString,
+            "region": request.region
         }, (err, data) => {
             if (err) {
                 request.cb(err, null);

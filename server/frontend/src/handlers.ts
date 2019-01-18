@@ -24,7 +24,7 @@ export class WebAchievementSocketHandler {
     }
 
     public handleSearchPlayer(msg: SearchPlayerMessage, cb: (err: string | null, data?: PlayerPartialInfo[]) => void) {        
-        this.achievementService.searchPlayer(msg).then((data) => {
+        this.notificationService.searchPlayer(msg, msg.region).then((data) => {
             cb(null, data)
         }).catch((err) =>{ 
             console.log(err)
@@ -70,7 +70,8 @@ export class LocalAchievementSocketHandler {
     }
 
     public handleSearchPlayer(msg: SearchPlayerMessage, cb: (err: string | null, data?: PlayerPartialInfo[]) => void) {        
-        this.achievementService.searchPlayer(msg).then((data) => {
+        this.notificationService.searchPlayer(msg, msg.region).then((data) => {
+            console.log("Found players: ", data, " for ", msg)
             cb(null, data)
         }).catch((err) =>{ 
             console.log(err)
