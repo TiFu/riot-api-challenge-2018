@@ -131,4 +131,4 @@ class CreateGroupComponent extends React.Component<ConfigurableCreateGroupCompon
           createGroup: (name, cb) => dispatch(createGroupAction(name, cb))
       }
   }
-  export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateGroupComponent) as any)
+  export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateGroupComponent) as any) as any

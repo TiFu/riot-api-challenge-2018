@@ -79,7 +79,7 @@ function mapStateToProps(state: AchievementState, ownProps: SidebarConfigurableP
 function mapDispatchToProps(dispatch): SidebarComponentActions {
       return {}
 }
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarComponent) as any)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarComponent) as any) as any
 
 
 interface GroupSubItemsConfigurableProps {
@@ -115,5 +115,5 @@ function mapStateToPropsSubItems(state: AchievementState, ownProps: GroupSubItem
 function mapDispatchToPropsSubItems(dispatch): SidebarComponentActions {
       return {}
 }
-const GroupSubItems = withRouter(connect(mapStateToPropsSubItems, mapDispatchToPropsSubItems)(_GroupSubItems) as any)
+const GroupSubItems = withRouter(connect(mapStateToPropsSubItems, mapDispatchToPropsSubItems)(_GroupSubItems) as any) as any
 
