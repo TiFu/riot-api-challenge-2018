@@ -34,7 +34,10 @@ class MemberComponent extends React.Component<ConfigurableMemberComponentProps &
             </tr>
         })
         return <div>
-                    <h1><i className="fas fa-users"></i> Members</h1>
+                    <div className="row">
+                        <div className="col"><h1><i className="fas fa-users"></i> Members</h1></div>
+                        <div className="col" style={{textAlign: "right"}}> <button type="button" onClick={() => console.log("button clicked")} className="btn btn-primary" data-dismiss="alert" aria-label="Close"><i class="fas fa-plus-circle"></i> Invite Player</button></div>
+                    </div>
                     <table className="table">
                     <thead>
                         <tr>

@@ -51,7 +51,7 @@ export class AchievementService {
         });
     }
 
-    public searchPlayer(msg: SearchPlayerMessage): Promise<PlayerPartialInfo[]> {        
+    public searchPlayer(msg: SearchPlayerMessage): Promise<PlayerPartialInfo[]> {
         // TODO: implement (possibly in notification-service , renamed to player service))
         return Promise.resolve([{
             accountId: 4,
