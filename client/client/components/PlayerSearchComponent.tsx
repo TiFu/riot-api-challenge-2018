@@ -23,6 +23,7 @@ interface ConfigurablePlayerSearchComponentProps {
     region: string
     onChange: (player: PlayerPartialInfo) => void
     player: PlayerPartialInfo
+    exclude: Set<number>
 }
   
 interface PlayerSearchComponentProps {
@@ -59,7 +60,7 @@ class PlayerSearchComponent extends React.Component<ConfigurablePlayerSearchComp
         if (err) {
             this.setState({msg: err})
         } else {
-            this.updateSuggestions(data)
+            this.updateSuggestions(data.filter(m => !this.props.exclude.has(m.accountId)))
         }
     }
 

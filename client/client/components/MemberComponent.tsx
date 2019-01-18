@@ -88,7 +88,7 @@ class MemberComponent extends React.Component<ConfigurableMemberComponentProps &
         </div>
         <div className="modal-body">
             {msg}
-            <PlayerSearchComponent player={this.state.selectedPlayer} region={this.props.region} onChange={this.handlePlayerUpdate.bind(this)}></PlayerSearchComponent>
+            <PlayerSearchComponent exclude={new Set<number>(this.props.members.map(m => m.accountId))} player={this.state.selectedPlayer} region={this.props.region} onChange={this.handlePlayerUpdate.bind(this)}></PlayerSearchComponent>
         </div>
         <div className="modal-footer">
           <button type="button" className="btn btn-danger" onClick={() => this.handleClose()}>
