@@ -32,14 +32,17 @@ interface AchievementBoxComponentActions {
 class AchievementBoxComponent extends React.Component<ConfigurableAchievementBoxComponentProps & AchievementBoxComponentProps & AchievementBoxComponentActions, AchievementBoxComponentState> {
 
     renderObtainableAchievements() {
-        if (!this.props.playerAchievements) {
-            return null
+        let idArr = []
+        if (this.props.playerAchievements) {
+            return idArr = this.props.playerAchievements.map(a => a.achievementId)
         }
-        const obtainedIds = new Set<number>(this.props.playerAchievements.map(a => a.achievementId));
+        const obtainedIds = new Set<number>(idArr);
         const objectives: any = []
+        console.log("Rendering obtainable achievements")
         for (let categoryName in playerAchievementCategories) {
             const category = playerAchievementCategories[categoryName as any]
             let ids = getObtainableIds(category, obtainedIds)
+            console.log("Obtainable Ids: ", ids)
             let id = ids[Math.floor(Math.random() * ids.length)]
             objectives.push(<div className="row achievement-box-padding"><div className="col"><AchievementComponent icon={category.icon} achievement={achievementMap.get(id)} ></AchievementComponent></div></div>)
         }
