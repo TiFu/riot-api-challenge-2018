@@ -9,6 +9,8 @@ import {Route, HashRouter as Router, NavLink, withRouter} from 'react-router-dom
 import GroupComponent from './GroupsComponent'
 import { GroupPartialInfo } from "achievement-sio";
 import GroupInvitesComponent from "./GroupInvitesComponent";
+import AchievementBoxComponent from "./AchievementBoxComponent";
+import { playerAchievementCategories } from 'achievement-models';
 
 export interface SidebarConfigurableProps {
      onCreateGroupClicked: () => void;
@@ -58,6 +60,11 @@ class SidebarComponent extends React.Component<SidebarConfigurableProps & Sideba
                         <Route path="/groups" render={() => <GroupSubItems onCreateGroupClicked={this.props.onCreateGroupClicked} ></GroupSubItems>}>
 
                         </Route>
+                    </div>
+                </div>
+                <div className="row sidebar_achievementBox">
+                    <div className="sidebar_menu">
+                        <AchievementBoxComponent></AchievementBoxComponent>
                     </div>
                 </div>
                 {this.makeFooter()}

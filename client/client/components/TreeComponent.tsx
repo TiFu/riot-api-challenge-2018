@@ -7,7 +7,7 @@ import { PlayerAchievementCategory, GroupAchievementCategory, AchievemenCategory
 import { Treant } from 'treant-js'
 import { Achievement as SIOAchievement } from 'achievement-sio'
 import * as champSkinMap from '../assets/champSkinMap.json';
-
+import {borderMap, getBorderForLevel } from './util'
 
 interface ConfigurableTreeComponentProps {
   achievementCategory: AchievemenCategory<any>
@@ -51,18 +51,6 @@ interface NodeDescription extends Node {
   // TODO: more description stuff
 }
 
-type BorderMap = {
-  "level_-1": string,
-  "level_0": string,
-  "level_1": string,
-  "level_2": string
-}
-const borderMap: BorderMap = {
-  "level_-1": "./assets/borders/no_border.png",
-  "level_0": "./assets/borders/border_bronze.png",
-  "level_1": "./assets/borders/border_silver.png",
-  "level_2": "./assets/borders/border_gold.png"
-}
 
 // TODO: map AchievementCategory + Achievements to tree
 class TreeComponent extends React.Component<ConfigurableTreeComponentProps & TreeComponentProps & TreeComponentActions, {}> {
@@ -157,9 +145,6 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
     }
   }
 
-  private getBorderForLevel(level: string) {
-    return borderMap[level]
-  }
   private getTreeNode(node: NodeDescription, id: number) {
     let gray = ""
     console.log("Level: ", node.level)
@@ -175,7 +160,7 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
             <img className={"tree_champ_img " + gray} src={icon}></img>
           </div>
           <div>
-            <img className={"tree_border_img " + gray} src={this.getBorderForLevel("level_" + node.level)}></img>
+            <img className={"tree_border_img " + gray} src={getBorderForLevel("level_" + node.level)}></img>
           </div>
         </span>
   }

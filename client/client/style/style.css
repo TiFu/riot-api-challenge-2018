@@ -4,6 +4,7 @@
 @import url("wallpaper.css");
 @import url("invite.css");
 @import url("autosuggest.css");
+@import url("achievement.css");
 
 @font-face {
     font-family: "Calisto MT";
@@ -24,6 +25,7 @@
     --main-bg-color: #0d1a23;
     --transparent-main-highlight-color: #213c3eF0;
     --main-highlight-color: #213c3e;
+    --main-modal-color: #1b2e34;
     --main-hover-color: #2B5354;
     --font-color: #f0e6d2;
 }

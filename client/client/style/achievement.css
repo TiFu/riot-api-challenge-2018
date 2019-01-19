@@ -1,0 +1,30 @@
+.achievement_champ_img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-48%, -57%);
+    z-index: 0;
+    width: 25px;
+    height: auto;
+    border-radius: 50%
+}
+
+.achievement_border_img {
+    position: relative;
+    width: 40px;
+    z-index: 100;
+    height: auto;
+}
+
+.achievement-box-padding {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.achievement-box {
+    margin: 0px auto;
+    text-align: center;
+    width: 90%;
+    border: 1px solid var(--font-color);
+    background-color: transparent;
+}

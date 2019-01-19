@@ -7,8 +7,8 @@ import { MatchV4MatchDto, MatchV4MatchTimelineDto } from 'kayn/typings/dtos';
 
 
 // TOP LANE
-const group1Level0: PlayerAchievement = new PlayerAchievement(1, "", "Test unlock message", "test", "test desc", [new KillRule()]);
-const group5level0: PlayerAchievement = new PlayerAchievement(6, "", "Test unlock message", "test 6", "test desc", [new KillRule()]);
+const group1Level0: PlayerAchievement = new PlayerAchievement(1, 0, "", "Test unlock message", "test", "test desc", [new KillRule()]);
+const group5level0: PlayerAchievement = new PlayerAchievement(6, 0, "", "Test unlock message", "test 6", "test desc", [new KillRule()]);
 
 export const group5: PlayerAchievementGroup = {
     name: "Test2",
@@ -22,25 +22,25 @@ export const group1: PlayerAchievementGroup = {
 }
 
 
-const topCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "icon", group1);
+const topCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "./assets/lanes/top.png", group1);
 
 // Jungle
-const jungleCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "icon", group1);
+const jungleCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "./assets/lanes/jungle.png", group1);
 
 
 // Mid
-const midCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "icon", group1);
+const midCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "./assets/lanes/middle.png", group1);
 
 
 // Support
-const supportCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "icon", group1);
+const supportCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "./assets/lanes/support.png", group1);
 
 // ADC
-const adcCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "icon", group1);
+const adcCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "./assets/lanes/bottom.png", group1);
 
 
 // Clown
-const clownCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "icon", group1);
+const clownCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "./assets/lanes/top.png", group1);
 
 type PlayerAchievementCategories = {
     "top": PlayerAchievementCategory,
@@ -64,8 +64,8 @@ export const playerAchievementCategories: PlayerAchievementCategories = {
 
 
 // Group Achievement Category
-const group2Level0: GroupAchievement = new GroupAchievement(2, "", "test unlock message", "achievement2 test name", "desc", [ new GroupKillRule() ]);
-const group3Level0: GroupAchievement = new GroupAchievement(3, "", "test unlock message", "achievement3 test name", "desc", [ new GroupKillRule() ]);
+const group2Level0: GroupAchievement = new GroupAchievement(2, 0,  "", "test unlock message", "achievement2 test name", "desc", [ new GroupKillRule() ]);
+const group3Level0: GroupAchievement = new GroupAchievement(3, 0, "", "test unlock message", "achievement3 test name", "desc", [ new GroupKillRule() ]);
 
 const group3: GroupAchievementGroup = {
     name: "Test2",

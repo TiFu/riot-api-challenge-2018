@@ -10,10 +10,13 @@
 }
 
 .sidebar_menu_size {
-    height: 78%;
+    height: 30%;
     padding-top: 20px;
 }
 
+.sidebar_achievementBox {
+    height: 48%;
+}
 .sidebar_footer {
     height:7%;
 }
