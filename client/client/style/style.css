@@ -5,6 +5,7 @@
 @import url("invite.css");
 @import url("autosuggest.css");
 @import url("achievement.css");
+@import url("achievement-overview.css");
 
 @font-face {
     font-family: "Calisto MT";
@@ -24,7 +25,7 @@
 :root {
     --main-bg-color: #0d1a23;
     --transparent-main-highlight-color: #213c3eF0;
-    --main-highlight-color: #213c3e;
+    --main-highlight-color: #15242b;
     --main-modal-color: #1b2e34;
     --main-hover-color: #2B5354;
     --font-color: #f0e6d2;
@@ -40,6 +41,10 @@
 }
 .hidden {
     display: none
+}
+
+.row-one-third {
+    height: 33.33%;
 }
 
 .full_width_height {

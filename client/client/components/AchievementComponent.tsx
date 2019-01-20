@@ -49,7 +49,7 @@ class AchievementComponent extends React.Component<ConfigurableAchievementCompon
                         </div>                    
                     </div>
                     <div className="col-8">
-                        <div style={{"display": "table", height: "100%", overflow: "hidden;"}}>
+                        <div style={{"display": "table", height: "100%", overflow: "hidden"}}>
                             <div style={{display: "table-cell", verticalAlign: "middle"}}>
                                 <div>
                                     {this.props.achievement.name}
@@ -70,7 +70,6 @@ class AchievementComponent extends React.Component<ConfigurableAchievementCompon
   
   function mapDispatchToProps(dispatch): AchievementComponentActions {
       return {
-          createGroup: (name, cb) => dispatch(createGroupAction(name, cb))
       }
   }
   export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AchievementComponent) as any) as any

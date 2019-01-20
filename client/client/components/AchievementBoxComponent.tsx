@@ -15,8 +15,10 @@ import { Redirect, withRouter } from "react-router";
 import { GroupPartialInfo } from 'achievement-sio';
 import {borderMap, getBorderForLevel} from './util'
 import AchievementComponent from "./AchievementComponent";
+import AchievementOverviewsComponent from "./AchievementOverviewsComponent";
 
 interface AchievementBoxComponentState {
+    showAchievementOverview: boolean
 }
 
 interface ConfigurableAchievementBoxComponentProps {
@@ -31,32 +33,77 @@ interface AchievementBoxComponentActions {
 
 class AchievementBoxComponent extends React.Component<ConfigurableAchievementBoxComponentProps & AchievementBoxComponentProps & AchievementBoxComponentActions, AchievementBoxComponentState> {
 
-    renderObtainableAchievements() {
+    public constructor(props) {
+        super(props)
+        this.state = { showAchievementOverview: true }
+    }
+
+    private showOverview(show: boolean) {
+        this.setState({ showAchievementOverview: show})
+    }
+    
+    calculateObtainableAchievements(): { [key: string]: number[] } {
         let idArr = []
         if (this.props.playerAchievements) {
-            return idArr = this.props.playerAchievements.map(a => a.achievementId)
+            idArr = this.props.playerAchievements.map(a => a.achievementId)
         }
+
+        let result: { [key: string]: number[] } = {}
+
         const obtainedIds = new Set<number>(idArr);
-        const objectives: any = []
         for (let categoryName in playerAchievementCategories) {
             const category = playerAchievementCategories[categoryName as any]
             let ids = getObtainableIds(category, obtainedIds)
+            result[categoryName] = ids;
+        }
+        return result;
+    }
+
+    renderObtainableAchievements(map: { [key: string]: number[]}) {
+        const objectives: any = []
+        for (let categoryName in playerAchievementCategories) {
+            const category = playerAchievementCategories[categoryName as any]
+            let ids = map[categoryName]
             let id = ids[Math.floor(Math.random() * ids.length)]
-            objectives.push(<div className="row achievement-box-padding"><div className="col"><AchievementComponent icon={category.icon} achievement={achievementMap.get(id)} ></AchievementComponent></div></div>)
+            objectives.push(<div key={categoryName} className="row achievement-box-padding"><div className="col"><AchievementComponent icon={category.icon} achievement={achievementMap.get(id)} ></AchievementComponent></div></div>)
         }
         return objectives;
     }
 
     render() {
+        let map = this.calculateObtainableAchievements()
+        let achievementComponent = null
+        console.log("ACHIEVEMENT COMPONENT");
+        if (this.state.showAchievementOverview) {
+            console.log("ACHIEVEMENT COMPONENT JUP")
+            achievementComponent = <AchievementOverviewsComponent 
+                    topCategory={playerAchievementCategories["top"]}
+                    jungleCategory={playerAchievementCategories["jungle"]}
+                    midCategory={playerAchievementCategories["mid"]}
+                    botCategory={playerAchievementCategories["adc"]}
+                    supportCategory={playerAchievementCategories["support"]}
+                    clownfiestaCategory={playerAchievementCategories["clownfiesta"]}
+
+                    topAchievements={map["top"]}
+                    jungleAchievements={map["jungle"]}
+                    midAchievements={map["mid"]}
+                    botAchievemets={map["adc"]}
+                    supportAchievements={map["support"]}
+                    clownfiestaAchievements={map["clownfiesta"]}
+                ></AchievementOverviewsComponent>
+        }
         return <div className="full_width_height" style={{textAlign: "center"}}>
                 <div className="card achievement-box">
                     <div className="card-body">
-                    <h3 style={{textAlign: "center"}}><span className="highlight_text">Your Challenges</span></h3>
-                    <div style={{"textAlign": "center", width: "100%"}}>
-                    {this.renderObtainableAchievements()}
-                    </div>
+                        <h3 style={{textAlign: "center"}}>
+                            <span className="highlight_text">Your Challenges</span>
+                        </h3>
+                        <div style={{"textAlign": "center", width: "100%"}}>
+                            {this.renderObtainableAchievements(map)}
+                        </div>
                     </div>
                 </div>
+                {achievementComponent}
             </div>       
     }
 }
