@@ -31,12 +31,13 @@ interface AchievementComponentActions {
 class AchievementComponent extends React.Component<ConfigurableAchievementComponentProps & AchievementComponentProps & AchievementComponentActions, AchievementComponentState> {
 
     renderIcon() {
+        // getBorderForLevel("level_" + this.props.achievement.level)
         return <span style={{position: "absolute"}}>
           <div>
             <img className={"achievement_champ_img "} src={this.props.icon}></img>
           </div>
           <div>
-            <img className={"achievement_border_img "} src={getBorderForLevel("level_" + this.props.achievement.level)}></img>
+            <img className={"achievement_border_img "} src="./assets/borders/border_square.png"></img>
           </div>
         </span>
     }
@@ -51,7 +52,7 @@ class AchievementComponent extends React.Component<ConfigurableAchievementCompon
                     <div className="col-8">
                         <div style={{"display": "table", height: "100%", overflow: "hidden"}}>
                             <div style={{display: "table-cell", verticalAlign: "middle"}}>
-                                <div>
+                                <div style={{paddingLeft: "5px"}}>
                                     {this.props.achievement.name}
                                 </div>
                             </div>

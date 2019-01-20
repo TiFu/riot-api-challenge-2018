@@ -2,9 +2,9 @@
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-48%, -57%);
+    transform: translate(-50%, -50%);
     z-index: 0;
-    width: 25px;
+    width: 30px;
     height: auto;
     border-radius: 50%
 }

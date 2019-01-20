@@ -12,12 +12,14 @@ import GroupInvitesComponent from "./GroupInvitesComponent";
 import SidebarComponent from "./SidebarComponent";
 import CreateGroupComponent from './CreateGroupComponent'
 import Modal from 'react-bootstrap4-modal';
+import { showAchievementOverview } from "../store/component/actions";
 
 interface MainComponentProps {
     groups: GroupPartialInfo[]
 }
 
 interface MainComponentActions {
+    showAchievementOverview: (visible: boolean) => void
 }
 
 interface MainComponentState {
@@ -54,7 +56,7 @@ class MainComponent extends React.Component<MainComponentProps & MainComponentAc
             <div className="col-2 no_padding">
                <SidebarComponent onCreateGroupClicked={() => this.showCreateGroupClickedModal()}></SidebarComponent>
             </div>
-            <div className="col-10 full_width_height no_padding">
+            <div className="col-10 full_width_height no_padding" onClick={() => this.props.showAchievementOverview(false)}>
                 <Route exact path="/wallpaper" component={WallpaperComponent}></Route>
                 <Route  path="/groups/id/:idx" component={GroupsComponent}></Route>
                 <Route exact path="/groups/invites" component={GroupInvitesComponent}></Route>
@@ -76,6 +78,8 @@ class MainComponent extends React.Component<MainComponentProps & MainComponentAc
   }
   
   function mapDispatchToProps(dispatch): MainComponentActions {
-      return {}
+      return {
+          showAchievementOverview: (visible: boolean) => dispatch(showAchievementOverview(visible))
+      }
   }
   export default connect(mapStateToProps, mapDispatchToProps)(MainComponent)

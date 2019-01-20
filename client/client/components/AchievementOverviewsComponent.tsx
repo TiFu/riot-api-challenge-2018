@@ -15,6 +15,7 @@ import { Redirect, withRouter } from "react-router";
 import { GroupPartialInfo } from 'achievement-sio';
 import {borderMap, getBorderForLevel} from './util'
 import AchievementOverviewComponent from "./AchievementOverviewComponent";
+import { showAchievementOverview } from "../store/component/actions";
 interface AchievementOverviewsComponentState {
 }
 
@@ -38,12 +39,17 @@ interface AchievementOverviewsComponentProps {
 }
 
 interface AchievementOverviewsComponentActions {
+    setOverviewVisible: (visible: boolean) => void;
 }
 
 class AchievementOverviewsComponent extends React.Component<ConfigurableAchievementOverviewsComponentProps & AchievementOverviewsComponentProps & AchievementOverviewsComponentActions, AchievementOverviewsComponentState> {
 
     render() {
         return <div className="achievement_overview_second_border">
+        <div onClick={() => this.props.setOverviewVisible(false)} style={{cursor: "pointer", position: "absolute", top: "calc(50% - 60px)", right: "calc(0% - 9px)", zIndex: 2000 }}>
+            <span className="fas fa-caret-left" style={{fontSize: "120px"}}></span>
+        </div>
+
         <div className="container achievement_overview_component">
                 <div className="row achievement_overview_tite_row"> 
                     <h1 className="achievement_overview_title"><span className="highlight_text">CHALLENGES</span></h1>
@@ -113,6 +119,7 @@ class AchievementOverviewsComponent extends React.Component<ConfigurableAchievem
   
   function mapDispatchToProps(dispatch): AchievementOverviewsComponentActions {
       return {
+          setOverviewVisible: (visible: boolean) => dispatch(showAchievementOverview(visible))
       }
   }
   export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AchievementOverviewsComponent) as any) as any

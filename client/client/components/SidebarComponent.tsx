@@ -11,6 +11,7 @@ import { GroupPartialInfo } from "achievement-sio";
 import GroupInvitesComponent from "./GroupInvitesComponent";
 import AchievementBoxComponent from "./AchievementBoxComponent";
 import { playerAchievementCategories } from 'achievement-models';
+import { showAchievementOverview } from "../store/component/actions";
 
 export interface SidebarConfigurableProps {
      onCreateGroupClicked: () => void;
@@ -22,6 +23,7 @@ interface SidebarComponentProps {
 }
 
 interface SidebarComponentActions {
+    setOverviewVisible: (visible: boolean) => void;
 }
 
 class SidebarComponent extends React.Component<SidebarConfigurableProps & SidebarComponentProps & SidebarComponentActions, {}> {
@@ -52,7 +54,7 @@ class SidebarComponent extends React.Component<SidebarConfigurableProps & Sideba
                         <img src="./assets/logo.jpg" className="full_width_height" />
                     </div>
                 </div>
-                <div className="row sidebar_menu_size">
+                <div className="row sidebar_menu_size" onClick={() => this.props.setOverviewVisible(false)}>
                     <div className="sidebar_menu">
                         <NavLink className="sidebar_default_link" activeClassName="sidebar_active_link" to="/wallpaper"><span className="fas fa-trophy"></span> <span className="sidebar_desc">Trophy Wall</span></NavLink>
                         <NavLink className="sidebar_default_link" activeClassName="sidebar_active_link" to="/groups/id/0"><span className="fas fa-users"></span> <span className="sidebar_desc">Groups</span></NavLink>
@@ -84,7 +86,9 @@ function mapStateToProps(state: AchievementState, ownProps: SidebarConfigurableP
 }
   
 function mapDispatchToProps(dispatch): SidebarComponentActions {
-      return {}
+      return {
+        setOverviewVisible: (visible: boolean) => dispatch(showAchievementOverview(visible))
+      }
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SidebarComponent) as any) as any
 
@@ -119,7 +123,7 @@ function mapStateToPropsSubItems(state: AchievementState, ownProps: GroupSubItem
   
 }
   
-function mapDispatchToPropsSubItems(dispatch): SidebarComponentActions {
+function mapDispatchToPropsSubItems(dispatch) {
       return {}
 }
 const GroupSubItems = withRouter(connect(mapStateToPropsSubItems, mapDispatchToPropsSubItems)(_GroupSubItems) as any) as any

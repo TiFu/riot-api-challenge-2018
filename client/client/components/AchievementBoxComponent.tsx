@@ -16,9 +16,9 @@ import { GroupPartialInfo } from 'achievement-sio';
 import {borderMap, getBorderForLevel} from './util'
 import AchievementComponent from "./AchievementComponent";
 import AchievementOverviewsComponent from "./AchievementOverviewsComponent";
+import { showAchievementOverview } from "../store/component/actions";
 
 interface AchievementBoxComponentState {
-    showAchievementOverview: boolean
 }
 
 interface ConfigurableAchievementBoxComponentProps {
@@ -26,20 +26,18 @@ interface ConfigurableAchievementBoxComponentProps {
   
 interface AchievementBoxComponentProps {
     playerAchievements: PlayerAchievementEntry[]
+    showAchievementOverview: boolean
 }
 
 interface AchievementBoxComponentActions {
+    setOverviewVisible: (visible: boolean) => void
 }
 
 class AchievementBoxComponent extends React.Component<ConfigurableAchievementBoxComponentProps & AchievementBoxComponentProps & AchievementBoxComponentActions, AchievementBoxComponentState> {
 
     public constructor(props) {
         super(props)
-        this.state = { showAchievementOverview: true }
-    }
-
-    private showOverview(show: boolean) {
-        this.setState({ showAchievementOverview: show})
+        this.state = {}
     }
     
     calculateObtainableAchievements(): { [key: string]: number[] } {
@@ -74,7 +72,7 @@ class AchievementBoxComponent extends React.Component<ConfigurableAchievementBox
         let map = this.calculateObtainableAchievements()
         let achievementComponent = null
         console.log("ACHIEVEMENT COMPONENT");
-        if (this.state.showAchievementOverview) {
+        if (this.props.showAchievementOverview) {
             console.log("ACHIEVEMENT COMPONENT JUP")
             achievementComponent = <AchievementOverviewsComponent 
                     topCategory={playerAchievementCategories["top"]}
@@ -92,9 +90,13 @@ class AchievementBoxComponent extends React.Component<ConfigurableAchievementBox
                     clownfiestaAchievements={map["clownfiesta"]}
                 ></AchievementOverviewsComponent>
         }
+        
         return <div className="full_width_height" style={{textAlign: "center"}}>
-                <div className="card achievement-box">
+                <div className="card achievement-box" style={{cursor: "pointer"}} onClick={() => this.props.setOverviewVisible(true)}>
                     <div className="card-body">
+                        <div style={{position: "absolute", top: "calc(50% - 35px)", left: "100%", zIndex: 2000 }}>
+                            <span className="fas fa-caret-right" style={{fontSize: "70px"}}></span>
+                        </div>
                         <h3 style={{textAlign: "center"}}>
                             <span className="highlight_text">Your Challenges</span>
                         </h3>
@@ -111,12 +113,14 @@ class AchievementBoxComponent extends React.Component<ConfigurableAchievementBox
   
   function mapStateToProps(state: AchievementState, ownProps: ConfigurableAchievementBoxComponentProps): AchievementBoxComponentProps {
     return {
-        playerAchievements: state.player.playerAchievements
+        playerAchievements: state.player.playerAchievements,
+        showAchievementOverview: state.component.showAchievementOverviewAction
     };
   }
   
   function mapDispatchToProps(dispatch): AchievementBoxComponentActions {
       return {
+          setOverviewVisible: (visible: boolean) => dispatch(showAchievementOverview(visible))
       }
   }
   export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AchievementBoxComponent) as any) as any
