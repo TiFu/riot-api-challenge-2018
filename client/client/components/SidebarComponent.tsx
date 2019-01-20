@@ -36,7 +36,7 @@ class SidebarComponent extends React.Component<SidebarConfigurableProps & Sideba
                 <img src="./assets/lcu.png" width="40px" className={"connection_icon " + lcuClass}/>
             </div>
             <div className="col connection_icon_frame no_padding">
-                <img src="./assets/logo.jpg" width="40px" className={"connection_icon " + backendClass}/>
+                <img src="./assets/logo.png" width="40px" className={"connection_icon " + backendClass}/>
             </div>
         </div>
     }
@@ -51,7 +51,7 @@ class SidebarComponent extends React.Component<SidebarConfigurableProps & Sideba
                         </div>
                     </div>
                     <div className="col-5 no_padding">
-                        <img src="./assets/logo.jpg" className="full_width_height" />
+                        <img src="./assets/logo.png" className="full_width_height" />
                     </div>
                 </div>
                 <div className="row sidebar_menu_size" onClick={() => this.props.setOverviewVisible(false)}>

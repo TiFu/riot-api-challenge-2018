@@ -57,6 +57,7 @@ class MainComponent extends React.Component<MainComponentProps & MainComponentAc
                <SidebarComponent onCreateGroupClicked={() => this.showCreateGroupClickedModal()}></SidebarComponent>
             </div>
             <div className="col-10 full_width_height no_padding" onClick={() => this.props.showAchievementOverview(false)}>
+                <Route exact path="/" component={RedirectComponent}></Route>
                 <Route exact path="/wallpaper" component={WallpaperComponent}></Route>
                 <Route  path="/groups/id/:idx" component={GroupsComponent}></Route>
                 <Route exact path="/groups/invites" component={GroupInvitesComponent}></Route>
@@ -80,6 +81,12 @@ class MainComponent extends React.Component<MainComponentProps & MainComponentAc
   function mapDispatchToProps(dispatch): MainComponentActions {
       return {
           showAchievementOverview: (visible: boolean) => dispatch(showAchievementOverview(visible))
+      }
+  }
+
+  class RedirectComponent extends React.Component<{}, {}> {
+      render() { 
+        return <Redirect to="/wallpaper"></Redirect>
       }
   }
   export default connect(mapStateToProps, mapDispatchToProps)(MainComponent)

@@ -86,7 +86,7 @@ class CreateGroupComponent extends React.Component<ConfigurableCreateGroupCompon
     private renderForm() {
         return <form>
             <div className="form-group">
-                <input type="email" className="form-control" id="inputEmail3" value={this.state.groupName} onChange={this.handleNameChange.bind(this)} placeholder="Group Name" />
+                <input type="text" className="form-control" id="inputEmail3" value={this.state.groupName} onChange={this.handleNameChange.bind(this)} placeholder="Group Name" />
             </div>
         </form>;
     }
