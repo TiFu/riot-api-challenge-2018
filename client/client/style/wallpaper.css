@@ -1,6 +1,7 @@
 .wallpaper_background {
-    background-image: url("../assets/background.png");
-    background-size: cover;
+    background-image: url("../assets/shelves.png"),  url("../assets/background.png");
+    background-position: top left, top left;
+    background-size: 100% 100%;
 }
 
 .row-one-third {

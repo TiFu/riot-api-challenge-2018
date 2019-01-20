@@ -6,11 +6,13 @@
 .group_name_row {
     height: 10%;
     margin-left:0px;
+    margin-right: 0px;
 }
 
 .group_component_row {
     height: 90%;
     margin-left:0px;
+    margin-right: 0px;
 }
 
 .group_title {
