@@ -6,6 +6,7 @@
   "scripts": {
     "start": "electron .",
     "build": "tsc --resolveJsonModule",
+    "watch": "tsc --resolveJsonModule --watch",
     "debug": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
