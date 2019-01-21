@@ -17,6 +17,7 @@ import {borderMap, getBorderForLevel} from './util'
 import AchievementComponent from "./AchievementComponent";
 import AchievementOverviewsComponent from "./AchievementOverviewsComponent";
 import { showAchievementOverview } from "../store/component/actions";
+import { filterForLowestObtainableId } from "achievement-models";
 
 interface AchievementBoxComponentState {
 }
@@ -50,10 +51,15 @@ class AchievementBoxComponent extends React.Component<ConfigurableAchievementBox
 
         const obtainedIds = new Set<number>(idArr);
         for (let categoryName in playerAchievementCategories) {
-            const category = playerAchievementCategories[categoryName as any]
+            const category: PlayerAchievementCategory = playerAchievementCategories[categoryName as any]
             let ids = getObtainableIds(category, obtainedIds)
-            result[categoryName] = ids;
+            let idSet = new Set(ids)
+            filterForLowestObtainableId(idSet, category.getFirstGroup());
+            result[categoryName] = Array.from(idSet);
         }
+
+        // filter result
+
         return result;
     }
 

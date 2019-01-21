@@ -1,2 +1,2 @@
 export * from './models'
-export { achievementMap,  getObtainableIds, playerAchievementCategories, groupAchievementCategories, checkPlayerAchievementCategories, checkGroupAchievementCategories, getCategoryCompletionState } from './achievements'
+export { filterForLowestObtainableId, achievementMap,  getObtainableIds, playerAchievementCategories, groupAchievementCategories, checkPlayerAchievementCategories, checkGroupAchievementCategories, getCategoryCompletionState } from './achievements'

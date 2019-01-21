@@ -170,6 +170,33 @@ export function checkPlayerAchievementCategories(encryptedAccountId: string, obt
     return allObtainedIds;
 }
 
+export function filterForLowestObtainableId(obtainableIds: Set<number>, group: AchievementGroup<any>) {
+
+    const ids = group.levels.map(l => l.id);
+    let remove = false;
+    let log = false;
+    for (let i = 0; i < ids.length; i++) {
+        if (ids[i] == 530 || ids[i] == 531 || ids[i] == 532) {
+            log = true
+        }
+        if (remove) {
+            if (log) {
+                console.log("[filter] Removing " + ids[i])
+            }
+            obtainableIds.delete(ids[i])
+        } else if (obtainableIds.has(ids[i])) {
+            if (log) {
+                console.log("[filter] Lowest ID: " + ids[i] + " was in obtainable id set.")
+            }
+            remove = true;
+        }
+    }
+    for (let child of group.childAchievements) {
+        filterForLowestObtainableId(obtainableIds, child);
+    }
+    return obtainableIds;
+}
+
 export function checkGroupAchievementCategories(accountIds: string[], obtainedAchievements: Set<AchievementId>, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto, groupAchievementCategories: GroupAchievementCategory[]) {
     const allObtainedIds: AchievementId[] = [];
     for (const category of groupAchievementCategories) {
