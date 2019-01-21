@@ -120,7 +120,7 @@ class WallpaperComponent extends React.Component<WallpaperComponentProps & Wallp
         const keys = new Set<number>(playerAchievements.keys());
         for (const lane of ["top", "jungle", "mid", "adc", "support"]) {
             const completionState = getCategoryCompletionState(playerAchievementCategories[lane], keys)
-            trophies.push(<div key={lane} className="col wallpaper-centerd">
+            trophies.push(<div key={lane} className="col wallpaper-centerd trophy_col">
                 <TrophyComponent completionState={completionState} achievementCategory={playerAchievementCategories[lane]} />
             </div>
             )

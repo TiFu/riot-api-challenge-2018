@@ -9,6 +9,44 @@ export const initialState: PlayerState = {
         "platformId": "euw1",
         "playerName": "TiFu"
     },
+    "playerAchievements": [
+        {
+            "achievedAt": new Date(),
+            "achievementId": 500,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 510,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 520,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 530,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 540,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 550,
+            "champId": 1,
+            "skinId": 0
+        }
+    ],
     "invites": [
         {
             "groupId": 10,

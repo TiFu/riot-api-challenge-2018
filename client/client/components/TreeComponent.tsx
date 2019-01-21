@@ -188,7 +188,7 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
     const nodes = this.achievementCategoriesToNodes(this.props.achievementCategory.getFirstGroup(), this.props.achievements, "", 0);
     const nodeDiv = this.getTreeNodes(nodes);
 
-    return <div className="full_width_height">
+    return <div className="full_width_height tree_component">
         <div id={"tree-simple-" + this.props.componentId} className="full_width_height" ></div>
         {nodeDiv}
     </div>;

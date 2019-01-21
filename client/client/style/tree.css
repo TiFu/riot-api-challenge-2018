@@ -19,3 +19,7 @@
 .tree_border_img_gray {
     filter: grayscale(100%);
 }
+
+.tree_component {
+    padding-top: 20px;
+}

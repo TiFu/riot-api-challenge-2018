@@ -21,9 +21,9 @@ export const group1: PlayerAchievementGroup = {
 
 // [0], [1, 2], [3, 4, 5]
 //ADC
-const group50Level0: PlayerAchievement = new PlayerAchievement(501, 0, "", "Test unlock message", "Farmerama", "You rise and fall by your farming skill. Proof that you are a good farmer, have 65/75/90 CS at 10 minutes.", [new KillRule()]);
-const group50Level1: PlayerAchievement = new PlayerAchievement(502, 1, "", "Test unlock message", "Farmerama", "You rise and fall by your farming skill. Have 75/90 CS at 10 minutes.", [new KillRule()]);
-const group50Level2: PlayerAchievement = new PlayerAchievement(503, 2, "", "Test unlock message", "Farmerama", "You farm well indeed. Can you manage 90 CS at 10 minutes?", [new KillRule()]);
+const group50Level0: PlayerAchievement = new PlayerAchievement(500, 0, "", "Test unlock message", "Farmerama", "You rise and fall by your farming skill. Proof that you are a good farmer, have 65/75/90 CS at 10 minutes.", [new KillRule()]);
+const group50Level1: PlayerAchievement = new PlayerAchievement(501, 1, "", "Test unlock message", "Farmerama", "You rise and fall by your farming skill. Have 75/90 CS at 10 minutes.", [new KillRule()]);
+const group50Level2: PlayerAchievement = new PlayerAchievement(502, 2, "", "Test unlock message", "Farmerama", "You farm well indeed. Can you manage 90 CS at 10 minutes?", [new KillRule()]);
 
 const group51Level0: PlayerAchievement = new PlayerAchievement(510, 0, "", "Test unlock message", "I will carry you", "It's called carry for a reason. Win a game with more than 25k/35k/50k damage dealt to champions.", [new KillRule()]);
 const group51Level1: PlayerAchievement = new PlayerAchievement(511, 1, "", "Test unlock message", "I will carry you", "It's called carry for a reason. Win a game with more than 35k/50k damage dealt to champions.", [new KillRule()]);
@@ -33,9 +33,9 @@ const group52Level0: PlayerAchievement = new PlayerAchievement(520, 0, "", "Test
 const group52Level1: PlayerAchievement = new PlayerAchievement(521, 1, "", "Test unlock message", "Hi I'm support", "Report my team for ks! Finish a game while having less than 1/0 kills and at least 7/10 assists.", [new KillRule()]);
 const group52Level2: PlayerAchievement = new PlayerAchievement(522, 2, "", "Test unlock message", "Hi I'm support", "Maybe I should find another job. Finish a game while having 0 kills and at least 10 assists.", [new KillRule()]);
 
-const group53Level0: PlayerAchievement = new PlayerAchievement(531, 0, "", "Test unlock message", "I will hunt you down", "Passive laning is boring. Score a double kill before 15/10/5 minutes into the game.", [new KillRule()]);
-const group53Level1: PlayerAchievement = new PlayerAchievement(532, 1, "", "Test unlock message", "I will hunt you down", "Passive laning is boring. Score a double kill before 10/5 minutes into the game.", [new KillRule()]);
-const group53Level2: PlayerAchievement = new PlayerAchievement(533, 2, "", "Test unlock message", "I will hunt you down", "Channel your inner Draven. Score a double kill before 5 minutes into the game.", [new KillRule()]);
+const group53Level0: PlayerAchievement = new PlayerAchievement(530, 0, "", "Test unlock message", "I will hunt you down", "Passive laning is boring. Score a double kill before 15/10/5 minutes into the game.", [new KillRule()]);
+const group53Level1: PlayerAchievement = new PlayerAchievement(531, 1, "", "Test unlock message", "I will hunt you down", "Passive laning is boring. Score a double kill before 10/5 minutes into the game.", [new KillRule()]);
+const group53Level2: PlayerAchievement = new PlayerAchievement(532, 2, "", "Test unlock message", "I will hunt you down", "Channel your inner Draven. Score a double kill before 5 minutes into the game.", [new KillRule()]);
 
 const group54Level0: PlayerAchievement = new PlayerAchievement(540, 0, "", "Test unlock message", "Strong and independent", "I don't need protection. Get 2/4/7 solo kills in one game.", [new KillRule()]);
 const group54Level1: PlayerAchievement = new PlayerAchievement(541, 1, "", "Test unlock message", "Strong and independent", "I don't need protection. Get 4/7 solo kills in one game.", [new KillRule()]);
