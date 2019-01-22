@@ -105,7 +105,7 @@ class WallpaperComponent extends React.Component<WallpaperComponentProps & Wallp
     private getRoleTrees(playerAchievements: Map<number, Achievement>) {
         const trees = []
         for (const lane of ["top", "jungle", "mid", "adc", "support"]) {
-            trees.push(<div key={lane} className="col wallpaper-centerd">
+            trees.push(<div key={lane} className="col wallpaper-centerd" style={{width: "20%"}}>
                 <TreeComponent achievements={playerAchievements} achievementCategory={playerAchievementCategories[lane]}  componentId={lane}> </TreeComponent>
             </div>
             )

@@ -6,7 +6,7 @@ let tray = null;
 
 // TODO: add option to quit
 function initApp() {
-    window = new BrowserWindow({ icon: __dirname + "/../assets/logo.png", show: false })
+    window = new BrowserWindow({ icon: __dirname + "/../assets/logo.png", show: false, resizable: false })
     window.once('ready-to-show', () => {
         window.maximize();
         window.show()

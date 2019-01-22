@@ -43,10 +43,10 @@ class GroupComponent extends React.Component<ConfigurableGroupComponentProps & G
                 <div className="row row_half no_margin">
                     <div className="col full_width_height">
                         <div className="row  full_width_height">
-                            <div className="col">
+                            <div className="col" style={{height: "100%"}}>
                                 <TrophyComponent completionState={completionState} achievementCategory={groupCat}></TrophyComponent>
                             </div>
-                            <div className="col">
+                            <div className="col" style={{height: "100%"}}>
                                 <TreeComponent achievementCategory={groupCat} achievements={achievementMap} componentId={"group_" + this.props.group.id}></TreeComponent>
                             </div>
                         </div>
