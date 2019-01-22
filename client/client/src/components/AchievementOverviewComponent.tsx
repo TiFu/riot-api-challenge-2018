@@ -35,14 +35,14 @@ class AchievementOverviewComponent extends React.Component<ConfigurableAchieveme
     render() {
         const achievements = this.props.achievements.map(a => achievementMap.get(a)).map(a => {
             return <tr>
-                    <td><b className="highlight_text">{a.name}</b><br />{a.description}</td>
+                    <td><span className="highlight_text">{a.name}</span><br />{a.description}</td>
                 </tr>
         })
         return <div className="full_width_height">
                 <div style={{height: "40px"}}>
                     <h3 className="achievement_overview_simple_title" style={{fontSize: "1.5rem"}} ><img src={this.props.icon} width="25px" ></img> <span className="category_title highlight_text">{this.props.title}</span></h3>
                 </div>
-                <div className="overview_table">
+                <div className="overview_table overview_font">
                     <table className="table" style={{textAlign: "left"}}>
                         <thead>
                         </thead>
