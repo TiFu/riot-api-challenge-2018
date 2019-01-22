@@ -6,7 +6,7 @@ let tray = null;
 
 // TODO: add option to quit
 function initApp() {
-    window = new BrowserWindow({ icon: "./assets/logo.png", show: false })
+    window = new BrowserWindow({ icon: __dirname + "/../assets/logo.png", show: false })
     window.once('ready-to-show', () => {
         window.maximize();
         window.show()
@@ -18,7 +18,7 @@ function initApp() {
         window.hide()
     })
 
-    tray = new Tray("./images/icon.png")  
+    tray = new Tray(__dirname + "/../assets/logo.png")  
     const contextMenu = Menu.buildFromTemplate([
         { label: 'Exit', click: exitElectron },
       ])
