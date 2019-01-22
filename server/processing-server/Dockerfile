@@ -9,9 +9,6 @@ COPY ./server/achievement-redis /home/root/app/server/achievement-redis
 
 COPY ./server/processing-server /home/root/app/server/processing-server
 
-RUN ls -al /home/root/app/server/processing-server
-RUN ls -al /home/root/app/server/processing-server/src
-
 WORKDIR /home/root/app/server/processing-server/src
 
 RUN cd /home/root/app/common/achievement-sio && npm install && npm run build

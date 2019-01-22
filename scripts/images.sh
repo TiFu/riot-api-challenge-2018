@@ -1,2 +1,2 @@
 set -e
-docker build -f ./server/processing-server/Dockerfile .
+sudo docker-compose -f ../server/docker-compose.yml build

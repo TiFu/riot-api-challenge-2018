@@ -1,14 +1,19 @@
 version: '3'
 services:
         achievement-server:
-                build: ./frontend/
+                build: 
+                        context: ../
+                        dockerfile: ./server/frontend/Dockerfile
                 ports:
                         - "80:3000"
                 restart: always
                 environment:
                         - NODE_ENV=production
         achievement-processing:
-                build: ./processing-server/
+                build:
+                        context: ../
+                        dockerfile: ./server/processing-server/Dockerfile
+
                 restart: always
                 environment:
                         - NODE_ENV=production
