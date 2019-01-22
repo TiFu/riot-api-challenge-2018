@@ -234,7 +234,7 @@ export const group50: PlayerAchievementGroup = {
 
 
 // Clown ID 1xx
-const clownCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "./assets/lanes/top.png", group50);
+const clownCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "./assets/lanes/fun.png", group50);
 
 //Top ID 2xx
 const topCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "1x1.png"}], "Test", "desc", "./assets/lanes/top.png", group20);
