@@ -90,7 +90,7 @@ class WallpaperComponent extends React.Component<WallpaperComponentProps & Wallp
 
 
         return <div className="wallpaper-80">
-            <div className="row full_width_height">
+            <div className="row full_width_height" style={{marginRight: "0px", marginLeft: "0px"}}>
                 {groupWall}
                 <div className="col-3 wallpaper-centerd trophy_top">
                     <TrophyComponent completionState={clownfiestaCompletionState} achievementCategory={clownfiesta} />
