@@ -2,6 +2,7 @@
   "name": "lol-achievements",
   "version": "1.0.0",
   "description": "",
+  "productName": "Trophy Hunter",
   "main": "dist/electron.js",
   "scripts": {
     "start": "electron .",
@@ -45,6 +46,7 @@
   },
   "devDependencies": {
     "electron": "^4.0.0",
+    "electron-packager": "^13.0.1",
     "typescript": "^3.2.2"
   }
 }
