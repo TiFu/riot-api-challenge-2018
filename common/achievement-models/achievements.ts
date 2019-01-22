@@ -4,22 +4,178 @@ import { GroupKillRule } from './group_rules';
 
 import { MatchV4MatchDto, MatchV4MatchTimelineDto } from 'kayn/typings/dtos';
 
-/*
-const group1Level0: PlayerAchievement = new PlayerAchievement(1, 0, "", "Test unlock message", "test", "test desc", [new KillRule()]);
-const group5Level0: PlayerAchievement = new PlayerAchievement(6, 1, "", "Test unlock message", "test 6", "test desc", [new KillRule()]);
-
-export const group5: PlayerAchievementGroup = {
-    name: "Test3",
-    childAchievements: [],
-    levels: [group5Level0]
-}
-export const group1: PlayerAchievementGroup = {
-    name: "Test1",
-    childAchievements: [group5],
-    levels: [group1Level0]
-} */
 
 // [0], [1, 2], [3, 4, 5]
+//TODO: sup, clown, group
+
+//Top
+const group20Level0: PlayerAchievement = new PlayerAchievement(200, 0, "", "Test unlock message", "Pressure", "Have a CS advantage of 15/25/40 compared to the enemy top laner at 10 minutes. No need to kill to destroy.", [new KillRule()]);
+const group20Level1: PlayerAchievement = new PlayerAchievement(201, 1, "", "Test unlock message", "Pressure", "Have a CS advantage of 15/25/40 compared to the enemy top laner at 10 minutes. No need to kill to destroy.", [new KillRule()]);
+const group20Level2: PlayerAchievement = new PlayerAchievement(202, 2, "", "Test unlock message", "Pressure", "Am I alone on this lane? Have a CS advantage of 15/25/40 compared to the enemy top laner at 10 minutes.", [new KillRule()]);
+
+const group21Level0: PlayerAchievement = new PlayerAchievement(210, 0, "", "Test unlock message", "Meet Shelly", "Participate in killing the Rift Herald pre 20/15/10 minutes. This pet has same weird aggression issues.", [new KillRule()]);
+const group21Level1: PlayerAchievement = new PlayerAchievement(211, 1, "", "Test unlock message", "Meet Shelly", "Participate in killing the Rift Herald pre 20/15/10 minutes. This pet has same weird aggression issues.", [new KillRule()]);
+const group21Level2: PlayerAchievement = new PlayerAchievement(212, 2, "", "Test unlock message", "Meet Shelly", "Bye bye, turret. Participate in killing the Rift Herald pre 20/15/10 minutes.", [new KillRule()]);
+
+const group22Level0: PlayerAchievement = new PlayerAchievement(220, 0, "", "Test unlock message", "No quarter", "I crush you like a Teemo. Win a game starting with Ignite and Ghost as summoner spells (and have more than 5/10 kills).", [new KillRule()]);
+const group22Level1: PlayerAchievement = new PlayerAchievement(221, 1, "", "Test unlock message", "No quarter", "I crush you like a Teemo. Win a game starting with Ignite and Ghost as summoner spells and have more than 5/10 kills.", [new KillRule()]);
+const group22Level2: PlayerAchievement = new PlayerAchievement(222, 2, "", "Test unlock message", "No quarter", "I crush everyone like a Teemo. Win a game starting with Ignite and Ghost as summoner spells and have more than 10 kills.", [new KillRule()]);
+
+const group23Level0: PlayerAchievement = new PlayerAchievement(230, 0, "", "Test unlock message", "Hi inhib~", "Deal more than 7k/10k/13k damage to turrets. Run it down top!", [new KillRule()]);
+const group23Level1: PlayerAchievement = new PlayerAchievement(231, 1, "", "Test unlock message", "Hi inhib~", "Deal more than 10k/13k damage to turrets. Run it down top!", [new KillRule()]);
+const group23Level2: PlayerAchievement = new PlayerAchievement(232, 2, "", "Test unlock message", "Hi inhib~", "Deal more than 13k damage to turrets. And no, Ziggs is usually not a top lane champ.", [new KillRule()]);
+
+const group24Level0: PlayerAchievement = new PlayerAchievement(240, 0, "", "Test unlock message", "Island", "I walk a lonely lane. There are only solo kills on top lane (no takedowns by other players from either side involving top laners) pre 10/15/20 minutes.", [new KillRule()]);
+const group24Level1: PlayerAchievement = new PlayerAchievement(241, 1, "", "Test unlock message", "Island", "I walk a lonely lane. There are only solo kills on top lane (no takedowns by other players from either side involving top laners) pre 15/20 minutes.", [new KillRule()]);
+const group24Level2: PlayerAchievement = new PlayerAchievement(242, 2, "", "Test unlock message", "Island", "My jungler is TSM Santorin. There are only solo kills on top lane (no takedowns by other players from either side involving top laners) pre 20 minutes.", [new KillRule()]);
+
+const group25Level0: PlayerAchievement = new PlayerAchievement(250, 0, "", "Test unlock message", "“Tank Meta is over”", "My mum said I can be everything. Deal more than 20/30/40k damage to champions while having more than 30k damage taken.", [new KillRule()]);
+const group25Level1: PlayerAchievement = new PlayerAchievement(251, 1, "", "Test unlock message", "“Tank Meta is over”", "My mum said I can be everything. Deal more than 30/40k damage to champions while having more than 30k damage taken.", [new KillRule()]);
+const group25Level2: PlayerAchievement = new PlayerAchievement(252, 2, "", "Test unlock message", "“Tank Meta is over”", "Oh, I am not supposed to one-shot their carry? Deal more than 40k damage to champions while having more than 30k damage taken.", [new KillRule()]);
+
+export const group25: PlayerAchievementGroup = {
+    name: "“Tank Meta is over”",
+    childAchievements: [],
+    levels: [group25Level0, group25Level1, group25Level2],
+}
+export const group24: PlayerAchievementGroup = {
+    name: "Island",
+    childAchievements: [],
+    levels: [group24Level0, group24Level1, group24Level2],
+}
+export const group23: PlayerAchievementGroup = {
+    name: "Hi inhib~",
+    childAchievements: [],
+    levels: [group23Level0, group23Level1, group23Level2]
+}
+export const group22: PlayerAchievementGroup = {
+    name: "No quarter",
+    childAchievements: [group25],
+    levels: [group22Level0, group22Level1, group22Level2],
+}
+export const group21: PlayerAchievementGroup = {
+    name: "Meet Shelly",
+    childAchievements: [group23, group24],
+    levels: [group21Level0, group21Level1, group21Level2],
+}
+export const group20: PlayerAchievementGroup = {
+    name: "Pressure",
+    childAchievements: [group21, group22],
+    levels: [group20Level0, group20Level1, group20Level2]
+}
+
+//Jungle
+const group30Level0: PlayerAchievement = new PlayerAchievement(300, 0, "", "Test unlock message", "Danger!", "Participate in at least two lane kills/more than a kill on two different lanes/on every lane pre 15 minutes. The enemy laners love you.", [new KillRule()]);
+const group30Level1: PlayerAchievement = new PlayerAchievement(301, 1, "", "Test unlock message", "Danger!", "Participate in more than a kill on two different lanes/on every lane pre 15 minutes. The enemy laners love you.", [new KillRule()]);
+const group30Level2: PlayerAchievement = new PlayerAchievement(302, 2, "", "Test unlock message", "Danger!", "Make jungle great again! Participate in more than a kill on every lane pre 15 minutes.", [new KillRule()]);
+
+const group31Level0: PlayerAchievement = new PlayerAchievement(310, 0, "", "Test unlock message", "Master Smiter", "Secure 3/5/7 epic monsters in one game. Such jungle talent, so wow.", [new KillRule()]);
+const group31Level1: PlayerAchievement = new PlayerAchievement(311, 1, "", "Test unlock message", "Master Smiter", "Secure 5/7 epic monsters in one game. Such jungle talent, so wow.", [new KillRule()]);
+const group31Level2: PlayerAchievement = new PlayerAchievement(312, 2, "", "Test unlock message", "Master Smiter", "Secure 7 epic monsters in one game. Now that's gonna be one powerful elder drake.", [new KillRule()]);
+
+const group32Level0: PlayerAchievement = new PlayerAchievement(320, 0, "", "Test unlock message", "Strategic waiting", "Don't forget to bring your tent. Participate in killing the same enemy laner 2/4/6 times pre 15min.", [new KillRule()]);
+const group32Level1: PlayerAchievement = new PlayerAchievement(321, 1, "", "Test unlock message", "Strategic waiting", "Don't forget to bring your tent. Participate in killing the same enemy laner 4/6 times pre 15min.", [new KillRule()]);
+const group32Level2: PlayerAchievement = new PlayerAchievement(322, 2, "", "Test unlock message", "Strategic waiting", "Participate in killing the same enemy laner 6 times pre 15min. Did you get his All-Chat love yet?", [new KillRule()]);
+
+const group33Level0: PlayerAchievement = new PlayerAchievement(330, 0, "", "Test unlock message", "Invasion", "Kill the enemy jungler in their jungle 1/3/5 times before the 20 minute mark. I will find you, and I will kill you!", [new KillRule()]);
+const group33Level1: PlayerAchievement = new PlayerAchievement(331, 1, "", "Test unlock message", "Invasion", "Kill the enemy jungler in their jungle 3/5 times before the 20 minute mark. I will find you, and I will kill you!", [new KillRule()]);
+const group33Level2: PlayerAchievement = new PlayerAchievement(332, 2, "", "Test unlock message", "Invasion", "Kill the enemy jungler in their jungle 5 times before the 20 minute mark. A new invasive species has been detected.", [new KillRule()]);
+
+const group34Level0: PlayerAchievement = new PlayerAchievement(340, 0, "", "Test unlock message", "Help me push", "Get an assist on 1/2/all three outer turrets. Objectives > kills.", [new KillRule()]);
+const group34Level1: PlayerAchievement = new PlayerAchievement(341, 1, "", "Test unlock message", "Help me push", "Get an assist on 2/all three outer turrets. Objectives > kills.", [new KillRule()]);
+const group34Level2: PlayerAchievement = new PlayerAchievement(342, 2, "", "Test unlock message", "Help me push", "Get an assist on all three outer turrets. Don't forget to collect tax while you are at it muhahaha.", [new KillRule()]);
+
+const group35Level0: PlayerAchievement = new PlayerAchievement(350, 0, "", "Test unlock message", "Lost in the jungle", "GG no jungler. Have less than 10k/5k/least damage dealt to enemy champions and win the game.", [new KillRule()]);
+const group35Level1: PlayerAchievement = new PlayerAchievement(351, 1, "", "Test unlock message", "Lost in the jungle", "GG no jungler. Have less than 5k/least damage dealt to enemy champions and win the game.", [new KillRule()]);
+const group35Level2: PlayerAchievement = new PlayerAchievement(352, 2, "", "Test unlock message", "Lost in the jungle", "Have less than least damage dealt to enemy champions and win the game. Did we just win 4v5?", [new KillRule()]);
+
+export const group35: PlayerAchievementGroup = {
+    name: "Lost in the jungle",
+    childAchievements: [],
+    levels: [group35Level0, group35Level1, group35Level2],
+}
+export const group34: PlayerAchievementGroup = {
+    name: "Help me push",
+    childAchievements: [],
+    levels: [group34Level0, group34Level1, group34Level2],
+}
+export const group33: PlayerAchievementGroup = {
+    name: "Invasion",
+    childAchievements: [],
+    levels: [group33Level0, group33Level1, group33Level2]
+}
+export const group32: PlayerAchievementGroup = {
+    name: "Strategic waiting",
+    childAchievements: [group35],
+    levels: [group32Level0, group32Level1, group32Level2],
+}
+export const group31: PlayerAchievementGroup = {
+    name: "Master Smiter",
+    childAchievements: [group33, group34],
+    levels: [group31Level0, group31Level1, group31Level2],
+}
+export const group30: PlayerAchievementGroup = {
+    name: "Danger!",
+    childAchievements: [group31, group32],
+    levels: [group30Level0, group30Level1, group30Level2]
+}
+
+//Mid
+const group40Level0: PlayerAchievement = new PlayerAchievement(400, 0, "", "Test unlock message", "Open up the map", "Push down the enemy mid turret before 15 minutes/10 minutes/any champion gets first blooded. Now their map just got a lot more dangerous.", [new KillRule()]);
+const group40Level1: PlayerAchievement = new PlayerAchievement(401, 1, "", "Test unlock message", "Open up the map", "Push down the enemy mid turret before 10 minutes/any champion gets first blooded. Now their map just got a lot more dangerous.", [new KillRule()]);
+const group40Level2: PlayerAchievement = new PlayerAchievement(402, 2, "", "Test unlock message", "Open up the map", "Have you considered a career in demolition yet? Push down the enemy mid turret before any champion gets first blooded.", [new KillRule()]);
+
+const group41Level0: PlayerAchievement = new PlayerAchievement(410, 0, "", "Test unlock message", "Snacked", "Win lane, win game. Be ahead of the enemy mid laner by 2/5/10 kills at 20 minutes and win the game.", [new KillRule()]);
+const group41Level1: PlayerAchievement = new PlayerAchievement(411, 1, "", "Test unlock message", "Snacked", "Win lane, win game. Be ahead of the enemy mid laner by 5/10 kills at 20 minutes and win the game.", [new KillRule()]);
+const group41Level2: PlayerAchievement = new PlayerAchievement(412, 2, "", "Test unlock message", "Snacked", "Better mid wins. Be ahead of the enemy mid laner by 10 kills at 20 minutes and win the game.", [new KillRule()]);
+
+const group42Level0: PlayerAchievement = new PlayerAchievement(420, 0, "", "Test unlock message", "Heroes never die", "Is it still tank meta? Have more than 20k/30k/most damage taken in game.", [new KillRule()]);
+const group42Level1: PlayerAchievement = new PlayerAchievement(421, 1, "", "Test unlock message", "Heroes never die", "Is it still tank meta? Have more than 30k/most damage taken in game.", [new KillRule()]);
+const group42Level2: PlayerAchievement = new PlayerAchievement(422, 2, "", "Test unlock message", "Heroes never die", "Is it still tank meta? Have more than most damage taken in game.", [new KillRule()]);
+
+const group43Level0: PlayerAchievement = new PlayerAchievement(430, 0, "", "Test unlock message", "Mid SS", "Get a total of 2/4/6 takedowns pre 15 minutes on top- and botlane. They'll never know what hit them.", [new KillRule()]);
+const group43Level1: PlayerAchievement = new PlayerAchievement(431, 1, "", "Test unlock message", "Mid SS", "Get a total of 4/6 takedowns pre 15 minutes on top- and botlane. They'll never know what hit them.", [new KillRule()]);
+const group43Level2: PlayerAchievement = new PlayerAchievement(432, 2, "", "Test unlock message", "Mid SS", "It's a team game and your enemies are hating you for it. Get a total of 6 takedowns pre 15 minutes on top- and botlane.", [new KillRule()]);
+
+const group44Level0: PlayerAchievement = new PlayerAchievement(440, 0, "", "Test unlock message", "Wait for me", "Achieve more than 60%/70%/80% kill participation in one game. At least gimme an assist!", [new KillRule()]);
+const group44Level1: PlayerAchievement = new PlayerAchievement(441, 1, "", "Test unlock message", "Wait for me", "Achieve more than 60%/70%/80% kill participation in one game. At least gimme an assist!", [new KillRule()]);
+const group44Level2: PlayerAchievement = new PlayerAchievement(442, 2, "", "Test unlock message", "Wait for me", "Achieve more than 60%/70%/80% kill participation in one game. Did you just sneak assists, or did you actually contribute?", [new KillRule()]);
+
+const group45Level0: PlayerAchievement = new PlayerAchievement(450, 0, "", "Test unlock message", "It's not over yet", "Get a solo kill on the enemy mid laner while being down 1/3/5 kills compared to him. Or her.", [new KillRule()]);
+const group45Level1: PlayerAchievement = new PlayerAchievement(451, 1, "", "Test unlock message", "It's not over yet", "Get a solo kill on the enemy mid laner while being down 3/5 kills compared to him. Found my outplay button.", [new KillRule()]);
+const group45Level2: PlayerAchievement = new PlayerAchievement(452, 2, "", "Test unlock message", "It's not over yet", "Get a solo kill on the enemy mid laner while being down 5 kills compared to him. Maybe he should just uninstall.", [new KillRule()]);
+
+export const group45: PlayerAchievementGroup = {
+    name: "It's not over yet",
+    childAchievements: [],
+    levels: [group45Level0, group45Level1, group45Level2],
+}
+export const group44: PlayerAchievementGroup = {
+    name: "Wait for me",
+    childAchievements: [],
+    levels: [group44Level0, group44Level1, group44Level2],
+}
+export const group43: PlayerAchievementGroup = {
+    name: "Mid SS",
+    childAchievements: [],
+    levels: [group43Level0, group43Level1, group43Level2]
+}
+export const group42: PlayerAchievementGroup = {
+    name: "Heroes never die",
+    childAchievements: [group45],
+    levels: [group42Level0, group42Level1, group42Level2],
+}
+export const group41: PlayerAchievementGroup = {
+    name: "Snacked",
+    childAchievements: [group43, group44],
+    levels: [group41Level0, group41Level1, group41Level2],
+}
+export const group40: PlayerAchievementGroup = {
+    name: "Open up the map",
+    childAchievements: [group41, group42],
+    levels: [group40Level0, group40Level1, group40Level2]
+}
+
 //ADC
 const group50Level0: PlayerAchievement = new PlayerAchievement(500, 0, "", "Test unlock message", "Farmerama", "You rise and fall by your farming skill. Proof that you are a good farmer, have 65/75/90 CS at 10 minutes.", [new KillRule()]);
 const group50Level1: PlayerAchievement = new PlayerAchievement(501, 1, "", "Test unlock message", "Farmerama", "You rise and fall by your farming skill. Have 75/90 CS at 10 minutes.", [new KillRule()]);
@@ -81,13 +237,13 @@ export const group50: PlayerAchievementGroup = {
 const clownCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "./assets/lanes/top.png", group50);
 
 //Top ID 2xx
-const topCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "1x1.png"}], "Test", "desc", "./assets/lanes/top.png", group50);
+const topCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "1x1.png"}], "Test", "desc", "./assets/lanes/top.png", group20);
 
 // Jungle ID 3xx
-const jungleCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "./assets/lanes/jungle.png", group50);
+const jungleCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "./assets/lanes/jungle.png", group30);
 
 // Mid ID 4xx
-const midCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "./assets/lanes/middle.png", group50);
+const midCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "./assets/lanes/middle.png", group40);
 
 // ADC ID 5xx
 const adcCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "1x1.png"}, { completionState: 0.15, trophyImage: "adc_1.png"}, { completionState: 0.44, trophyImage: "adc_2.png"}, { completionState: 0.71, trophyImage: "adc_3.png"}, { completionState: 0.99, trophyImage: "adc_4.png"}], "Test", "desc", "./assets/lanes/bottom.png", group50);
