@@ -35,7 +35,7 @@ class AchievementOverviewComponent extends React.Component<ConfigurableAchieveme
     render() {
         const achievements = this.props.achievements.map(a => achievementMap.get(a)).map(a => {
             return <tr>
-                    <td><span className="highlight_text">{a.name}</span><br />{a.description}</td>
+                    <td><span className="highlight_text overview_font_title">{a.name}</span><br />{a.description}</td>
                 </tr>
         })
         return <div className="full_width_height">

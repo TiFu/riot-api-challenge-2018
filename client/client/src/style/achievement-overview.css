@@ -16,6 +16,9 @@
     border-right: 1px solid var(--font-color);
 }
 
+.overview_font_title {
+    font-size: 13pt;
+}
 .overview_font {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 12pt;
