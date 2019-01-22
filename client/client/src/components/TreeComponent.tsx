@@ -70,11 +70,7 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
     let skinId = null;
     let achievedAt = null;
     for (const i in group.levels) {
-      console.log("Index: ", i);
-      console.log("Achievement Id", group.levels[i].id);
-      console.log(obtainedAchievements)
       if (obtainedAchievements.has(group.levels[i].id)) {
-        console.log("has achievement");
         const achievement = obtainedAchievements.get(group.levels[i].id);
         achieved = true
         level = i as any;
@@ -85,7 +81,6 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
     }
     let children = []
     if (achieved) {
-      console.log("Recursing for " , group)
       children = group.childAchievements.map((a, i) => this.achievementCategoriesToNodes(a, obtainedAchievements, nodeId + "-" + counter, i, achieved))
     }
     const cssId = "tree-node-" + this.props.componentId + nodeId + "-" + counter;

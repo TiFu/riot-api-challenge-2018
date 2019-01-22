@@ -66,13 +66,17 @@
 }
 
 .font {
-    color: #f0e6d2;
+    color: var(--font-color);
     font-family: "Calisto MT";
     font-size: 14pt;
 }
 
+.font_color {
+    color: var(--font-color);
+}
+
 a {
-    color: #f0e6d2;
+    color: var(--font-color);
 }
 
 .margin {

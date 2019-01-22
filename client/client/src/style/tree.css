@@ -4,14 +4,14 @@
     top: 50%;
     transform: translate(-50%, -54%);
     z-index: 0;
-    width: 52px;
+    width: 40px;
     height: auto;
     border-radius: 50%
 }
 
 .tree_border_img {
     position: relative;
-    width: 64px;
+    width: 52px;
     z-index: 100;
     height: auto;
 }

@@ -47,7 +47,7 @@ class AchievementOverviewsComponent extends React.Component<ConfigurableAchievem
     render() {
         return <div className="achievement_overview_second_border">
         <div onClick={() => this.props.setOverviewVisible(false)} style={{cursor: "pointer", position: "absolute", top: "calc(50% - 60px)", right: "calc(0% - 9px)", zIndex: 2000 }}>
-            <span className="fas fa-caret-left" style={{fontSize: "120px"}}></span>
+            <span className="fas fa-caret-left font_color" style={{fontSize: "120px"}}></span>
         </div>
 
         <div className="container achievement_overview_component">

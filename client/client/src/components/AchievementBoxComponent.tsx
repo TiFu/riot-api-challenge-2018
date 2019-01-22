@@ -103,7 +103,7 @@ class AchievementBoxComponent extends React.Component<ConfigurableAchievementBox
                 <div className="card achievement-box" style={{cursor: "pointer"}} onClick={() => this.props.setOverviewVisible(true)}>
                     <div className="card-body" style={{paddingLeft: "5px", paddingRight: "5px"}}>
                         <div style={{position: "absolute", top: "calc(50% - 35px)", left: "100%", zIndex: 2000 }}>
-                            <span className="fas fa-caret-right" style={{fontSize: "70px"}}></span>
+                            <span className="fas fa-caret-right font_color" style={{fontSize: "70px"}}></span>
                         </div>
                         <h3 style={{textAlign: "center"}}>
                             <span className="highlight_text">Your Challenges</span>
