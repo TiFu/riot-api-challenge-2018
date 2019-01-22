@@ -8,6 +8,62 @@ import { MatchV4MatchDto, MatchV4MatchTimelineDto } from 'kayn/typings/dtos';
 // [0], [1, 2], [3, 4, 5]
 //TODO: sup, clown, group
 
+//Clown
+const group10Level0: PlayerAchievement = new PlayerAchievement(100, 0, "", "Test unlock message", "Warriors", "Become ARAM-challenjour. Go on a killing spree with more than 4/7/10 kills.", [new KillRule()]);
+const group10Level1: PlayerAchievement = new PlayerAchievement(101, 1, "", "Test unlock message", "Warriors", "Become ARAM-challenjour. Go on a killing spree with more than 7/10 kills.", [new KillRule()]);
+const group10Level2: PlayerAchievement = new PlayerAchievement(102, 2, "", "Test unlock message", "Warriors", "You have been promoted to ARAM-challenjour. Go on a killing spree with more than 10 kills to celebrate.", [new KillRule()]);
+
+const group11Level0: PlayerAchievement = new PlayerAchievement(110, 0, "", "Test unlock message", "CS is power", "Knowledge is power? Nah. Have at least 80/120/170 CS.", [new KillRule()]);
+const group11Level1: PlayerAchievement = new PlayerAchievement(111, 1, "", "Test unlock message", "CS is power", "Knowledge is power? Nah. Have at least 120/170 CS.", [new KillRule()]);
+const group11Level2: PlayerAchievement = new PlayerAchievement(112, 2, "", "Test unlock message", "CS is power", "Have at least 170 CS. You could even win the game of thrones with all that CS.", [new KillRule()]);
+
+const group12Level0: PlayerAchievement = new PlayerAchievement(120, 0, "", "Test unlock message", "Legends never die", "Legends also never go shopping. Win an ARAM with less than 2/1/no deaths.", [new KillRule()]);
+const group12Level1: PlayerAchievement = new PlayerAchievement(121, 1, "", "Test unlock message", "Legends never die", "Legends also never go shopping. Win an ARAM with less than 1/no deaths.", [new KillRule()]);
+const group12Level2: PlayerAchievement = new PlayerAchievement(122, 2, "", "Test unlock message", "Legends never die", "Legends also don't have any impact in ARAM lategame. Win an ARAM with no deaths.", [new KillRule()]);
+
+const group13Level0: PlayerAchievement = new PlayerAchievement(130, 0, "", "Test unlock message", "We have eternity", "Just one more quick ARAM before going to bed? Play an ARAM that lasts longer than 25/30/38mins.", [new KillRule()]);
+const group13Level1: PlayerAchievement = new PlayerAchievement(131, 1, "", "Test unlock message", "We have eternity", "Just one more quick ARAM before going to bed? Play an ARAM that lasts longer than 30/38mins.", [new KillRule()]);
+const group13Level2: PlayerAchievement = new PlayerAchievement(132, 2, "", "Test unlock message", "We have eternity", "Play an ARAM that lasts longer than 38mins. Man, did you sign a peace treaty?", [new KillRule()]);
+
+const group14Level0: PlayerAchievement = new PlayerAchievement(140, 0, "", "Test unlock message", "Worlds Collide", "Be brave! Build a Tear of the Goddess + a Blade of the Ruined King/+ Gargoyle Stone Plate/+ Mikael's Crucible in one game.", [new KillRule()]);
+const group14Level1: PlayerAchievement = new PlayerAchievement(141, 1, "", "Test unlock message", "Worlds Collide", "Be brave! Build a Tear of the Goddess + a Blade of the Ruined King + Gargoyle Stone Plate/+ Mikael's Crucible in one game.", [new KillRule()]);
+const group14Level2: PlayerAchievement = new PlayerAchievement(142, 2, "", "Test unlock message", "Worlds Collide", "Do you still have friends left to play with you? Build a Tear of the Goddess + a Blade of the Ruined King/+ Gargoyle Stone Plate + Mikael's Crucible in one game.", [new KillRule()]);
+
+const group15Level0: PlayerAchievement = new PlayerAchievement(150, 0, "", "Test unlock message", "Run it down mid!", "Occasionally dying is too easy. Die more than 13/17/22 times and still win the game.", [new KillRule()]);
+const group15Level1: PlayerAchievement = new PlayerAchievement(151, 1, "", "Test unlock message", "Run it down mid!", "Occasionally dying is too easy. Die more than 17/22 times and still win the game.", [new KillRule()]);
+const group15Level2: PlayerAchievement = new PlayerAchievement(152, 2, "", "Test unlock message", "Run it down mid!", "I just really like to spend money. Die more than 22 times and still win the game.", [new KillRule()]);
+
+export const group15: PlayerAchievementGroup = {
+    name: "Run it down mid!",
+    childAchievements: [],
+    levels: [group15Level0, group15Level1, group15Level2],
+}
+export const group14: PlayerAchievementGroup = {
+    name: "Worlds Collide",
+    childAchievements: [],
+    levels: [group14Level0, group14Level1, group14Level2],
+}
+export const group13: PlayerAchievementGroup = {
+    name: "We have eternity",
+    childAchievements: [],
+    levels: [group13Level0, group13Level1, group13Level2]
+}
+export const group12: PlayerAchievementGroup = {
+    name: "Legends never die",
+    childAchievements: [group15],
+    levels: [group12Level0, group12Level1, group12Level2],
+}
+export const group11: PlayerAchievementGroup = {
+    name: "CS is power",
+    childAchievements: [group13, group14],
+    levels: [group11Level0, group11Level1, group11Level2],
+}
+export const group10: PlayerAchievementGroup = {
+    name: "Warriors",
+    childAchievements: [group11, group12],
+    levels: [group10Level0, group10Level1, group10Level2]
+}
+
 //Top
 const group20Level0: PlayerAchievement = new PlayerAchievement(200, 0, "", "Test unlock message", "Pressure", "Have a CS advantage of 15/25/40 compared to the enemy top laner at 10 minutes. No need to kill to destroy.", [new KillRule()]);
 const group20Level1: PlayerAchievement = new PlayerAchievement(201, 1, "", "Test unlock message", "Pressure", "Have a CS advantage of 15/25/40 compared to the enemy top laner at 10 minutes. No need to kill to destroy.", [new KillRule()]);
@@ -193,9 +249,9 @@ const group53Level0: PlayerAchievement = new PlayerAchievement(530, 0, "", "Test
 const group53Level1: PlayerAchievement = new PlayerAchievement(531, 1, "", "Test unlock message", "I will hunt you down", "Passive laning is boring. Score a double kill before 10/5 minutes into the game.", [new KillRule()]);
 const group53Level2: PlayerAchievement = new PlayerAchievement(532, 2, "", "Test unlock message", "I will hunt you down", "Channel your inner Draven. Score a double kill before 5 minutes into the game.", [new KillRule()]);
 
-const group54Level0: PlayerAchievement = new PlayerAchievement(540, 0, "", "Test unlock message", "Strong and independent", "I don't need protection. Get 2/4/7 solo kills in one game.", [new KillRule()]);
-const group54Level1: PlayerAchievement = new PlayerAchievement(541, 1, "", "Test unlock message", "Strong and independent", "I don't need protection. Get 4/7 solo kills in one game.", [new KillRule()]);
-const group54Level2: PlayerAchievement = new PlayerAchievement(542, 2, "", "Test unlock message", "Strong and independent", "Support, you are fired! Get 7 solo kills in one game.", [new KillRule()]);
+const group54Level0: PlayerAchievement = new PlayerAchievement(540, 0, "", "Test unlock message", "Strong & independent", "I don't need protection. Get 2/4/7 solo kills in one game.", [new KillRule()]);
+const group54Level1: PlayerAchievement = new PlayerAchievement(541, 1, "", "Test unlock message", "Strong & independent", "I don't need protection. Get 4/7 solo kills in one game.", [new KillRule()]);
+const group54Level2: PlayerAchievement = new PlayerAchievement(542, 2, "", "Test unlock message", "Strong & independent", "Support, you are fired! Get 7 solo kills in one game.", [new KillRule()]);
 
 const group55Level0: PlayerAchievement = new PlayerAchievement(550, 0, "", "Test unlock message", "Squishy?", "Tired of being one-shot? Build a Bramble Vest before 20/15/10 minutes and keep it until the end of the game. Oh, and winning is important as well.", [new KillRule()]);
 const group55Level1: PlayerAchievement = new PlayerAchievement(551, 1, "", "Test unlock message", "Squishy?", "Tired of being one-shot? Build a Bramble Vest before 15/10 minutes and keep it until the end of the game. Oh, and winning is important as well.", [new KillRule()]);
@@ -207,7 +263,7 @@ export const group55: PlayerAchievementGroup = {
     levels: [group55Level0, group55Level1, group55Level2],
 }
 export const group54: PlayerAchievementGroup = {
-    name: "Strong and independent",
+    name: "Strong & independent",
     childAchievements: [],
     levels: [group54Level0, group54Level1, group54Level2],
 }
@@ -234,7 +290,11 @@ export const group50: PlayerAchievementGroup = {
 
 
 // Clown ID 1xx
+<<<<<<< HEAD
 const clownCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "ARAM", "desc", "./assets/lanes/fun.png", group50);
+=======
+const clownCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "./assets/lanes/fun.png", group10);
+>>>>>>> added aram achievement structure
 
 //Top ID 2xx
 const topCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "1x1.png"}], "Top", "desc", "./assets/lanes/top.png", group20);
