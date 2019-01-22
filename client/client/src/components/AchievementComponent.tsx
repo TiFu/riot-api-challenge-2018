@@ -32,25 +32,21 @@ class AchievementComponent extends React.Component<ConfigurableAchievementCompon
 
     renderIcon() {
         // getBorderForLevel("level_" + this.props.achievement.level)
-        return <span style={{position: "absolute"}}>
-          <div>
+        return <div className="full_width_height">
             <img className={"achievement_champ_img "} src={this.props.icon}></img>
-          </div>
-          <div>
             <img className={"achievement_border_img "} src="./assets/borders/border_square.png"></img>
-          </div>
-        </span>
+       </div>
     }
     render() {
-        return <div>
-                <div className="row" style={{height: "40px"}}>
+        return <div className="full_width_height" style={{paddingTop: "5px"}}>
+                <div className="row" style={{height: "45px"}}>
                     <div className="col-4">
-                        <div style={{width: "100%", position: "relative"}}>
+                        <div style={{width: "100%", height: "100%", position: "relative"}}>
                                 {this.renderIcon()}
                         </div>                    
                     </div>
-                    <div className="col-8">
-                        <div style={{"display": "table", height: "100%", overflow: "hidden"}}>
+                    <div className="col-8" style={{paddingLeft: "0px"}}>
+                        <div style={{"display": "table", height: "100%", width: "100%", overflow: "hidden", textAlign: "left"}}>
                             <div style={{display: "table-cell", verticalAlign: "middle"}}>
                                 <div style={{paddingLeft: "5px"}}>
                                     {this.props.achievement.name}

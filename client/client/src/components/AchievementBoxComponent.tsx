@@ -68,8 +68,10 @@ class AchievementBoxComponent extends React.Component<ConfigurableAchievementBox
         for (let categoryName in playerAchievementCategories) {
             const category = playerAchievementCategories[categoryName as any]
             let ids = map[categoryName]
-            let id = ids[Math.floor(Math.random() * ids.length)]
-            objectives.push(<div key={categoryName} className="row achievement-box-padding"><div className="col"><AchievementComponent icon={category.icon} achievement={achievementMap.get(id)} ></AchievementComponent></div></div>)
+            if (ids.length > 0) {
+                let id = ids[0]
+                objectives.push(<div key={categoryName} className="row achievement-box-padding"><div className="col" ><AchievementComponent icon={category.icon} achievement={achievementMap.get(id)} ></AchievementComponent></div></div>)
+            }
         }
         return objectives;
     }
