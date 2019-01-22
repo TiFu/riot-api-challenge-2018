@@ -4,7 +4,7 @@
   "description": "",
   "productName": "Trophy Hunter Dev",
   "scripts": {
-    "package": "electron-packager ./src/ --icon=./src/assets/logo.ico --overwrite && npm run cleanup_package",
+    "package": "electron-builder",
     "cleanup_package": "./cleanup_package.sh",
     "start": "cd src && npm run start",
     "build": "cd src && npm run build",
@@ -15,7 +15,29 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "^4.0.0",
+    "electron-builder": "^20.38.5",
     "electron-packager": "^13.0.1",
     "typescript": "^3.2.2"
+  },
+  "build": {
+    "appId": "pro.trophy-hunter.client",
+    "directories": {
+      "app": "./src/",
+      "output": "./releases/"
+    },
+    "files": [
+      "!*",
+      "dist/**/*",
+      "index.html",
+      "assets",
+      "style",
+      "node_modules"
+    ],
+    "win": {
+      "icon": "build/logo.ico"
+    },
+    "nsis": {
+      "createDesktopShortcut": "always"
+    }
   }
 }
