@@ -19,6 +19,7 @@ export class AchievementDatabase {
     constructor(config: DBConfig) {
         const psql: IMain = pgPromise();
         this.db = psql({
+            "host": config.url,
             "user": config.user,
             "password": config.password,
             "database": config.db,

@@ -10,10 +10,10 @@ services:
                 environment:
                         - NODE_ENV=production
                         - REDIS_URL=redis
-                        - DB_URL=postgres
+                        - DB_URL=db
                 links:
                         - redis
-                        - postgres
+                        - db
         achievement-processing:
                 build:
                         context: ../
@@ -23,10 +23,10 @@ services:
                 environment:
                         - NODE_ENV=production
                         - REDIS_URL=redis
-                        - DB_URL=postgres
+                        - DB_URL=db
                 links:
                         - redis
-                        - postgres
+                        - db
         redis:
                 image: redis
                 restart: always
@@ -34,13 +34,13 @@ services:
                         - redis-volume:/data
                 expose:
                         - "6379"
-        postgres:
+        db:
                 image: postgres
                 restart: always
                 volumes:
                         - postgresql-volume:/var/lib/postgresql/data
                         - ./db-server/structure.sql:/docker-entrypoint-initdb.d/structure.sql
-                expose:
+                ports:
                         - "5432"
                 environment: # TODO: Use docker secrets for production...
                         POSTGRES_PASSWORD: dev
