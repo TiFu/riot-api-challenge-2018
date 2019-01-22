@@ -13,7 +13,7 @@ import { checkPlayerAchievementCategories } from 'achievement-models';
 import { playerAchievementCategories } from 'achievement-models';
 import { promises } from 'fs';
 import { checkGroupAchievementCategories } from 'achievement-models';
-import { groupAchievementCategories } from '../../../../common/achievement-models/achievements';
+import { groupAchievementCategories } from 'achievement-models';
 
 export class ProcessingService {
     private region: { [key: string]: string} = {
