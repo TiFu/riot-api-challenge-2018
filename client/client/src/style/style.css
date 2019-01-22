@@ -31,6 +31,10 @@
     --font-color: #f0e6d2;
 }
 
+.small_text {
+    font-size: 11pt;
+}
+
 .hover:hover {
     background-color: var(--main-hover-color);
 }

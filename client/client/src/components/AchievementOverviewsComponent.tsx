@@ -52,7 +52,7 @@ class AchievementOverviewsComponent extends React.Component<ConfigurableAchievem
 
         <div className="container achievement_overview_component">
                 <div className="row achievement_overview_tite_row"> 
-                    <h1 className="achievement_overview_title"><span className="highlight_text">CHALLENGES</span></h1>
+                    <h1 className="achievement_overview_title"><span className="highlight_text">CHALLENGES</span><span className="small_text">(matchmade games in the respective role only)</span></h1>
                 </div>
                 <div className="row achievement_overview_body">
                     <div className="col" style={{height: "100%"}}>
