@@ -6,10 +6,11 @@ let tray = null;
 
 // TODO: add option to quit
 function initApp() {
-    window = new BrowserWindow({ icon: __dirname + "/../assets/logo.png", show: false })
+    window = new BrowserWindow({ icon: __dirname + "/../assets/logo.png", show: false, minHeight: 1040, minWidth: 1920, maxHeight: 1080, maxWidth: 1936 })
     window.once('ready-to-show', () => {
         window.maximize();
         window.show()
+        console.log(window.getSize())
     })
     window.loadFile("index.html");
 
