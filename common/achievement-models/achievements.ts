@@ -290,11 +290,7 @@ export const group50: PlayerAchievementGroup = {
 
 
 // Clown ID 1xx
-<<<<<<< HEAD
-const clownCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "ARAM", "desc", "./assets/lanes/fun.png", group50);
-=======
 const clownCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "./assets/lanes/fun.png", group10);
->>>>>>> added aram achievement structure
 
 //Top ID 2xx
 const topCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "1x1.png"}], "Top", "desc", "./assets/lanes/top.png", group20);
