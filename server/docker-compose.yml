@@ -5,14 +5,18 @@ services:
                 ports:
                         - "80:3000"
                 restart: always
+                environment:
+                        - NODE_ENV=production
         achievement-processing:
                 build: ./processing-server/
                 restart: always
+                environment:
+                        - NODE_ENV=production
         redis:
                 image: redis
                 restart: always
                 volumes:
-                        - data:/data
+                        - redis-volume:/data
         postgres:
                 image: postgres
                 restart: always
@@ -24,4 +28,5 @@ services:
                         POSTGRES_USER: dev
                         POSTGRES_DB: achievements
 volumes:
-        data: {}
+        redis-volume: {}
+        postgresql-volume: {}
