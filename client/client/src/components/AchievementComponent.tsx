@@ -40,12 +40,12 @@ class AchievementComponent extends React.Component<ConfigurableAchievementCompon
     render() {
         return <div className="full_width_height" style={{paddingTop: "5px"}}>
                 <div className="row" style={{height: "45px"}}>
-                    <div className="col-4">
+                    <div className="col-3" style={{paddingRight: "0px"}}>
                         <div style={{width: "100%", height: "100%", position: "relative"}}>
                                 {this.renderIcon()}
                         </div>                    
                     </div>
-                    <div className="col-8" style={{paddingLeft: "0px"}}>
+                    <div className="col-9" style={{paddingLeft: "0px"}}>
                         <div style={{"display": "table", height: "100%", width: "100%", overflow: "hidden", textAlign: "left"}}>
                             <div style={{display: "table-cell", verticalAlign: "middle"}}>
                                 <div style={{paddingLeft: "5px"}}>
