@@ -32,6 +32,11 @@
     padding-bottom: 40px;
 }
 
+.trophy_top {
+    width: 20%;
+    padding-top: 40px;
+}
+
 .trophy {
     height: 100%;
 }

@@ -80,7 +80,7 @@ class WallpaperComponent extends React.Component<WallpaperComponentProps & Wallp
             groupWall = [<div className="col-3 wallpaper-centerd" key={"group_tree"}>
                 {groupTree}
             </div>,
-            <div className="col-3 wallpaper-centerd" key={"group_trophy"}>
+            <div className="col-3 wallpaper-centerd trophy_top" key={"group_trophy"}>
                 {groupTrophy}
             </div>]
 
@@ -92,7 +92,7 @@ class WallpaperComponent extends React.Component<WallpaperComponentProps & Wallp
         return <div className="wallpaper-80">
             <div className="row full_width_height">
                 {groupWall}
-                <div className="col-3 wallpaper-centerd">
+                <div className="col-3 wallpaper-centerd trophy_top">
                     <TrophyComponent completionState={clownfiestaCompletionState} achievementCategory={clownfiesta} />
                 </div>
                 <div className="col-3 wallpaper-centerd">
