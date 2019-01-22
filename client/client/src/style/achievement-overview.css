@@ -35,7 +35,7 @@
 }
 
 .achievement_overview_tite_row {
-    height: 50px;
+    height: 75px;
     padding: 10px;
 }
 
@@ -45,7 +45,7 @@
 }
 
 .achievement_overview_body {
-    height: calc(100% - 50px);
+    height: calc(100% - 75px);
     padding: 30px;
 }
 
