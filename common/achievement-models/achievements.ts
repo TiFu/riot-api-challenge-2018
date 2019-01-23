@@ -9,7 +9,7 @@ import { MatchV4MatchDto, MatchV4MatchTimelineDto } from 'kayn/typings/dtos';
 //TODO: sup, clown, group
 
 //Clown
-const group10Level0: PlayerAchievement = new PlayerAchievement(100, 0, "", "Test unlock message", "Warriors", "Become ARAM-challenjour. Go on a killing spree with more than 4/7/10 kills.", [new KillRule()]);
+const group10Level0: PlayerAchievement = new PlayerAchievement(100, 0, "", "Test unlock message", "Warriors", "Become ARAM-challenjour. Go on a killing spree with more than 3/7/10 kills.", [new KillRule()]);
 const group10Level1: PlayerAchievement = new PlayerAchievement(101, 1, "", "Test unlock message", "Warriors", "Become ARAM-challenjour. Go on a killing spree with more than 7/10 kills.", [new KillRule()]);
 const group10Level2: PlayerAchievement = new PlayerAchievement(102, 2, "", "Test unlock message", "Warriors", "You have been promoted to ARAM-challenjour. Go on a killing spree with more than 10 kills to celebrate.", [new KillRule()]);
 
@@ -66,12 +66,12 @@ export const group10: PlayerAchievementGroup = {
 
 //Top
 const group20Level0: PlayerAchievement = new PlayerAchievement(200, 0, "", "Test unlock message", "Pressure", "Have a CS advantage of 15/25/40 compared to the enemy top laner at 10 minutes. No need to kill to destroy.", [new KillRule()]);
-const group20Level1: PlayerAchievement = new PlayerAchievement(201, 1, "", "Test unlock message", "Pressure", "Have a CS advantage of 15/25/40 compared to the enemy top laner at 10 minutes. No need to kill to destroy.", [new KillRule()]);
-const group20Level2: PlayerAchievement = new PlayerAchievement(202, 2, "", "Test unlock message", "Pressure", "Am I alone on this lane? Have a CS advantage of 15/25/40 compared to the enemy top laner at 10 minutes.", [new KillRule()]);
+const group20Level1: PlayerAchievement = new PlayerAchievement(201, 1, "", "Test unlock message", "Pressure", "Have a CS advantage of 25/40 compared to the enemy top laner at 10 minutes. No need to kill to destroy.", [new KillRule()]);
+const group20Level2: PlayerAchievement = new PlayerAchievement(202, 2, "", "Test unlock message", "Pressure", "Am I alone on this lane? Have a CS advantage of 40 compared to the enemy top laner at 10 minutes.", [new KillRule()]);
 
 const group21Level0: PlayerAchievement = new PlayerAchievement(210, 0, "", "Test unlock message", "Meet Shelly", "Participate in killing the Rift Herald pre 20/15/10 minutes. This pet has same weird aggression issues.", [new KillRule()]);
-const group21Level1: PlayerAchievement = new PlayerAchievement(211, 1, "", "Test unlock message", "Meet Shelly", "Participate in killing the Rift Herald pre 20/15/10 minutes. This pet has same weird aggression issues.", [new KillRule()]);
-const group21Level2: PlayerAchievement = new PlayerAchievement(212, 2, "", "Test unlock message", "Meet Shelly", "Bye bye, turret. Participate in killing the Rift Herald pre 20/15/10 minutes.", [new KillRule()]);
+const group21Level1: PlayerAchievement = new PlayerAchievement(211, 1, "", "Test unlock message", "Meet Shelly", "Participate in killing the Rift Herald pre 15/10 minutes. This pet has same weird aggression issues.", [new KillRule()]);
+const group21Level2: PlayerAchievement = new PlayerAchievement(212, 2, "", "Test unlock message", "Meet Shelly", "Bye bye, turret. Participate in killing the Rift Herald pre 10 minutes.", [new KillRule()]);
 
 const group22Level0: PlayerAchievement = new PlayerAchievement(220, 0, "", "Test unlock message", "No quarter", "I crush you like a Teemo. Win a game starting with Ignite and Ghost as summoner spells (and have more than 5/10 kills).", [new KillRule()]);
 const group22Level1: PlayerAchievement = new PlayerAchievement(221, 1, "", "Test unlock message", "No quarter", "I crush you like a Teemo. Win a game starting with Ignite and Ghost as summoner spells and have more than 5/10 kills.", [new KillRule()]);
@@ -290,7 +290,7 @@ export const group50: PlayerAchievementGroup = {
 
 
 // Clown ID 1xx
-const clownCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Test", "desc", "./assets/lanes/fun.png", group10);
+const clownCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "ARAM", "desc", "./assets/lanes/fun.png", group10);
 
 //Top ID 2xx
 const topCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "1x1.png"}], "Top", "desc", "./assets/lanes/top.png", group20);
