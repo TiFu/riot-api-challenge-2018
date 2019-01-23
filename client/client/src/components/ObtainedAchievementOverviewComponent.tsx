@@ -39,20 +39,22 @@ class AchievementComponent extends React.Component<ConfigurableAchievementCompon
             <td>{achievement.description}</td>
             </tr>
         })
-        return <div>
+        return <div className="group_achieve_div">
                     <h1><i className={"fas fa-" + (this.props.icon || "trophy")}></i> {this.props.title || "Achievements"}</h1>
-                    <table className="table">
-                    <thead>
-                        <tr>
-                        <th scope="col">Date</th>
-                        <th scope="col">Achievement</th>
-                        <th scope="col">Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {Achievements}
-                    </tbody>
-                    </table>                    
+                    <div className="group_achieve_less_pad">
+                        <table className="table">
+                        <thead>
+                            <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Achievement</th>
+                            <th scope="col">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Achievements}
+                        </tbody>
+                        </table>
+                    </div>                    
             </div>
     }
   

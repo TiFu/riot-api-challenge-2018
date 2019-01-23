@@ -12,6 +12,7 @@
     padding: 15px;
     padding-left:60px;
     padding-right:60px;
+    padding-bottom: 70px;
 }
 
 .wallpaper-centerd {
@@ -29,12 +30,12 @@
 
 .trophy_col {
     width: 20%;
-    padding-bottom: 40px;
+    padding-bottom: 10px;
 }
 
 .trophy_top {
     width: 20%;
-    padding-top: 40px;
+    padding-top: 10px;
 }
 
 .trophy {

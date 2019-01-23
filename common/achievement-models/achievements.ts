@@ -253,9 +253,9 @@ const group54Level0: PlayerAchievement = new PlayerAchievement(540, 0, "", "Test
 const group54Level1: PlayerAchievement = new PlayerAchievement(541, 1, "", "Test unlock message", "Strong & independent", "I don't need protection. Get 4/7 solo kills in one game.", [new KillRule()]);
 const group54Level2: PlayerAchievement = new PlayerAchievement(542, 2, "", "Test unlock message", "Strong & independent", "Support, you are fired! Get 7 solo kills in one game.", [new KillRule()]);
 
-const group55Level0: PlayerAchievement = new PlayerAchievement(550, 0, "", "Test unlock message", "Squishy?", "Tired of being one-shot? Build a Bramble Vest before 20/15/10 minutes and keep it until the end of the game. Oh, and winning is important as well.", [new KillRule()]);
-const group55Level1: PlayerAchievement = new PlayerAchievement(551, 1, "", "Test unlock message", "Squishy?", "Tired of being one-shot? Build a Bramble Vest before 15/10 minutes and keep it until the end of the game. Oh, and winning is important as well.", [new KillRule()]);
-const group55Level2: PlayerAchievement = new PlayerAchievement(552, 2, "", "Test unlock message", "Squishy?", "Better than Executioner's Calling, trust me. Build a Bramble Vest before 10 minutes and keep it until the end of the game. Oh, and winning is important as well.", [new KillRule()]);
+const group55Level0: PlayerAchievement = new PlayerAchievement(550, 0, "", "Test unlock message", "Squishy?", "Tired of being one-shot? Build a Bramble Vest (or Thornmail) before 20/15/10 minutes and keep it until the end of the game. Oh, and winning is important as well.", [new KillRule()]);
+const group55Level1: PlayerAchievement = new PlayerAchievement(551, 1, "", "Test unlock message", "Squishy?", "Tired of being one-shot? Build a Bramble Vest (or Thornmail) before 15/10 minutes and keep it until the end of the game. Oh, and winning is important as well.", [new KillRule()]);
+const group55Level2: PlayerAchievement = new PlayerAchievement(552, 2, "", "Test unlock message", "Squishy?", "Better than Executioner's Calling, trust me. Build a Bramble Vest (or Thornmail) before 10 minutes and keep it until the end of the game. Oh, and winning is important as well.", [new KillRule()]);
 
 export const group55: PlayerAchievementGroup = {
     name: "Squishy?",
@@ -408,8 +408,8 @@ const group71Level0: GroupAchievement = new GroupAchievement(710, 0,  "", "test 
 const group71Level1: GroupAchievement = new GroupAchievement(711, 1,  "", "test unlock message", "Positioning is life", "No panic button. Win a game where at least 4/all 5 teammates don't take Flash.", [ new GroupKillRule() ]);
 const group71Level2: GroupAchievement = new GroupAchievement(712, 2,  "", "test unlock message", "Positioning is life", "Does writing \"gg ez\" after this game count as toxic or honest? Win a game where all 5 teammates don't take Flash.", [ new GroupKillRule() ]);
 
-const group72Level0: GroupAchievement = new GroupAchievement(720, 0,  "", "test unlock message", "Full House", "Score 2 triple-/quadra-/pentakills in one game. PWNED!", [ new GroupKillRule() ]);
-const group72Level1: GroupAchievement = new GroupAchievement(721, 1,  "", "test unlock message", "Full House", "Score 2 quadra-/pentakills in one game. PWNED!", [ new GroupKillRule() ]);
+const group72Level0: GroupAchievement = new GroupAchievement(720, 0,  "", "test unlock message", "Full House", "Score 2 triple-/ quadra-/ pentakills in one game. PWNED!", [ new GroupKillRule() ]);
+const group72Level1: GroupAchievement = new GroupAchievement(721, 1,  "", "test unlock message", "Full House", "Score 2 quadra-/ pentakills in one game. PWNED!", [ new GroupKillRule() ]);
 const group72Level2: GroupAchievement = new GroupAchievement(722, 2,  "", "test unlock message", "Full House", "Score 2 pentakills in one game. Also known as total annihilation.", [ new GroupKillRule() ]);
 
 const group73Level0: GroupAchievement = new GroupAchievement(730, 0,  "", "test unlock message", "Carry Army", "Win a game where 3/4/5 team members or more play a Marksman champion. We will carry each other.", [ new GroupKillRule() ]);

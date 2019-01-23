@@ -1,12 +1,15 @@
 .row_half {
     height: 50%;
     width: 100%;
+    padding-bottom: 20px;
 }
 
 .group_name_row {
     height: 10%;
     margin-left:0px;
     margin-right: 0px;
+    padding-top: 10px;
+    padding-left: 20px;
 }
 
 .group_component_row {
@@ -19,6 +22,20 @@
     font-size: 2.5rem;
     font-weight: bold;
     text-decoration: none;
+}
+
+.group_achieve_table {
+    height: calc(100% - 75px);
+    overflow-y: auto;
+}
+
+.group_achieve_less_pad {
+    height: calc(100% - 15px);
+    overflow-y: auto;
+}
+
+.group_achieve_div {
+    height: 100%;
 }
 
 .highlight_text {

@@ -53,7 +53,7 @@ class AchievementOverviewsComponent extends React.Component<ConfigurableAchievem
         <div className="container achievement_overview_component">
                 <div className="row achievement_overview_tite_row"> 
                     <h1 className="achievement_overview_title" style={{width: "100%"}}><span className="highlight_text">CHALLENGES</span></h1>
-                    <br></br><span className="small_text" style={{paddingLeft: "25px"}}>Matchmade games in the respective role only</span>
+                    <br></br><span className="small_text" style={{paddingLeft: "25px"}}>Challenges can only be completed in matchmade games in the respective role/game mode.</span>
                 </div>
                 <div className="row achievement_overview_body">
                     <div className="col" style={{height: "100%"}}>

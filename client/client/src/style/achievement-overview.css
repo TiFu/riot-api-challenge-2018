@@ -27,11 +27,13 @@
 }
 
 .overview_font_title {
-    font-size: 13pt;
+    font-size: 14pt;
+    /* font-family: "Calisto MT";
+    src: url("../assets/fonts/CALISTB.TTF"); */
 }
 .overview_font {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    font-size: 12pt;
+    /* font-family: Calibri, 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif; */
+    font-size: 13pt;
 }
 
 .achievement_overview_title {

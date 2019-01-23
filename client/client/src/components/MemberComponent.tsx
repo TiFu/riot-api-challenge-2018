@@ -114,19 +114,21 @@ class MemberComponent extends React.Component<ConfigurableMemberComponentProps &
                         <div className="col"><h1><i className="fas fa-users"></i> Members</h1></div>
                         <div className="col" style={{textAlign: "right"}}> <button type="button" onClick={() => this.setState({showModal:true})} className="btn btn-primary" data-dismiss="alert" aria-label="Close"><i className="fas fa-plus-circle"></i> Invite Player</button></div>
                     </div>
-                    <table className="table">
-                    <thead>
-                        <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Member since</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {members}
-                    </tbody>
-                    </table>   
-                    {this.renderModal()}                 
+                    <div className="row"></div>
+                        <table className="table">
+                        <thead>
+                            <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Member since</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {members}
+                        </tbody>
+                        </table>   
+                        {this.renderModal()} 
+                    </div>                
             </div>
     }
   

@@ -25,13 +25,13 @@ export const initialState: PlayerState = {
         {
             "achievedAt": new Date(),
             "achievementId": 520,
-            "champId": 1,
+            "champId": 25,
             "skinId": 0
         },
         {
             "achievedAt": new Date(),
             "achievementId": 530,
-            "champId": 1,
+            "champId": 18,
             "skinId": 0
         },
         {
@@ -43,6 +43,12 @@ export const initialState: PlayerState = {
         {
             "achievedAt": new Date(),
             "achievementId": 550,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 551,
             "champId": 1,
             "skinId": 0
         }
@@ -86,13 +92,18 @@ export const initialState: PlayerState = {
             achievements: [
                 {
                     achievedAt: (new Date()).toString(),
-                    achievementId: 2,
+                    achievementId: 700,
                     championId: 25
                 },
                 {
                     achievedAt: (new Date()).toString(),
-                    achievementId: 3,
+                    achievementId: 701,
                     championId: 18
+                },
+                {
+                    achievedAt: (new Date()).toString(),
+                    achievementId: 702,
+                    championId: 25
                 }
             ]
         },
@@ -108,7 +119,7 @@ export const initialState: PlayerState = {
             achievements: [
                 {
                     achievedAt: (new Date()).toString(),
-                    achievementId: 2,
+                    achievementId: 700,
                     championId: 1
                 }
             ]
