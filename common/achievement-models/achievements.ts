@@ -125,9 +125,15 @@ const group30Level0: PlayerAchievement = new PlayerAchievement(300, 0, "", "Test
 const group30Level1: PlayerAchievement = new PlayerAchievement(301, 1, "", "Test unlock message", "Danger!", "Participate in at least a kill on two different lanes/on every lane pre 15 minutes. The enemy laners love you.", [new KillRule()]);
 const group30Level2: PlayerAchievement = new PlayerAchievement(302, 2, "", "Test unlock message", "Danger!", "Make jungle great again! Participate in at least a kill on every lane pre 15 minutes.", [new KillRule()]);
 
+<<<<<<< HEAD
 const group31Level0: PlayerAchievement = new PlayerAchievement(310, 0, "", "Test unlock message", "Master Smiter", "Secure 3/5/7 epic monsters in one game. Don't be Saintvicious, be awesome instead.", [new KillRule()]);
 const group31Level1: PlayerAchievement = new PlayerAchievement(311, 1, "", "Test unlock message", "Master Smiter", "Secure 5/7 epic monsters in one game. Don't be Saintvicious, be awesome instead.", [new KillRule()]);
 const group31Level2: PlayerAchievement = new PlayerAchievement(312, 2, "", "Test unlock message", "Master Smiter", "Secure 7 epic monsters in one game. Such jungle talent, so wow.", [new KillRule()]);
+=======
+const group31Level0: PlayerAchievement = new PlayerAchievement(310, 0, "", "Test unlock message", "Master Smiter", "Secure 2/4/6 epic monsters in one game. Such jungle talent, so wow.", [new KillRule()]);
+const group31Level1: PlayerAchievement = new PlayerAchievement(311, 1, "", "Test unlock message", "Master Smiter", "Secure 4/6 epic monsters in one game. Such jungle talent, so wow.", [new KillRule()]);
+const group31Level2: PlayerAchievement = new PlayerAchievement(312, 2, "", "Test unlock message", "Master Smiter", "Secure 6 epic monsters in one game. Now that's gonna be one powerful elder drake.", [new KillRule()]);
+>>>>>>> Added achievements for top, mid, jungle, adc, clownfiesta
 
 const group32Level0: PlayerAchievement = new PlayerAchievement(320, 0, "", "Test unlock message", "Strategic waiting", "Don't forget to bring your tent. Participate in killing the same enemy laner 2/4/6 times pre 15min.", [new KillRule()]);
 const group32Level1: PlayerAchievement = new PlayerAchievement(321, 1, "", "Test unlock message", "Strategic waiting", "Don't forget to bring your tent. Participate in killing the same enemy laner 4/6 times pre 15min.", [new KillRule()]);
