@@ -2,7 +2,7 @@ import {Action} from 'redux'
 
 export interface LCUState {
     connectedToLcu: boolean
-    connectedToFrontend: boolean
+    connectedToFrontend: boolean,
     champselect: {
         champId?: number
         skinId?: number
