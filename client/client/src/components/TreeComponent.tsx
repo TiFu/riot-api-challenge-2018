@@ -3,11 +3,12 @@ import { AchievementState } from "../store";
 import { connect } from 'react-redux';
 import { updatePlayerInfo } from '../store/player/actions';
 import { PlayerInfo, PlayerState } from '../store/player/types';
-import { PlayerAchievementCategory, GroupAchievementCategory, AchievemenCategory, Achievement, AchievementId, AchievementGroup } from 'achievement-models';
+import { PlayerAchievementCategory, GroupAchievementCategory, AchievemenCategory, Achievement, AchievementId, AchievementGroup, achievementMap } from 'achievement-models';
 import { Treant } from 'treant-js'
 import { Achievement as SIOAchievement } from 'achievement-sio'
 import * as champSkinMap from '../assets/champSkinMap.json';
 import {borderMap, getBorderForLevel } from './util'
+
 
 interface ConfigurableTreeComponentProps {
   achievementCategory: AchievemenCategory<any>
@@ -45,6 +46,7 @@ interface NodeDescription extends Node {
   champId: number | null 
   skinId: number | null
   level: number
+  achievementId: number
   achievedAt: Date | null
   achievementGroup: AchievementGroup<any>
   children: NodeDescription[]
@@ -69,6 +71,7 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
     let champId = null;
     let skinId = null;
     let achievedAt = null;
+    let achievementId = group.levels[0].id;
     for (const i in group.levels) {
       if (obtainedAchievements.has(group.levels[i].id)) {
         const achievement = obtainedAchievements.get(group.levels[i].id);
@@ -77,6 +80,7 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
         champId = achievement.championId
         skinId = achievement.skinId
         achievedAt = achievement.achievedAt
+        achievementId = achievement.achievementId
       }
     }
     let children = []
@@ -86,6 +90,7 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
     const cssId = "tree-node-" + this.props.componentId + nodeId + "-" + counter;
     return {
       innerHTML: "#" + cssId,
+      achievementId: achievementId,
       cssId: cssId,
       children: children,
       champId: champId,
@@ -98,10 +103,16 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
   }
 
   componentDidUpdate() {
+    (window as any).$(function () {
+      (window as any).$('[data-toggle="tooltip"]').tooltip()
+    })
     this.drawTree()
   }
 
   componentDidMount() {
+    (window as any).$(function () {
+      (window as any).$('[data-toggle="tooltip"]').tooltip()
+    })
     this.drawTree()
   }
 
@@ -140,6 +151,16 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
     }
   }
 
+  private getTooltipForNode(node: NodeDescription) {
+    console.log("Not found: " + node.achievementId)
+    
+    const achievement = achievementMap.get(node.achievementId);
+    if (!achievement) {
+      return "";
+    }
+    return '<div class="overview_font" style="text-align: left;"><div className="row overview_font_title"><span class="highlight_text">' + achievement.name + '</span></div><div className="row">' + achievement.description + '</div></div>'
+  }
+
   private getTreeNode(node: NodeDescription, id: number) {
     let gray = ""
     console.log("Level: ", node.level)
@@ -150,14 +171,14 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
     if (node.achieved) {
       icon = this.getImgForChampAndSkinId(node.champId, node.skinId)
     }
-    return <span id={node.cssId} key={"tree-id-" + this.props.componentId + "-" + id}>
-          <div>
-            <img className={"tree_champ_img " + gray} src={icon}></img>
+    return <div id={node.cssId} key={"tree-id-" + this.props.componentId + "-" + id} data-toggle="tooltip" data-template='<div class="tooltip" role="tooltip"><div class="arrow tooltip_bg_arrow"></div><div class="tooltip-inner tooltip_bg"></div></div>' data-html="true" data-placement="right" title={this.getTooltipForNode(node)}>
+            <div>
+              <img className={"tree_champ_img " + gray} src={icon} ></img>
+            </div>
+            <div>
+              <img className={"tree_border_img " + gray}  src={getBorderForLevel("level_" + node.level)}></img>
+            </div> 
           </div>
-          <div>
-            <img className={"tree_border_img " + gray} src={getBorderForLevel("level_" + node.level)}></img>
-          </div>
-        </span>
   }
 
   private recursiveGetTreeNodes(node: NodeDescription, nodes: JSX.Element[], id: number = 0): number {

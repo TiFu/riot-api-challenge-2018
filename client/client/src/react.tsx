@@ -8,6 +8,8 @@ import MainComponent from "./components/MainComponent";
 import {Provider} from 'react-redux'
 import configureStores from './store/index';
 
+// Import tippy css
+
 console.log("Running react!")
 const store = configureStores()
 

@@ -16,6 +16,16 @@
     border-right: 1px solid var(--font-color);
 }
 
+.tooltip_bg_arrow::before {
+    border-right-color: var(--font-color) !important;
+    border-left-color: var(--font-color) !important;
+}
+
+.tooltip_bg {
+    background-color: var(--main-hover-color);
+    border: 1px solid var(--font-color);
+}
+
 .overview_font_title {
     font-size: 13pt;
 }

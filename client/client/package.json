@@ -39,5 +39,6 @@
     "nsis": {
       "createDesktopShortcut": "always"
     }
-  }
+  },
+  "dependencies": {}
 }
