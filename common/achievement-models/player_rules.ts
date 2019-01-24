@@ -589,7 +589,7 @@ export class TurretDestructionTimedRule extends PlayerRule {
                         && event.laneType == "MID_LANE"
                         && event.towerType == "OUTER_TURRET" 
                         && lanerWasInvolved(event, participant)) {
-                    if ((this.beforeFirstBlood && !firstKill) || (event.timestamp <= this.timeLimitInMs)) {
+                    if ((this.beforeFirstBlood && !firstKill) || (!this.beforeFirstBlood && event.timestamp <= this.timeLimitInMs)) {
                         return true;
                     }
                 }
