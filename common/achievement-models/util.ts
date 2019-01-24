@@ -9,6 +9,14 @@ export function findParticipantBySummonerId(summonerId: string, game: MatchV4Mat
     return null;
 }
 
+export function findParticipantsBySummonerIds(summonerIds: string[], game: MatchV4MatchDto): MatchV4ParticipantDto[] {
+    let participants = [];
+    for (const summonerId of summonerIds) {
+        participants.push(findParticipantBySummonerId(summonerId, game));
+    }
+    return participants
+}
+
 export function findParticipantByParticipantId(id: number, game: MatchV4MatchDto): MatchV4ParticipantDto {
     for (const identity of game.participants) {
         if (identity.participantId == id) {

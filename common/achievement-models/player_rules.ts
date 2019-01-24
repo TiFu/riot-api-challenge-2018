@@ -20,13 +20,26 @@ class StatsRule extends PlayerRule {
     }
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
         return this.comparison(participant.stats[this.statName], this.value)
     }
 }
 
 const greaterThan = (stat: number | boolean, value: number | boolean) => stat >= value;
 const lessThan = (stat: number | boolean, value: number | boolean) => stat <= value;
+
+export class HealingRule extends StatsRule {
+    public constructor(healingRequired: number) {
+        super("totalHeal", healingRequired, greaterThan);
+    }
+}
+
+export class CCRule extends StatsRule {
+    public constructor(ccTimeRequired: number) {
+        super("timeCCingOthers", ccTimeRequired, greaterThan);
+    }
+
+}
 export class KillingSpreeRule extends StatsRule {
 
     public constructor(killingSpreeLength: number) {
@@ -37,6 +50,28 @@ export class KillingSpreeRule extends StatsRule {
 export class DamageToChampsionsRule extends StatsRule {
     public constructor(dmgToChamps: number) {
         super("totalDamageDealtToChampions", dmgToChamps, greaterThan);
+    }
+}
+
+export class MostDamageToChampionsInTeamRule extends PlayerRule {
+    
+    public constructor() {
+        super();
+    }
+
+    public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
+        const laner = findParticipantBySummonerId(summonerId, game);
+        let maximum = Number.NEGATIVE_INFINITY;
+        for (const participant of game.participants) {
+            if (participant.participantId == laner.participantId || laner.teamId != participant.teamId) {
+                continue;
+            }
+
+            if (participant.stats.totalDamageDealtToChampions > maximum) {
+                maximum = participant.stats.totalDamageDealtToChampions
+            }
+        }
+        return laner.stats.totalDamageDealtToChampions > maximum;
     }
 }
 
@@ -144,7 +179,7 @@ export class WinRule extends PlayerRule {
     }
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
         for (const team of game.teams) {
             if (team.teamId == participant.teamId) {
                 return team.win == this.win;
@@ -174,7 +209,7 @@ export class CheckItemsRule extends PlayerRule {
     }
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
         for (let item of this.itemIds) {
             // TS didn't like "item" + i for some reason
             const isItem0 = item == participant.stats.item0
@@ -204,7 +239,7 @@ export class LaneRule extends PlayerRule {
     }
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
         return this.lane.some(a => participant.timeline.lane == a[0] && participant.timeline.role == a[1]);
     }
 }
@@ -215,7 +250,7 @@ export class CSAdvantageRule extends PlayerRule {
     }
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
         return participant.timeline.csDiffPerMinDeltas["0-10"] * 10 >= this.csDiff;
     }
 }
@@ -228,7 +263,7 @@ export class MonsterKillTimeCheck extends PlayerRule {
     }
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
         const participantId = participant.participantId
 
         for (const frame of timeline.frames) {
@@ -484,9 +519,10 @@ export class AheadInKillsOfEnemyLaner extends PlayerRule {
     }  
 }
 
-export class KillsOnBotAndTopRule extends PlayerRule {
-    private lanes = [ "BOTTOM", "BOT", "TOP"]
-    public constructor(private killsRequired: number, private timeLimitInMs: number) {
+export class KillsOnLaneRule extends PlayerRule {
+//    private lanes = [ "BOTTOM", "BOT", "TOP"]
+//    private lanes = [ "MID", "MIDDLE"]
+    public constructor(private killsRequired: number, private timeLimitInMs: number, private lanes: string[]) {
         super();
     }
     
@@ -515,6 +551,7 @@ export class KillsOnBotAndTopRule extends PlayerRule {
                 }
             }
         }
+        return killCount >= this.killsRequired;
     }
 }
 
@@ -677,4 +714,49 @@ export class ItemInInventoryRule extends PlayerRule {
         }
         return !this.checkRequiredItems(items);
     } 
+}
+
+
+export class PinkWardRule extends PlayerRule {
+
+    public constructor(private pinkWardCount: number) {
+        super();
+    }
+
+    public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
+        const participant = findParticipantBySummonerId(summonerId, game);
+        const items: number[] = []
+        let wardCount = 0;
+
+        for (const frame of timeline.frames) {
+            for (const event of frame.events) {
+                if (event.type =="WARD_PLACED" && event.creatorId == participant.participantId && event.wardType == "UNDEFINED") {
+                    wardCount += 1;
+                }
+            }
+        }
+
+        return wardCount >= this.pinkWardCount;
+    }
+}
+
+
+export class ZeroScoreRule extends PlayerRule {
+  
+    // use POSITIVE_INFINITY for until end of game
+    public constructor(private zeroScoreUntilTimeInMs: number) {
+        super();
+    }
+
+    public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        for (const frame of timeline.frames) {
+            for (const event of frame.events) {
+                if (event.type =="CHAMPION_KILL" && event.timestamp <= this.zeroScoreUntilTimeInMs && lanerWasInvolved(event, participant)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }  
 }
