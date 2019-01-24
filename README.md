@@ -1,11 +1,11 @@
 # Trophy Hunter
 [![Build Status](https://travis-ci.com/TiFu/riot-api-challenge-2018.svg?token=3VvqnLpe2ibJHC5uy4EV&branch=master)](https://travis-ci.com/TiFu/riot-api-challenge-2018)
 
-[![Example Trophy Wall](https://raw.githubusercontent.com/TiFu/riot-api-challenge-2018/examples/wall_semi_cleared.png)]
+![Example Trophy Wall](https://raw.githubusercontent.com/TiFu/riot-api-challenge-2018/examples/wall_semi_cleared.png)
 
 ## What is "Trophy Hunter"?
 
-[![Demo Video](https://img.youtube.com/vi/oc2CF3OyAFA/0.jpg)](https://www.youtube.com/watch?v=oc2CF3OyAFA)
+![Demo Video](https://img.youtube.com/vi/oc2CF3OyAFA/0.jpg)](https://www.youtube.com/watch?v=oc2CF3OyAFA)
 
 ## How do I get to use it?
 
