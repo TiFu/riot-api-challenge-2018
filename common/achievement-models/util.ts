@@ -2,7 +2,7 @@ import { MatchV4MatchDto, MatchV4ParticipantDto, MatchV4MatchEventDto } from "ka
 
 export function findParticipantBySummonerId(summonerId: string, game: MatchV4MatchDto): MatchV4ParticipantDto {
     for (const identity of game.participantIdentities) {
-        if (identity.player.summonerId == summonerId) {
+        if (identity.player.accountId == summonerId) {
             return findParticipantByParticipantId(identity.participantId, game);
         }        
     }
