@@ -253,7 +253,7 @@ export class CheckItemsRule extends PlayerRule {
     }
 }
 
-export type Lane = "MID" | "MIDDLE" | "TOP" | "JUNGLE" | "BOT" | "BOTTOM";
+export type Lane = "MID" | "MIDDLE" | "TOP" | "JUNGLE" | "BOT" | "BOTTOM" | "NONE";
 export type Role = "DUO" | "NONE" | "SOLO" | "DUO_CARRY" | "DUO_SUPPORT";
 
 export class LaneRule extends PlayerRule {
