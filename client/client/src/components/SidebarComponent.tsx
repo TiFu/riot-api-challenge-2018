@@ -58,7 +58,7 @@ class SidebarComponent extends React.Component<SidebarConfigurableProps & Sideba
                     <div className="sidebar_menu">
                         <NavLink className="sidebar_default_link" activeClassName="sidebar_active_link" to="/wallpaper"><span className="fas fa-trophy"></span> <span className="sidebar_desc">Trophy Wall</span></NavLink>
                         <NavLink className="sidebar_default_link" activeClassName="sidebar_active_link" to="/groups/id/0"><span className="fas fa-users"></span> <span className="sidebar_desc">Groups</span></NavLink>
-                        <GroupSubItems onCreateGroupClicked={this.props.onCreateGroupClicked} ></GroupSubItems>}
+                        <GroupSubItems onCreateGroupClicked={this.props.onCreateGroupClicked} ></GroupSubItems>
                     </div>
                 </div>
                 <div className="row sidebar_achievementBox">

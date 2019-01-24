@@ -15,6 +15,7 @@ const store = configureStores()
 
 const lcu = new LCUService();
 const sioService = new AchievementSocketIOService(store, "http://trophy-hunter.pro:" + 80, eventBus);
+//const sioService = new AchievementSocketIOService(store, "localhost" + 80, eventBus);
 
 const lcuListener = new LCUUpdateHandler(lcu, store, sioService);
 
