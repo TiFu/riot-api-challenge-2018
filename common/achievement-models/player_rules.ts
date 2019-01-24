@@ -272,6 +272,25 @@ export class LaneRule extends PlayerRule {
     }
 }
 
+export class MinionTimeRule extends PlayerRule {
+    public constructor(private cs: number) {
+        super();
+    }
+
+    public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+ 
+        if (timeline.frames.length <= 10) {
+            return false;
+        }
+        
+        return timeline.frames[10].participantFrames[participant.participantId].minionsKilled >= this.cs;
+    }
+}
+
 export class CSAdvantageRule extends PlayerRule {
     public constructor(private csDiff: number) {
         super();
@@ -795,10 +814,13 @@ export class ItemInInventoryRule extends PlayerRule {
             const index = items.indexOf(event.itemId);
             if (index !== -1) {
                 items.splice(index, 1);
+                return true;
             }
         } else if (event.type == "ITEM_PURCHASED") {
             items.push(event.itemId);
+            return true;
         }
+        return false;
     }
 
     private checkRequiredItems(items: number[]): boolean {
