@@ -14,7 +14,8 @@ console.log("Running react!")
 const store = configureStores()
 
 const lcu = new LCUService();
-const sioService = new AchievementSocketIOService(store, "http://localhost:" + 3000, eventBus);
+const sioService = new AchievementSocketIOService(store, "http://trophy-hunter.pro:" + 80, eventBus);
+
 const lcuListener = new LCUUpdateHandler(lcu, store, sioService);
 
 lcu.setListener(lcuListener)

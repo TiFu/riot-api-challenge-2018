@@ -54,7 +54,7 @@ class GroupsComponent extends React.Component<ConfigurableGroupsComponentProps &
     render() {       
         let groupComponent = null;
         let groupIdx = (this.props as any).match.params.idx 
-        if (this.props.groups.length <= (this.props as any).match.params.idx  && this.props.groups.length > 1) {
+        if (!this.props.groups || (this.props.groups.length <= (this.props as any).match.params.idx  && this.props.groups.length > 1)) {
             groupIdx = 0
         }
         console.log("Current Idx: " + (this.props as any).match.params.idx )
