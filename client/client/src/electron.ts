@@ -10,7 +10,6 @@ function initApp() {
     window.once('ready-to-show', () => {
         window.maximize();
         window.show()
-        console.log(window.getSize())
     })
     window.loadFile("index.html");
 
@@ -28,7 +27,6 @@ function initApp() {
     tray.setContextMenu(contextMenu)
 }
 function exitElectron() {
-    console.log("Exitting electron!");
     app.exit()
 }
 

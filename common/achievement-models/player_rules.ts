@@ -274,9 +274,10 @@ export class LaneRule extends PlayerRule {
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participant = findParticipantBySummonerId(summonerId, game); 
         if (participant == null) {
+            console.log("null participant");
             return false;
         }
- 
+        console.log("lane");
         return this.lane.some(a => participant.timeline.lane == a[0] && participant.timeline.role == a[1]);
     }
 }
@@ -889,7 +890,7 @@ export class PinkWardRule extends PlayerRule {
 
         for (const frame of timeline.frames) {
             for (const event of frame.events) {
-                if (event.type =="WARD_PLACED" && event.creatorId == participant.participantId && event.wardType == "UNDEFINED") {
+                if (event.type =="WARD_PLACED" && event.creatorId == participant.participantId && event.wardType == "CONTROL_WARD") {
                     wardCount += 1;
                 }
             }
