@@ -37,7 +37,7 @@ in our client and our frontend server and therefore decreases the likelihood of 
 
 
 ## Is that custom art?
-Aside from the champion/skin art used in the tree (who would have guessed) and the known role icons, almost everything was drawn by us. The Trophy Hunter icon, the backgrounds, the picture borders, the shelves, the background and the trophies. The lane trophies themselves were obviously inspired from themes from our beloved game.
+Aside from the champion/skin art used in the tree (who would have guessed) and the known role icons, almost everything was drawn by us. The Trophy Hunter icon, the backgrounds, the picture borders, the shelves, the background and the trophies. The lane trophies themselves were obviously inspired from themes from our beloved game. There are several trophy levels for each trophy.
 
 <img src="/examples/Midlane_Trophy_1.png" width="400" height="283"> <img src="/examples/Midlane_Trophy_4.png" width="400" height="283">
 
