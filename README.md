@@ -12,7 +12,8 @@ https://www.youtube.com/watch?v=oc2CF3OyAFA
 [![Demo Video](https://img.youtube.com/vi/oc2CF3OyAFA/0.jpg)](https://www.youtube.com/watch?v=oc2CF3OyAFA)
 
 ## How do I get to use it?
-Download and launch the installer. Log into your League Client to automatically log into "Trophy Hunter" as well. Now you are ready to go. Just play any matchmade game and it will count towards your challenges. Good luck!
+https://github.com/TiFu/riot-api-challenge-2018/releases
+Download and launch the installer found in the link above. Log into your League Client to automatically log into "Trophy Hunter" as well. Now you are ready to go. Just play any matchmade game and it will count towards your challenges. Good luck!
 
 ## Is that custom art?
 Aside from the champion/skin art used in the tree (who would have guessed) and the known role icons, almost everything was drawn by us. The Trophy Hunter icon, the backgrounds, the picture borders, the shelves, the background and the trophies. The lane trophies themselves were obviously inspired from themes from our beloved game.
