@@ -43,8 +43,12 @@ class GroupsComponent extends React.Component<ConfigurableGroupsComponentProps &
     }
 
     renderGroupSelectComponent() {
-        const options = this.props.groups.map((g, idx) => g.name);
-        return <div className="center_dropdown"><DropdownComponent selected={(this.props as any).match.params.idx} options={options} optionStyle="dropdown_title" titleStyle="highlight_text" buttonStyle="group_title" onSelectCallback={(idx) => this.newGroupSelected(idx)}></DropdownComponent></div>
+        if (this.props.groups && this.props.groups.length > 0) {
+            const options = this.props.groups.map((g, idx) => g.name);
+            return <div className="center_dropdown"><DropdownComponent selected={(this.props as any).match.params.idx} options={options} optionStyle="dropdown_title" titleStyle="highlight_text" buttonStyle="group_title" onSelectCallback={(idx) => this.newGroupSelected(idx)}></DropdownComponent></div>
+        } else {
+            return null;
+        }
     }
 
     render() {       
@@ -55,8 +59,13 @@ class GroupsComponent extends React.Component<ConfigurableGroupsComponentProps &
         }
         console.log("Current Idx: " + (this.props as any).match.params.idx )
         console.log("New idx: ", groupIdx)
-        if (this.props.groups.length > (this.props as any).match.params.idx ) {
+        if (this.props.groups && this.props.groups.length > (this.props as any).match.params.idx ) {
             groupComponent = <GroupComponent group={this.props.groups[groupIdx]}></GroupComponent>
+        } else if (!this.props.groups || this.props.groups.length == 0) {
+            groupComponent = <div className="full_width_height" style={{textAlign: "center", fontSize: "20pt"}}>
+                <i className="fas fa-users" style={{fontSize: "50pt"}}></i><br />
+                Create a group or accept a group invite to unlock new achievements!
+            </div>
         }
         return <div className="background full_width_height">
             <div className="row group_name_row">
