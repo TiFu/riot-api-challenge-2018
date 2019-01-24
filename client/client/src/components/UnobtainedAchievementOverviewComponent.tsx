@@ -37,7 +37,7 @@ class AchievementComponent extends React.Component<ConfigurableAchievementCompon
         const achievements = Array.from(idSet).map((m, idx) => {
             const achievement = achievementMap.get(m);
             return <tr key={achievement.id}>
-            <td scope="row"><img src={achievement.icon} width="32px"></img> {achievement.name}</td>
+            <td scope="row">{achievement.name}</td>
             <td scope="row">{achievement.description}</td>
             </tr>
         })
@@ -47,7 +47,7 @@ class AchievementComponent extends React.Component<ConfigurableAchievementCompon
                         <table className="table">
                         <thead>
                             <tr>
-                            <th scope="col" >Achievement</th>
+                            <th scope="col">Achievement</th>
                             <th scope="col">Description</th>
                             </tr>
                         </thead>

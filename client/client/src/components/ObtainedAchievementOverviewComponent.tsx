@@ -34,7 +34,7 @@ class AchievementComponent extends React.Component<ConfigurableAchievementCompon
         }).map((m, idx) => {
             const achievement = achievementMap.get(m.achievementId);
             return <tr key={m.achievementId}>
-            <td scope="row">{new Date(Date.parse(m.achievedAt)).toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit"})}</td>
+            <td scope="row">{new Date(Date.parse(m.achievedAt)).toLocaleString("en-US", { year: "2-digit", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit"})}</td>
             <td scope="row">{achievement.name}</td>
             <td>{achievement.description}</td>
             </tr>
@@ -45,7 +45,7 @@ class AchievementComponent extends React.Component<ConfigurableAchievementCompon
                         <table className="table">
                         <thead>
                             <tr>
-                            <th scope="col">Date</th>
+                            <th scope="col" className="first_column_group">Date</th>
                             <th scope="col">Achievement</th>
                             <th scope="col">Description</th>
                             </tr>

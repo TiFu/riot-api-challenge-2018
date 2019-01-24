@@ -27,15 +27,21 @@
 .group_achieve_table {
     height: calc(100% - 75px);
     overflow-y: auto;
+    font-size: 13pt;
 }
 
 .group_achieve_less_pad {
     height: calc(100% - 15px);
     overflow-y: auto;
+    font-size: 13pt;
 }
 
 .group_achieve_div {
     height: 100%;
+}
+
+.first_column_group {
+    width: 80pt;
 }
 
 .highlight_text {

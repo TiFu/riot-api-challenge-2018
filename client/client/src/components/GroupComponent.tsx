@@ -52,7 +52,7 @@ class GroupComponent extends React.Component<ConfigurableGroupComponentProps & G
                         </div>
                     </div>
                     <div className="col margin">
-                        <UnobtainedAchievementOverviewComponent achievementCategory={groupAchievementCategories[0]} title="Unlocked Achievements" icon="unlock" achievements={unlockedAchievements}></UnobtainedAchievementOverviewComponent>
+                        <UnobtainedAchievementOverviewComponent achievementCategory={groupAchievementCategories[0]} title="Unlocked Challenges" icon="unlock" achievements={unlockedAchievements}></UnobtainedAchievementOverviewComponent>
                     </div>
                 </div>
                 <div className="row row_half no_margin">
