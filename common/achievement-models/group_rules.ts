@@ -3,6 +3,20 @@ import { MatchV4MatchDto, MatchV4MatchTimelineDto, MatchV4MatchEventDto, MatchV4
 import { findParticipantBySummonerId, findParticipantsBySummonerIds } from './util';
 import { TurretDestructionTimedRule } from './player_rules';
 
+
+export class GroupGameModeRule extends GroupRule {
+
+    // 450 is aram, all others are 5x5 SR Ranked Solo, Blind, Flex
+    // 400 | 420 | 430 | 440 | 450
+    public constructor(private queueIds: number[]) {
+        super();
+    }
+
+    public verify(summonerId: string[], game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
+        return this.queueIds.indexOf(game.queueId) !== -1;
+    }
+
+}
 export class GroupKillRule extends GroupRule {
 
     public constructor() {

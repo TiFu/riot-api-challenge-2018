@@ -3,9 +3,11 @@ import { KillRule } from './rules';
 import { GroupKillRule } from './group_rules';
 
 import { MatchV4MatchDto, MatchV4MatchTimelineDto } from 'kayn/typings/dtos';
-import { MinionTimeRule, DamageToChampsionsRule, WinRule, LessThanKillRule, GreaterThanAssistRule, XKillRule, SoloKillRule, ItemInInventoryRule, LaneRule } from './player_rules';
+import { MinionTimeRule, DamageToChampsionsRule, WinRule, LessThanKillRule, GreaterThanAssistRule, XKillRule, SoloKillRule, ItemInInventoryRule, LaneRule, GameModeRule } from './player_rules';
 
 
+const summonersRiftRule = new GameModeRule([400, 420, 430, 440])
+const aramRule = new GameModeRule([450])
 // [0], [1, 2], [3, 4, 5]
 //TODO: sup, clown, group
 

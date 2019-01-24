@@ -267,7 +267,6 @@ export class LaneRule extends PlayerRule {
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participant = findParticipantBySummonerId(summonerId, game); 
-        console.log("PARTICIPATING ", participant);
         if (participant == null) {
             return false;
         }
@@ -291,6 +290,7 @@ export class MinionTimeRule extends PlayerRule {
             return false;
         }
         
+        console.log(timeline.frames[10].participantFrames[participant.participantId])
         return timeline.frames[10].participantFrames[participant.participantId].minionsKilled >= this.cs;
     }
 }
