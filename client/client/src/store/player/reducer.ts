@@ -12,8 +12,368 @@ export const initialState: PlayerState = {
     "playerAchievements": [
         {
             "achievedAt": new Date(),
+            "achievementId": 100,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 101,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 110,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 111,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 112,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 120,
+            "champId": 107,
+            "skinId": 107003
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 140,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 141,
+            "champId": 7,
+            "skinId": 7003
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 150,
+            "champId": 25,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 151,
+            "champId": 25,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 152,
+            "champId": 25,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 200,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 201,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 202,
+            "champId": 84,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 210,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 211,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 212,
+            "champId": 84,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 220,
+            "champId": 22,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 221,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 222,
+            "champId": 420,
+            "skinId": 420003
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 230,
+            "champId": 18,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 231,
+            "champId": 18,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 232,
+            "champId": 75,
+            "skinId": 75003
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 240,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 241,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 242,
+            "champId": 420,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 250,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 251,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 252,
+            "champId": 75,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 300,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 301,
+            "champId": 106,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 310,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 311,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 312,
+            "champId": 72,
+            "skinId": 72002
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 320,
+            "champId": 23,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 321,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 322,
+            "champId": 72,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 340,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 341,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 342,
+            "champId": 19,
+            "skinId": 19003
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 350,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 351,
+            "champId": 24,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 400,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 401,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 402,
+            "champId": 45,
+            "skinId": 45001
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 410,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 411,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 412,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 420,
+            "champId": 24,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 421,
+            "champId": 30,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 430,
+            "champId": 18,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 431,
+            "champId": 18,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 432,
+            "champId": 34,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 440,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 441,
+            "champId": 1,
+            "skinId": 1008
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 450,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 451,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 452,
+            "champId": 112,
+            "skinId": 112004
+        },
+        {
+            "achievedAt": new Date(),
             "achievementId": 500,
             "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 501,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 502,
+            "champId": 429,
             "skinId": 0
         },
         {
@@ -24,8 +384,32 @@ export const initialState: PlayerState = {
         },
         {
             "achievedAt": new Date(),
+            "achievementId": 511,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 512,
+            "champId": 222,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
             "achievementId": 520,
             "champId": 25,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 521,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 522,
+            "champId": 133,
             "skinId": 0
         },
         {
@@ -36,8 +420,32 @@ export const initialState: PlayerState = {
         },
         {
             "achievedAt": new Date(),
+            "achievementId": 531,
+            "champId": 18,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 532,
+            "champId": 222,
+            "skinId": 222002
+        },
+        {
+            "achievedAt": new Date(),
             "achievementId": 540,
             "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 541,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 542,
+            "champId": 21,
             "skinId": 0
         },
         {
@@ -51,7 +459,122 @@ export const initialState: PlayerState = {
             "achievementId": 551,
             "champId": 1,
             "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 552,
+            "champId": 222,
+            "skinId": 222002
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 600,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 601,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 602,
+            "champId": 267,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 610,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 611,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 612,
+            "champId": 267,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 620,
+            "champId": 26,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 621,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 622,
+            "champId": 161,
+            "skinId": 161003
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 630,
+            "champId": 18,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 631,
+            "champId": 18,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 632,
+            "champId": 143,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 640,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 641,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 642,
+            "champId": 40,
+            "skinId": 40003
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 650,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 651,
+            "champId": 1,
+            "skinId": 0
+        },
+        {
+            "achievedAt": new Date(),
+            "achievementId": 652,
+            "champId": 40,
+            "skinId": 40003
         }
+        
     ],
     "invites": [
         {
@@ -137,7 +660,7 @@ export const initialState: PlayerState = {
                 "region": "euw1",
                 "memberSince": (new Date()).toString()
             },{
-                
+
                 "accountId": 23456,
                 "name": "TiFu",
                 "region": "euw1",
@@ -152,12 +675,27 @@ export const initialState: PlayerState = {
                 {
                     achievedAt: (new Date()).toString(),
                     achievementId: 701,
-                    championId: 18
+                    championId: 25
                 },
                 {
                     achievedAt: (new Date()).toString(),
                     achievementId: 702,
+                    championId: 245
+                },
+                {
+                    achievedAt: (new Date()).toString(),
+                    achievementId: 710,
                     championId: 25
+                },
+                {
+                    achievedAt: (new Date()).toString(),
+                    achievementId: 720,
+                    championId: 25
+                },
+                {
+                    achievedAt: (new Date()).toString(),
+                    achievementId: 721,
+                    championId: 31
                 }
             ]
         },

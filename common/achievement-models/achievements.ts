@@ -358,22 +358,22 @@ export const group60: PlayerAchievementGroup = {
 
 
 // Clown ID 1xx
-const clownCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "ARAM", "desc", "./assets/lanes/fun.png", group10);
+const clownCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "1x1.png"}, { completionState: 0.15, trophyImage: "fun_1.png"}, { completionState: 0.44, trophyImage: "fun_2.png"}, { completionState: 0.71, trophyImage: "fun_3.png"}, { completionState: 0.99, trophyImage: "fun_4.png"}], "ARAM", "desc", "./assets/lanes/fun.png", group10);
 
 //Top ID 2xx
-const topCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "1x1.png"}], "Top", "desc", "./assets/lanes/top.png", group20);
+const topCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "1x1.png"}, { completionState: 0.15, trophyImage: "top_1.png"}, { completionState: 0.44, trophyImage: "top_2.png"}, { completionState: 0.71, trophyImage: "top_3.png"}, { completionState: 0.99, trophyImage: "top_4.png"}], "Top", "desc", "./assets/lanes/top.png", group20);
 
 // Jungle ID 3xx
-const jungleCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Jungle", "desc", "./assets/lanes/jungle.png", group30);
+const jungleCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "1x1.png"}, { completionState: 0.15, trophyImage: "jgl_1.png"}, { completionState: 0.44, trophyImage: "jgl_2.png"}, { completionState: 0.71, trophyImage: "jgl_3.png"}, { completionState: 0.99, trophyImage: "jgl_4.png"}], "Jungle", "desc", "./assets/lanes/jungle.png", group30);
 
 // Mid ID 4xx
-const midCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Mid", "desc", "./assets/lanes/middle.png", group40);
+const midCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "1x1.png"}, { completionState: 0.15, trophyImage: "mid_1.png"}, { completionState: 0.44, trophyImage: "mid_2.png"}, { completionState: 0.71, trophyImage: "mid_3.png"}, { completionState: 0.99, trophyImage: "mid_4.png"}], "Mid", "desc", "./assets/lanes/middle.png", group40);
 
 // ADC ID 5xx
 const adcCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "1x1.png"}, { completionState: 0.15, trophyImage: "adc_1.png"}, { completionState: 0.44, trophyImage: "adc_2.png"}, { completionState: 0.71, trophyImage: "adc_3.png"}, { completionState: 0.99, trophyImage: "adc_4.png"}], "ADC", "desc", "./assets/lanes/bottom.png", group50);
 
 // Support ID 6xx
-const supportCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Support", "desc", "./assets/lanes/support.png", group60);
+const supportCategory = new PlayerAchievementCategory([{ completionState: 0.0, trophyImage: "1x1.png"}, { completionState: 0.15, trophyImage: "sup_1.png"}, { completionState: 0.44, trophyImage: "sup_2.png"}, { completionState: 0.71, trophyImage: "sup_3.png"}, { completionState: 0.99, trophyImage: "sup_4.png"}], "Support", "desc", "./assets/lanes/support.png", group60);
 
 
 type PlayerAchievementCategories = {
@@ -470,7 +470,7 @@ const group70: GroupAchievementGroup = {
 
 
 export const groupAchievementCategories: GroupAchievementCategory[] = [
-    new GroupAchievementCategory([{ completionState: 0.0, trophyImage: "trophies.png"}], "Group Test", "Test Description", "", group70)
+    new GroupAchievementCategory([ { completionState: 0.0, trophyImage: "1x1.png"}, { completionState: 0.15, trophyImage: "group_1.png"}, { completionState: 0.44, trophyImage: "group_2.png"}, { completionState: 0.71, trophyImage: "group_3.png"}, { completionState: 0.99, trophyImage: "group_4.png"}], "Group", "Group Description", "", group70)
 ]
 
 export const achievementMap = new Map<number, Achievement<any>>()

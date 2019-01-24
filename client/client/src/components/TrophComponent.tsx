@@ -24,6 +24,7 @@ class TrophyComponent extends React.Component<ConfigurableTrophyComponentProps &
     const trophyImages = this.props.achievementCategory.trophyImages;
     let trophyImage = trophyImages[0].trophyImage;
     for (let i = 0; i < trophyImages.length; i++) {
+      console.log("YOLO "+ this.props.completionState);
         if (this.props.completionState >= trophyImages[i].completionState) {
             trophyImage = trophyImages[i].trophyImage
         }
