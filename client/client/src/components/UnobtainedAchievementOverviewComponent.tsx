@@ -10,8 +10,11 @@ import TrophyComponent from './TrophComponent';
 import { playerAchievementCategories, getCategoryCompletionState } from 'achievement-models';
 import { PlayerAchievementCategory } from 'achievement-models';
 import { achievementMap } from "achievement-models";
+import { GroupAchievementCategory } from 'achievement-models';
+import { filterForLowestObtainableId } from 'achievement-models';
 
 interface ConfigurableAchievementComponentProps {
+    achievementCategory: GroupAchievementCategory
     achievements: number[]
     title?: string
     icon?: string
@@ -29,7 +32,9 @@ interface AchievementComponentActions {
 class AchievementComponent extends React.Component<ConfigurableAchievementComponentProps & AchievementComponentProps & AchievementComponentActions, {}> {
 
     render() { 
-        const achievements = this.props.achievements.map((m, idx) => {
+        let idSet = new Set(this.props.achievements.map(a => a))
+        filterForLowestObtainableId(idSet, this.props.achievementCategory.getFirstGroup());
+        const achievements = Array.from(idSet).map((m, idx) => {
             const achievement = achievementMap.get(m);
             return <tr key={achievement.id}>
             <th scope="row"><img src={achievement.icon} width="32px"></img> {achievement.name}</th>
