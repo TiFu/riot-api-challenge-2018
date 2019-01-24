@@ -400,9 +400,9 @@ const group2: GroupAchievementGroup = {
     levels: [group2Level0]
 }*/
 
-const group70Level0: GroupAchievement = new GroupAchievement(700, 0,  "", "test unlock message", "Campingtrip", "Camping is a great team building measure. Get a kill before the 15/10/5 minute mark where every teammate has participated.", [ new GroupKillRule() ]);
-const group70Level1: GroupAchievement = new GroupAchievement(701, 1,  "", "test unlock message", "Campingtrip", "Camping is a great team building measure. Get a kill before the 10/5 minute mark where every teammate has participated.", [ new GroupKillRule() ]);
-const group70Level2: GroupAchievement = new GroupAchievement(702, 2,  "", "test unlock message", "Campingtrip", "Camping is a great team building measure. Get a kill before the 5 minute mark where every teammate has participated.", [ new GroupKillRule() ]);
+const group70Level0: GroupAchievement = new GroupAchievement(700, 0,  "", "test unlock message", "Camping trip", "Camping is a great team building measure. Get a kill before the 15/10/5 minute mark where every teammate has participated.", [ new GroupKillRule() ]);
+const group70Level1: GroupAchievement = new GroupAchievement(701, 1,  "", "test unlock message", "Camping trip", "Camping is a great team building measure. Get a kill before the 10/5 minute mark where every teammate has participated.", [ new GroupKillRule() ]);
+const group70Level2: GroupAchievement = new GroupAchievement(702, 2,  "", "test unlock message", "Camping trip", "Camping is a great team building measure. Get a kill before the 5 minute mark where every teammate has participated.", [ new GroupKillRule() ]);
 
 const group71Level0: GroupAchievement = new GroupAchievement(710, 0,  "", "test unlock message", "Positioning is life", "No panic button. Win a game where at least 3/4/all 5 teammates don't take Flash.", [ new GroupKillRule() ]);
 const group71Level1: GroupAchievement = new GroupAchievement(711, 1,  "", "test unlock message", "Positioning is life", "No panic button. Win a game where at least 4/all 5 teammates don't take Flash.", [ new GroupKillRule() ]);

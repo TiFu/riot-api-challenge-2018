@@ -109,12 +109,14 @@ class MemberComponent extends React.Component<ConfigurableMemberComponentProps &
             <td>{(new Date(Date.parse(m.memberSince))).toLocaleString("en-US", { year: "numeric", month: "long", day: "numeric"})}</td>
             </tr>
         })
-        return <div>
+        return <div className="group_achieve_div">
                     <div className="row">
                         <div className="col"><h1><i className="fas fa-users"></i> Members</h1></div>
                         <div className="col" style={{textAlign: "right"}}> <button type="button" onClick={() => this.setState({showModal:true})} className="btn btn-primary" data-dismiss="alert" aria-label="Close"><i className="fas fa-plus-circle"></i> Invite Player</button></div>
                     </div>
-                    <div className="row"></div>
+
+                   
+                    <div className="group_achieve_less_pad">
                         <table className="table">
                         <thead>
                             <tr>
@@ -127,9 +129,9 @@ class MemberComponent extends React.Component<ConfigurableMemberComponentProps &
                             {members}
                         </tbody>
                         </table>   
-                        {this.renderModal()} 
+                          {this.renderModal()}
                     </div>                
-            </div>
+        </div>
     }
   
 }

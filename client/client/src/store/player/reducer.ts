@@ -88,6 +88,60 @@ export const initialState: PlayerState = {
                 "name": "TiFu",
                 "region": "euw1",
                 "memberSince": (new Date()).toString()
+            },
+            {
+                "accountId": 23456,
+                "name": "TiFu",
+                "region": "euw1",
+                "memberSince": (new Date()).toString()
+            },
+            {
+                "accountId": 23456,
+                "name": "TiFu",
+                "region": "euw1",
+                "memberSince": (new Date()).toString()
+            },
+            {
+                "accountId": 23456,
+                "name": "TiFu",
+                "region": "euw1",
+                "memberSince": (new Date()).toString()
+            },
+            {
+                "accountId": 23456,
+                "name": "TiFu",
+                "region": "euw1",
+                "memberSince": (new Date()).toString()
+            },
+            {
+                "accountId": 23456,
+                "name": "TiFu",
+                "region": "euw1",
+                "memberSince": (new Date()).toString()
+            },
+            {
+                "accountId": 23456,
+                "name": "TiFu",
+                "region": "euw1",
+                "memberSince": (new Date()).toString()
+            },
+            {
+                "accountId": 23456,
+                "name": "TiFu",
+                "region": "euw1",
+                "memberSince": (new Date()).toString()
+            },
+            {
+                "accountId": 23456,
+                "name": "TiFu",
+                "region": "euw1",
+                "memberSince": (new Date()).toString()
+            },{
+                
+                "accountId": 23456,
+                "name": "TiFu",
+                "region": "euw1",
+                "memberSince": (new Date()).toString()
             }],
             achievements: [
                 {
