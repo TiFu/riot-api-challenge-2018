@@ -42,7 +42,7 @@ Aside from the champion/skin art used in the tree (who would have guessed) and t
 <img src="/examples/Midlane_Trophy_1.png" width="400" height="283"> <img src="/examples/Midlane_Trophy_4.png" width="400" height="283">
 
 ## Who participated?
-TiFu (euw) and Cookie Knight (euw).
+TiFu (euw) and Cookie Knight (euw). If there are any bugs... uhm... it's a feature.
 
 ## What does the future hold?
 More challenges, more trophies. We want to create an option where you can search for an see the trophy walls of other players. We have the backend tools needed to create a mode, where you can create challenges with your own criteria and share it to challenge your friends.
