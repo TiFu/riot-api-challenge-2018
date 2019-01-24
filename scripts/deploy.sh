@@ -1,1 +1,1 @@
-rsync --exclude 'client*' --exclude 'scripts*' --exclude '*node_modules*' -av --progress ./ root@trophy-hunter.pro:/home/root/
+rsync --exclude 'client*' --exclude 'examples' --exclude '.git' --exclude 'scripts*' --exclude '*node_modules*' -av --progress ./ root@trophy-hunter.pro:/home/root/
