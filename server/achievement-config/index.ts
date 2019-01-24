@@ -49,7 +49,7 @@ export function loadConfigFromEnvironment(): Config {
             "port": parseInt(process.env.FRONTEND_PORT || "3000")
         },
         "riotApi": {
-            "apiKey": process.env.RIOT_API_KEY || "RGAPI-fa2efd91-c418-45d4-be44-48fb8c10f312", // TODO: Remove
+            "apiKey": process.env.RIOT_API_KEY || "", // TODO: Remove
             "rateLimits": [
                 {
                     requests: 20,
