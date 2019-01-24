@@ -29,8 +29,14 @@ interface Node {
 interface ChartSettings{ 
   container: string
   hideRootNode: boolean
+  connectors: ConnectorSettings
 }
 
+interface ConnectorSettings {
+   style: {
+     stroke: string
+   }
+}
 interface Chart {
   chart: ChartSettings
   nodeStructure: Node
@@ -133,7 +139,12 @@ class TreeComponent extends React.Component<ConfigurableTreeComponentProps & Tre
     const simple_chart_config: Chart = {
       chart: {
           container: "#tree-simple-" + this.props.componentId,
-          hideRootNode: false
+          hideRootNode: false,
+          connectors: {
+            style: {
+              stroke: "#f0e6d2"
+            }
+          },
       },
       nodeStructure: nodeStructure
     };
