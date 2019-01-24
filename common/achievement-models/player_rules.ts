@@ -4,13 +4,16 @@ import { findParticipantBySummonerId, findLaneOpponent, lanerWasInvolved, wasInR
 
 export class GameModeRule extends PlayerRule {
 
-    public constructor(private models: string[]) {
+    // 450 is aram, all others are 5x5 SR Ranked Solo, Blind, Flex
+    // 400 | 420 | 430 | 440 | 450
+    public constructor(private queueIds: number[]) {
         super();
     }
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        return this.models.some(a => a == game.gameMode);
+        return this.queueIds.indexOf(game.queueId) !== -1;
     }
+
 }
 
 class StatsRule extends PlayerRule {
