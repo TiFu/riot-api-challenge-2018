@@ -37,12 +37,12 @@ class AchievementComponent extends React.Component<ConfigurableAchievementCompon
         const achievements = Array.from(idSet).map((m, idx) => {
             const achievement = achievementMap.get(m);
             return <tr key={achievement.id}>
-            <th scope="row"><img src={achievement.icon} width="32px"></img> {achievement.name}</th>
-            <th scope="row">{achievement.description}</th>
+            <td scope="row"><img src={achievement.icon} width="32px"></img> {achievement.name}</td>
+            <td scope="row">{achievement.description}</td>
             </tr>
         })
         return <div className="group_achieve_div">
-                    <h1><i className={"fas fa-" + (this.props.icon || "trophy")}></i> {this.props.title || "Achievements"}</h1>
+                    <h1><i className={"fas fa-" + (this.props.icon || "trophy")}></i> {this.props.title || "Achievements"}<br /><span className="small_text">Group Achievements can only be completed as a team of 5 in matchmade games on Summoner's Rift.</span></h1>
                     <div className="group_achieve_table">
                         <table className="table">
                         <thead>
