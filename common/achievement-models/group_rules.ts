@@ -40,6 +40,10 @@ export class AllMemberKillRule extends GroupRule {
 
     public verify(accountIds: string[], game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participants = findParticipantsBySummonerIds(accountIds, game);
+        if (participants.some(p => p == null)) {
+            return false;
+        }
+
         for (const frame of timeline.frames) {
             for (const event of frame.events) {
                 if (this.handleEvent(event, participants)) {
@@ -58,6 +62,10 @@ export class FlashLessRule extends GroupRule {
 
     public verify(accountIds: string[], game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participants = findParticipantsBySummonerIds(accountIds, game);
+        if (participants.some(p => p == null)) {
+            return false;
+        }
+
         let flashCount = 0;
         for (let participant of participants) {
             if (participant.spell1Id == 4 || participant.spell2Id == 4) {
@@ -106,6 +114,10 @@ export class MultiKillRule extends GroupRule {
     }
     public verify(accountIds: string[], game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participants = findParticipantsBySummonerIds(accountIds, game);
+        if (participants.some(p => p == null)) {
+            return false;
+        }
+
         let streakCount = 0;
         for (let participant of participants) {
             streakCount += this.getKillStreaksForOnePlayer(participant, game, timeline);
@@ -150,6 +162,10 @@ export class AllMarksmanRule extends GroupRule {
 
     public verify(accountIds: string[], game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participants = findParticipantsBySummonerIds(accountIds, game);
+        if (participants.some(p => p == null)) {
+            return false;
+        }
+
         let champCount = 0;
         for (let participant of participants) {
             if (this.allowedChamps.has(participant.championId)) {
@@ -170,6 +186,10 @@ export class NoWardsBuyRule extends GroupRule {
 
     public verify(accountIds: string[], game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participants = findParticipantsBySummonerIds(accountIds, game);
+        if (participants.some(p => p == null)) {
+            return false;
+        }
+
         const idSet = new Set(participants.map(p => p.participantId));
         for (const frame of timeline.frames) {
             for (const event of frame.events) {
@@ -190,6 +210,10 @@ export class NoWardsPlaceRule extends GroupRule {
 
     public verify(accountIds: string[], game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participants = findParticipantsBySummonerIds(accountIds, game);
+        if (participants.some(p => p == null)) {
+            return false;
+        }
+
         const idSet = new Set(participants.map(p => p.participantId));
         for (const frame of timeline.frames) {
             for (const event of frame.events) {
@@ -209,6 +233,10 @@ export class LowVisionScoreRule extends GroupRule {
 
     public verify(accountIds: string[], game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participants = findParticipantsBySummonerIds(accountIds, game);
+        if (participants.some(p => p == null)) {
+            return false;
+        }
+
 
         let teamVisionScore = 0;
         for (let participant of participants) {
@@ -250,6 +278,10 @@ export class PerfectGame extends GroupRule {
 
     public verify(accountIds: string[], game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participants = findParticipantsBySummonerIds(accountIds, game);
+        if (participants.some(p => p == null)) {
+            return false;
+        }
+
         const idSet = new Set(participants.map(p => p.participantId));
 
         if (this.noEpicMonstersLost && !this.checkNoEpicMonstersLost(idSet, timeline)) {

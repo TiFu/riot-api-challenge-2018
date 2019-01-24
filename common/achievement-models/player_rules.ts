@@ -21,6 +21,10 @@ class StatsRule extends PlayerRule {
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+ 
         return this.comparison(participant.stats[this.statName], this.value)
     }
 }
@@ -60,7 +64,11 @@ export class MostDamageToChampionsInTeamRule extends PlayerRule {
     }
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const laner = findParticipantBySummonerId(summonerId, game);
+        const laner = findParticipantBySummonerId(summonerId, game); 
+        if (laner == null) {
+            return false;
+        }
+
         let maximum = Number.NEGATIVE_INFINITY;
         for (const participant of game.participants) {
             if (participant.participantId == laner.participantId || laner.teamId != participant.teamId) {
@@ -82,7 +90,11 @@ export class LeastDamageToChampionsRule extends PlayerRule {
     }
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const laner = findParticipantBySummonerId(summonerId, game);
+        const laner = findParticipantBySummonerId(summonerId, game); 
+        if (laner == null) {
+            return false;
+        }
+
         let minimum = Number.POSITIVE_INFINITY;
         for (const participant of game.participants) {
             if (participant.participantId == laner.participantId) {
@@ -103,7 +115,11 @@ export class MostDamageTakenRule extends PlayerRule {
     }
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const laner = findParticipantBySummonerId(summonerId, game);
+        const laner = findParticipantBySummonerId(summonerId, game); 
+        if (laner == null) {
+            return false;
+        }
+
         let maximum = Number.NEGATIVE_INFINITY;
         for (const participant of game.participants) {
             if (participant.participantId == laner.participantId) {
@@ -180,6 +196,10 @@ export class WinRule extends PlayerRule {
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+ 
         for (const team of game.teams) {
             if (team.teamId == participant.teamId) {
                 return team.win == this.win;
@@ -210,6 +230,10 @@ export class CheckItemsRule extends PlayerRule {
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+ 
         for (let item of this.itemIds) {
             // TS didn't like "item" + i for some reason
             const isItem0 = item == participant.stats.item0
@@ -240,6 +264,10 @@ export class LaneRule extends PlayerRule {
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+ 
         return this.lane.some(a => participant.timeline.lane == a[0] && participant.timeline.role == a[1]);
     }
 }
@@ -251,6 +279,10 @@ export class CSAdvantageRule extends PlayerRule {
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+ 
         return participant.timeline.csDiffPerMinDeltas["0-10"] * 10 >= this.csDiff;
     }
 }
@@ -264,6 +296,10 @@ export class MonsterKillTimeCheck extends PlayerRule {
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+ 
         const participantId = participant.participantId
 
         for (const frame of timeline.frames) {
@@ -286,7 +322,11 @@ export class SummonerSpellCheck extends PlayerRule {
     }
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+
         return participant.spell1Id == this.summonerSpellId || participant.spell2Id == this.summonerSpellId;
     }
 }
@@ -317,8 +357,16 @@ export class OnlySoloKillsTop extends PlayerRule {
     }
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
-        const opponent = findLaneOpponent(participant, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+
+        const opponent = findLaneOpponent(participant, game); 
+        if (opponent == null) {
+            return false;
+        }
+
 
         for (const frame of timeline.frames) {
             for (const event of frame.events) {
@@ -339,7 +387,11 @@ export class GankingAchievement extends PlayerRule {
 
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+
         const killedIds = new Set<number>();
 
         for (const frame of timeline.frames) {
@@ -365,7 +417,11 @@ export class EpicMonsterKillRule extends PlayerRule {
     }
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+
         let killCounter = 0;
         for (const frame of timeline.frames) {
             for (const event of frame.events) {
@@ -385,7 +441,11 @@ export class CampingRule extends PlayerRule {
     
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+
         let killCounter: { [key: number]: number} = {};
         for (const frame of timeline.frames) {
             for (const event of frame.events) {
@@ -415,8 +475,16 @@ export class KillInEnemyJungleRule extends PlayerRule {
     
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
-        const opponent = findLaneOpponent(participant, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+
+        const opponent = findLaneOpponent(participant, game); 
+        if (opponent == null) {
+            return false;
+        }
+
         let killCount = 0;
 
         for (const frame of timeline.frames) {
@@ -444,7 +512,11 @@ export class OuterTurretAssistRule extends PlayerRule {
     
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+
         let killCount = 0;
 
         for (const frame of timeline.frames) {
@@ -470,7 +542,11 @@ export class TurretDestructionTimedRule extends PlayerRule {
     
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+
         let firstKill = false;
         for (const frame of timeline.frames) {
             for (const event of frame.events) {
@@ -499,8 +575,16 @@ export class AheadInKillsOfEnemyLaner extends PlayerRule {
     
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
-        const opponent = findLaneOpponent(participant, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+
+        const opponent = findLaneOpponent(participant, game); 
+        if (opponent == null) {
+            return false;
+        }
+
         let participantKills = 0;
         let opponentKills = 0;
 
@@ -538,7 +622,11 @@ export class KillsOnLaneRule extends PlayerRule {
     }
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+
         const validTargets = this.validKillTargets(game, participant.teamId);
         let killCount = 0;
         
@@ -571,7 +659,11 @@ export class KillParticipationRule extends PlayerRule {
     }
     
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+
         const participation = (participant.stats.kills + participant.stats.assists) / this.getKillCount(game, participant.teamId);
 
         return participation > this.participationRequirement;
@@ -588,8 +680,16 @@ export class KillWhileBehindEnemyLaner extends PlayerRule {
     
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
-        const opponent = findLaneOpponent(participant, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+
+        const opponent = findLaneOpponent(participant, game); 
+        if (opponent == null) {
+            return false;
+        }
+
         let participantKills = 0;
         let opponentKills = 0;
 
@@ -622,7 +722,11 @@ export class XKillRule extends PlayerRule {
     
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+
         let killCounter = 0;
         let lastKillTimestamp = 0;
         let killStreaks = 0;
@@ -659,7 +763,11 @@ export class SoloKillRule extends PlayerRule {
     
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+
         let killCounter = 0;
 
         for (const frame of timeline.frames) {
@@ -698,7 +806,11 @@ export class ItemInInventoryRule extends PlayerRule {
         return this.itemsToKeep.some(a => set.has(a));
     }
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+
         const items: number[] = []
 
         for (const frame of timeline.frames) {
@@ -724,7 +836,11 @@ export class PinkWardRule extends PlayerRule {
     }
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
-        const participant = findParticipantBySummonerId(summonerId, game);
+        const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+
         const items: number[] = []
         let wardCount = 0;
 
@@ -750,6 +866,10 @@ export class ZeroScoreRule extends PlayerRule {
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participant = findParticipantBySummonerId(summonerId, game); 
+        if (participant == null) {
+            return false;
+        }
+ 
         for (const frame of timeline.frames) {
             for (const event of frame.events) {
                 if (event.type =="CHAMPION_KILL" && event.timestamp <= this.zeroScoreUntilTimeInMs && lanerWasInvolved(event, participant)) {
