@@ -1,6 +1,6 @@
 import { PlayerRule } from "./models";
 import { MatchV4MatchDto, MatchV4MatchTimelineDto, MatchV4MatchParticipantFrameDto, MatchV4ParticipantStatsDto, MatchV4ParticipantTimelineDto, MatchV4MatchEventDto, MatchV4ParticipantDto, MatchV4MatchReferenceDto } from "kayn/typings/dtos";
-import { findParticipantBySummonerId, findLaneOpponent, lanerWasInvolved, wasInRedSideJungle, wasInBlueSideJungle, findParticipantByParticipantId } from "./util";
+import { findParticipantBySummonerId, findLaneOpponent, lanerWasInvolved, wasInRedSideJungle, wasInBlueSideJungle, findParticipantByParticipantId } from './util';
 
 export class GameModeRule extends PlayerRule {
 
@@ -402,8 +402,8 @@ export class OnlySoloKillsTop extends PlayerRule {
 
 }
 
-export class GankingAchievement extends PlayerRule {
-    public constructor(private numberOfGanks: number) {
+export class LaneKillsRule extends PlayerRule {
+    public constructor(private numberOfGanks: number, private numberOfDifferentLanes: number, private timeLimitInMs: number) {
         super();
     }
 
@@ -415,21 +415,29 @@ export class GankingAchievement extends PlayerRule {
             return false;
         }
 
-        const killedIds = new Set<number>();
+        let idCache: { [key: number]: Lane} = {}
+
+        const killedIds: number[] = [];
+        const gankedLanes: Set<string> = new Set<string>();
 
         for (const frame of timeline.frames) {
             for (const event of frame.events) {
                 // only reward succesful ganks
                 if (event.type == "CHAMPION_KILL" 
-                        && lanerWasInvolved(event, participant)
-                        && event.assistingParticipantIds 
-                        && event.assistingParticipantIds.length > 0) {
-                    killedIds.add(event.victimId);
+                        && event.timestamp <= this.timeLimitInMs
+                        && lanerWasInvolved(event, participant)) {
+                    if (!idCache[event.victimId]) {
+                        idCache[event.victimId] = findParticipantByParticipantId(event.victimId, game).timeline.lane;
+                    }
+                    if (idCache[event.victimId] != "JUNGLE") {
+                        killedIds.push(event.victimId);
+                        gankedLanes.add(idCache[event.victimId]);
+                    }
                 }
             }
         }
 
-        return killedIds.size >= this.numberOfGanks;
+        return killedIds.length >= this.numberOfGanks && gankedLanes.size >= this.numberOfDifferentLanes;
     }
 }
 
