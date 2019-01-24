@@ -56,7 +56,11 @@ export class ProcessingService {
         const region = this.mapPlatformToRegion(game.platform);
         const matchData = await this.riotApi.MatchV4.get(game.gameId).region(region)
         const timelineData = await this.riotApi.MatchV4.timeline(game.gameId).region(region);
-
+        // games below 7 minutes are ignored
+        if (matchData.gameDuration < 420) {
+            return;
+        }
+        
         console.log("processing achievements for summoners")
         const playerAchievementMessages = await this.processAchievementsForSummoner(game, player, matchData, timelineData);
         console.log("Player Achievement Messages: " + playerAchievementMessages);
