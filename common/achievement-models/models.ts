@@ -66,7 +66,9 @@ export class PlayerAchievement extends Achievement<PlayerRule> {
         console.log("Checking player achievement")
         let success = true;
         for (const rule of this.rules) {
-            success = success && rule.verify(encryptedAccountId, game, timeline);
+            const ruleSuccess = rule.verify(encryptedAccountId, game, timeline);
+            success = success && ruleSuccess;
+            console.log("Checked rule: ",  ruleSuccess, rule);
         }
         return success;
     }

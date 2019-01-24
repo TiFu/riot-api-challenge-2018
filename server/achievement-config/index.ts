@@ -35,7 +35,7 @@ export interface Config {
 export function loadConfigFromEnvironment(): Config {
     return {
         "db": {
-            "url": process.env.DB_URL || "server_postgres_1",
+            "url": process.env.DB_URL || "localhost",
             "port": parseInt(process.env.DB_PORT || "5432"),
             "user": process.env.DB_USER || "dev",
             "password": process.env.DB_PASSWORD || "dev",

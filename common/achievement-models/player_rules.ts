@@ -264,6 +264,7 @@ export class LaneRule extends PlayerRule {
 
     public verify(summonerId: string, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto): boolean {
         const participant = findParticipantBySummonerId(summonerId, game); 
+        console.log("PARTICIPATING ", participant);
         if (participant == null) {
             return false;
         }

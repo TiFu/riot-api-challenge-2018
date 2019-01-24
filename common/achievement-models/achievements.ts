@@ -488,6 +488,7 @@ function iterateAndFillMap(category: AchievemenCategory<any>, map: Map<number, A
 export function checkPlayerAchievementCategories(encryptedAccountId: string, obtainedAchievements: Set<AchievementId>, game: MatchV4MatchDto, timeline: MatchV4MatchTimelineDto, playerAchievementCategories: { [key: string]: PlayerAchievementCategory}) {
     const allObtainedIds: AchievementId[] = [];
     for (const categoryName in playerAchievementCategories) {
+        console.log("Checking category: " + categoryName);
         const category = playerAchievementCategories[categoryName];
         const newlyObtainedAchievements = category.checkCategory(encryptedAccountId, obtainedAchievements, game, timeline);
         newlyObtainedAchievements.forEach(a => allObtainedIds.push(a));

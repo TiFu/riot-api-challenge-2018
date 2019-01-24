@@ -22,7 +22,7 @@ console.log("Process.argv: ", process.argv)
 console.log("Using player: ", process.argv[2]);
 console.log("Using game id: ", process.argv[3]);
 store.dispatch(updatePlayerInfo({
-    playerName: process.argv[2],
+    playerName: process.argv[2].toString(),
     accountId: 36904072,
     platformId: "euw1"
 }))
