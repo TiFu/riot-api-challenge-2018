@@ -5,7 +5,7 @@
 
 ## What is "Trophy Hunter"?
 
-![Demo Video](https://img.youtube.com/vi/oc2CF3OyAFA/0.jpg)](https://www.youtube.com/watch?v=oc2CF3OyAFA)
+[![Demo Video](https://img.youtube.com/vi/oc2CF3OyAFA/0.jpg)](https://www.youtube.com/watch?v=oc2CF3OyAFA)
 
 ## How do I get to use it?
 
