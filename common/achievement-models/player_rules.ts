@@ -60,6 +60,12 @@ export class DamageToChampsionsRule extends StatsRule {
     }
 }
 
+export class LessDamageToChampsionsRule extends StatsRule {
+    public constructor(dmgToChamps: number) {
+        super("totalDamageDealtToChampions", dmgToChamps, lessThan);
+    }
+}
+
 export class MostDamageToChampionsInTeamRule extends PlayerRule {
     
     public constructor() {
@@ -313,7 +319,7 @@ export class CSAdvantageRule extends PlayerRule {
 // "RIFTHERALD"
 export class MonsterKillTimeCheck extends PlayerRule {
 
-    public constructor(private eventType: string, private monsterType: string, private timeConstraintInMs: number) {
+    public constructor(private monsterType: string, private timeConstraintInMs: number) {
         super();
     }
 
@@ -339,6 +345,9 @@ export class MonsterKillTimeCheck extends PlayerRule {
     }
 }
 
+//Flash 4
+//Ghost 6
+//Ignite 14
 export class SummonerSpellCheck extends PlayerRule {
     public constructor(private summonerSpellId: number) {
         super();
@@ -356,7 +365,7 @@ export class SummonerSpellCheck extends PlayerRule {
 
 
 export class OnlySoloKillsTop extends PlayerRule {
-    public constructor(private summonerSpellId: number, private timeLimitMs: number) {
+    public constructor(private timeLimitMs: number) {
         super();
     }
 
